@@ -1,106 +1,109 @@
 package com.github.shynixn.shyparticles.contract
 
+import com.github.shynixn.mcutils.common.language.LanguageItem
+import com.github.shynixn.mcutils.common.language.LanguageProvider
+
 /**
  * Language interface for ShyParticles.
  */
-interface ShyParticlesLanguage {
+interface ShyParticlesLanguage : LanguageProvider {
     /**
      * Player not found message.
      */
-    var playerNotFoundMessage: String
+    var playerNotFoundMessage: LanguageItem
     
     /**
      * No permission message.
      */
-    var noPermissionCommand: String
+    var noPermissionCommand: LanguageItem
     
     /**
      * Reload command hint.
      */
-    var reloadCommandHint: String
+    var reloadCommandHint: LanguageItem
     
     /**
      * Reload message.
      */
-    var reloadMessage: String
+    var reloadMessage: LanguageItem
     
     /**
      * Common error message.
      */
-    var commonErrorMessage: String
+    var commonErrorMessage: LanguageItem
     
     /**
      * Command sender has to be player message.
      */
-    var commandSenderHasToBePlayer: String
+    var commandSenderHasToBePlayer: LanguageItem
     
     /**
      * Command usage message.
      */
-    var commandUsage: String
+    var commandUsage: LanguageItem
     
     /**
      * Command description.
      */
-    var commandDescription: String
+    var commandDescription: LanguageItem
     
     /**
      * Effect not found message.
      */
-    var effectNotFoundMessage: String
+    var effectNotFoundMessage: LanguageItem
     
     /**
      * Effect play message.
      */
-    var effectPlayMessage: String
+    var effectPlayMessage: LanguageItem
     
     /**
      * Effect stop message.
      */
-    var effectStopMessage: String
+    var effectStopMessage: LanguageItem
     
     /**
      * Effect stop all message.
      */
-    var effectStopAllMessage: String
+    var effectStopAllMessage: LanguageItem
     
     /**
      * Effect list message.
      */
-    var effectListMessage: String
+    var effectListMessage: LanguageItem
     
     /**
      * Play command hint.
      */
-    var playCommandHint: String
+    var playCommandHint: LanguageItem
     
     /**
      * Stop command hint.
      */
-    var stopCommandHint: String
+    var stopCommandHint: LanguageItem
     
     /**
      * List command hint.
      */
-    var listCommandHint: String
+    var listCommandHint: LanguageItem
     
     /**
      * Create command hint.
      */
-    var createCommandHint: String
+    var createCommandHint: LanguageItem
     
     /**
      * Max effects reached message.
      */
-    var maxEffectsReached: String
+    var maxEffectsReached: LanguageItem
     
     /**
      * Invalid location message.
      */
-    var invalidLocation: String
+    var invalidLocation: LanguageItem
     
     /**
      * Effect created message.
      */
-    var effectCreated: String
+    var effectCreated: LanguageItem
 }
