@@ -1,0 +1,80 @@
+# All language key identifiers for ShyParticles
+shyParticlesPlayerNotFoundMessage:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] &cPlayer %shyparticles_param_1% not found."
+
+shyParticlesNoPermissionCommand:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] &cYou do not have permission to execute this command."
+
+shyParticlesReloadCommandHint:
+  type: "CHAT"
+  text: "Reloads all particle effects and configuration."
+
+shyParticlesReloadMessage:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] Reloaded all particle effects and configuration."
+
+shyParticlesCommonErrorMessage:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] &cA problem occurred. Check the console log for details."
+
+shyParticlesCommandSenderHasToBePlayer:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] The command sender has to be a player."
+
+shyParticlesCommandUsage:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] Use /shyparticles help to see more info about the plugin."
+
+shyParticlesCommandDescription:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] All commands for the ShyParticles plugin."
+
+shyParticlesEffectNotFoundMessage:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] &cParticle effect %shyparticles_param_1% not found."
+
+shyParticlesEffectPlayMessage:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] Playing particle effect %shyparticles_param_1%."
+
+shyParticlesEffectStopMessage:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] Stopped particle effect %shyparticles_param_1%."
+
+shyParticlesEffectStopAllMessage:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] Stopped all particle effects."
+
+shyParticlesEffectListMessage:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] Available effects: %shyparticles_param_1%"
+
+shyParticlesPlayCommandHint:
+  type: "CHAT"
+  text: "Plays a particle effect at your location or the specified location."
+
+shyParticlesStopCommandHint:
+  type: "CHAT"
+  text: "Stops a running particle effect."
+
+shyParticlesListCommandHint:
+  type: "CHAT"
+  text: "Lists all available particle effects."
+
+shyParticlesCreateCommandHint:
+  type: "CHAT"
+  text: "Creates a new particle effect."
+
+shyParticlesMaxEffectsReached:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] &cMaximum number of effects reached. Stop some effects first."
+
+shyParticlesInvalidLocation:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] &cInvalid location specified."
+
+shyParticlesEffectCreated:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] Created particle effect %shyparticles_param_1%."

@@ -1,0 +1,19 @@
+# Simple circle of hearts
+name: "love_circle"
+displayName: "&d&lLove Circle"
+description: "A simple circle of heart particles"
+duration: 10
+repeat: false
+
+layers:
+  - particle: "HEART"
+    shape: "circle"
+    options:
+      radius: 2.0
+      particleCount: 12
+      density: 1.0
+    modifiers:
+      - type: "pulse"
+        speed: 2.0  # pulses per second
+        minScale: 0.8
+        maxScale: 1.2

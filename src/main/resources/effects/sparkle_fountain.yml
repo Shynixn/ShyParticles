@@ -1,0 +1,43 @@
+# Sparkle fountain effect
+name: "sparkle_fountain"
+displayName: "&b&lSparkle Fountain"
+description: "A fountain of sparkling particles"
+duration: 15
+repeat: false
+
+layers:
+  # Main fountain stream
+  - particle: "WATER_SPLASH"
+    shape: "line"
+    options:
+      height: 4.0
+      particleCount: 8
+      density: 1.0
+      speed: 0.1
+    modifiers:
+      - type: "wave"
+        amplitude: 0.3
+        frequency: 3.0
+        axis: "X"
+      - type: "random"
+        strength: 0.2
+        
+  # Sparkles at the top
+  - particle: "ENCHANTMENT_TABLE"
+    shape: "sphere"
+    options:
+      radius: 1.0
+      particleCount: 5
+      density: 0.5
+      offsetY: 4.0
+    modifiers:
+      - type: "random"
+        strength: 0.5
+
+sounds:
+  - sound: "BLOCK_WATER_AMBIENT"
+    volume: 0.3
+    pitch: 1.2
+    delay: 0
+    repeat: true
+    interval: 40

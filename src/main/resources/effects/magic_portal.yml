@@ -1,0 +1,48 @@
+# Magic portal effect
+name: "magic_portal"
+displayName: "&5&lMagic Portal"
+description: "A swirling portal effect with multiple particle types"
+duration: 0  # infinite
+repeat: true
+
+layers:
+  # Outer ring
+  - particle: "PORTAL"
+    shape: "circle"
+    options:
+      radius: 3.0
+      particleCount: 20
+      density: 1.0
+    modifiers:
+      - type: "rotate"
+        speed: 45.0
+        axis: "Y"
+      - type: "wave"
+        amplitude: 0.5
+        frequency: 2.0
+        axis: "Y"
+        
+  # Inner spiral
+  - particle: "WITCH"
+    shape: "spiral"
+    options:
+      radius: 1.5
+      height: 2.0
+      turns: 6
+      density: 0.7
+      particleCount: 2
+    modifiers:
+      - type: "rotate"
+        speed: -60.0  # counter-clockwise
+        axis: "Y"
+        
+  # Center sparkles
+  - particle: "ENCHANTMENT_TABLE"
+    shape: "sphere"
+    options:
+      radius: 0.8
+      particleCount: 5
+      density: 0.3
+    modifiers:
+      - type: "random"
+        strength: 0.4

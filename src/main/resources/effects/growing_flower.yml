@@ -1,0 +1,54 @@
+# Growing flower effect
+name: "growing_flower"
+displayName: "&a&lGrowing Flower"
+description: "A flower that grows and blooms with particles"
+duration: 12
+repeat: false
+
+layers:
+  # Stem growing up
+  - particle: "VILLAGER_HAPPY"
+    shape: "line"
+    options:
+      height: 2.0
+      particleCount: 6
+      density: 0.8
+      speed: 0.05
+    modifiers:
+      - type: "offset"
+        x: 0.05
+        y: 0.0
+        z: 0.05
+        
+  # Petals blooming
+  - particle: "HEART"
+    shape: "circle"
+    options:
+      radius: 1.0
+      particleCount: 8
+      density: 1.0
+      offsetY: 2.0
+    modifiers:
+      - type: "pulse"
+        speed: 1.5
+        minScale: 0.5
+        maxScale: 1.2
+      - type: "rotate"
+        speed: 10.0
+        axis: "Y"
+        
+  # Pollen effect
+  - particle: "FALLING_DUST"
+    shape: "random"
+    options:
+      radius: 1.5
+      particleCount: 3
+      density: 0.3
+      offsetY: 2.5
+      speed: 0.02
+    modifiers:
+      - type: "random"
+        strength: 0.4
+
+conditions:
+  allowedBiomes: ["PLAINS", "SUNFLOWER_PLAINS", "FLOWER_FOREST"]

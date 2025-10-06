@@ -1,0 +1,79 @@
+# Unique identifier of the particle effect
+name: "fire_smoke_tornado"
+
+# Display name for the effect
+displayName: "&c&lFire Smoke Tornado"
+
+# Description of the effect
+description: "A spinning tornado of fire and smoke particles"
+
+# Duration of the effect in seconds (0 = infinite, repeats if repeat is true)
+duration: 20
+
+# Whether the effect should repeat after finishing
+repeat: true
+
+# Layers of particles that make up the effect
+layers:
+  # Fire spiral layer
+  - particle: "FLAME"
+    shape: "spiral"
+    options:
+      radius: 1.2
+      height: 6.0
+      turns: 10
+      density: 0.8
+      particleCount: 3
+    modifiers:
+      - type: "rotate"
+        speed: 30.0  # degrees per second
+        axis: "Y"
+      - type: "offset"
+        x: 0.1
+        y: 0.0
+        z: 0.1
+        
+  # Smoke spiral layer  
+  - particle: "CLOUD"
+    shape: "spiral"
+    options:
+      radius: 1.5
+      height: 6.0
+      turns: 8
+      density: 0.6
+      particleCount: 2
+    modifiers:
+      - type: "rotate"
+        speed: 15.0  # degrees per second
+        axis: "Y"
+      - type: "fade"
+        fadeTime: 3.0  # seconds
+        startAlpha: 1.0
+        endAlpha: 0.0
+      - type: "offset"
+        x: 0.2
+        y: 0.0
+        z: 0.2
+
+# Conditions for when this effect can play
+conditions:
+  # Minimum TPS required to play this effect
+  minTps: 15.0
+  
+  # Maximum number of this effect that can run simultaneously
+  maxInstances: 3
+  
+  # Biomes where this effect can play (empty = all biomes)
+  allowedBiomes: []
+  
+  # Worlds where this effect can play (empty = all worlds)
+  allowedWorlds: []
+
+# Sound effects to play with the particle effect
+sounds:
+  - sound: "BLOCK_FIRE_AMBIENT"
+    volume: 0.5
+    pitch: 1.0
+    delay: 0
+    repeat: true
+    interval: 60  # ticks
