@@ -1,7 +1,5 @@
 # Growing flower effect
 name: "growing_flower"
-displayName: "&a&lGrowing Flower"
-description: "A flower that grows and blooms with particles"
 duration: 12
 repeat: false
 
@@ -49,6 +47,3 @@ layers:
     modifiers:
       - type: "random"
         strength: 0.4
-
-conditions:
-  allowedBiomes: ["PLAINS", "SUNFLOWER_PLAINS", "FLOWER_FOREST"]

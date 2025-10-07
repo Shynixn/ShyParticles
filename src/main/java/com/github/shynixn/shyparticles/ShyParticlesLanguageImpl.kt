@@ -37,12 +37,4 @@ class ShyParticlesLanguageImpl : ShyParticlesLanguage {
  override var shyParticlesStopCommandHint = LanguageItem("Stops a running particle effect.")
 
  override var shyParticlesListCommandHint = LanguageItem("Lists all available particle effects.")
-
- override var shyParticlesCreateCommandHint = LanguageItem("Creates a new particle effect.")
-
- override var shyParticlesMaxEffectsReached = LanguageItem("[&9ShyParticles&f] &cMaximum number of effects reached. Stop some effects first.")
-
- override var shyParticlesInvalidLocation = LanguageItem("[&9ShyParticles&f] &cInvalid location specified.")
-
- override var shyParticlesEffectCreated = LanguageItem("[&9ShyParticles&f] Created particle effect %shyparticles_param_1%.")
 }

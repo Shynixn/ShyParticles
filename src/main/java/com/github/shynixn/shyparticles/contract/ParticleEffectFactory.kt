@@ -11,5 +11,5 @@ interface ParticleEffectFactory {
     /**
      * Creates a new particle effect instance from meta.
      */
-    fun createEffect(meta: ParticleEffectMeta, location: Location, player: Player? = null): ParticleEffect
+    fun createEffect(meta: ParticleEffectMeta, location: () -> Location, player: Player? = null): ParticleEffect
 }

@@ -2,6 +2,8 @@ name: ShyParticles
 version: 1.0.0
 author: Shynixn
 main: com.github.shynixn.shyparticles.ShyParticlesPlugin
+softdepend: [ PlaceholderAPI]
+api-version: 1.13
 folia-supported: true
 libraries:
   - com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0

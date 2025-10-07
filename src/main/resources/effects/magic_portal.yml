@@ -1,7 +1,5 @@
 # Magic portal effect
 name: "magic_portal"
-displayName: "&5&lMagic Portal"
-description: "A swirling portal effect with multiple particle types"
 duration: 0  # infinite
 repeat: true
 

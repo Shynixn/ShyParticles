@@ -16,7 +16,7 @@ class ShyParticlesSettings(private val reloadFun: (ShyParticlesSettings) -> Unit
     var commandPermission: String = Permission.COMMAND.text
 
     var defaultParticles: List<Pair<String, String>> = listOf(
-        "sign/sample_sign.yml" to "sample_sign.yml"
+        "effects/celestial_dance.yml" to "celestial_dance.yml"
     )
 
     /**

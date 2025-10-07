@@ -4,7 +4,7 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 
 /** Represents a running particle effect instance. */
-interface ParticleEffect {
+interface ParticleEffect : AutoCloseable {
     /** Unique identifier for this effect instance. */
     val id: String
 
@@ -22,7 +22,4 @@ interface ParticleEffect {
 
     /** Start time of the effect. */
     val startTime: Long
-
-    /** Closes the effect and cleans up resources. */
-    fun close()
 }

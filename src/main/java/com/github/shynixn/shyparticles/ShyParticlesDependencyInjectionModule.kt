@@ -30,10 +30,10 @@ import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.ServicePriority
 
 class ShyParticlesDependencyInjectionModule(
-        private val plugin: Plugin,
-        private val settings: ShyParticlesSettings,
-        private val language: ShyParticlesLanguage,
-        private val placeHolderService: PlaceHolderService
+    private val plugin: Plugin,
+    private val settings: ShyParticlesSettings,
+    private val language: ShyParticlesLanguage,
+    private val placeHolderService: PlaceHolderService
 ) {
     fun build(): DependencyInjectionModule {
         val module = DependencyInjectionModule()
@@ -46,15 +46,14 @@ class ShyParticlesDependencyInjectionModule(
         module.addService<PlaceHolderService>(placeHolderService)
 
         // Repositories
-        val effectRepositoryImpl =
-                YamlFileRepositoryImpl<ParticleEffectMeta>(
-                        plugin,
-                        "effects",
-                        plugin.dataFolder.toPath().resolve("effects"),
-                        emptyList(),
-                        emptyList(),
-                        object : TypeReference<ParticleEffectMeta>() {}
-                )
+        val effectRepositoryImpl = YamlFileRepositoryImpl<ParticleEffectMeta>(
+            plugin,
+            "effects",
+            plugin.dataFolder.toPath().resolve("effects"),
+            emptyList(),
+            emptyList(),
+            object : TypeReference<ParticleEffectMeta>() {}
+        )
         val cacheEffectRepository = CachedRepositoryImpl(effectRepositoryImpl)
         module.addService<Repository<ParticleEffectMeta>>(cacheEffectRepository)
         module.addService<CacheRepository<ParticleEffectMeta>>(cacheEffectRepository)
@@ -62,13 +61,13 @@ class ShyParticlesDependencyInjectionModule(
         // Services
         module.addService<ShyParticlesCommandExecutor> {
             ShyParticlesCommandExecutor(
-                    module.getService(),
-                    module.getService(),
-                    module.getService(),
-                    module.getService(),
-                    module.getService(),
-                    module.getService(),
-                    module.getService()
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService()
             )
         }
         module.addService<ShyParticlesListener> {
@@ -79,11 +78,11 @@ class ShyParticlesDependencyInjectionModule(
         }
         module.addService<ParticleEffectService> {
             ParticleEffectServiceImpl(
-                    module.getService(),
-                    module.getService(),
-                    module.getService(),
-                    module.getService(),
-                    module.getService()
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService()
             )
         }
         module.addService<ConfigurationService> { ConfigurationServiceImpl(module.getService()) }
@@ -95,19 +94,19 @@ class ShyParticlesDependencyInjectionModule(
 
         // Developer Api.
         Bukkit.getServicesManager()
-                .register(
-                        ParticleEffectService::class.java,
-                        module.getService<ParticleEffectService>(),
-                        plugin,
-                        ServicePriority.Normal
-                )
+            .register(
+                ParticleEffectService::class.java,
+                module.getService<ParticleEffectService>(),
+                plugin,
+                ServicePriority.Normal
+            )
         Bukkit.getServicesManager()
-                .register(
-                        ParticleEffectFactory::class.java,
-                        module.getService<ParticleEffectFactory>(),
-                        plugin,
-                        ServicePriority.Normal
-                )
+            .register(
+                ParticleEffectFactory::class.java,
+                module.getService<ParticleEffectFactory>(),
+                plugin,
+                ServicePriority.Normal
+            )
 
         return module
     }

@@ -26,9 +26,6 @@ class ParticleEffectMeta : Element {
     @Comment("Layers of particles that make up the effect")
     var layers: List<ParticleLayer> = ArrayList()
     
-    @Comment("Conditions for when this effect can play")
-    var conditions: ParticleConditions = ParticleConditions()
-    
     @Comment("Sound effects to play with the particle effect")
     var sounds: List<SoundEffect> = ArrayList()
 }

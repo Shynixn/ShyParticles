@@ -1,7 +1,5 @@
 # Simple circle of hearts
 name: "love_circle"
-displayName: "&d&lLove Circle"
-description: "A simple circle of heart particles"
 duration: 10
 repeat: false
 

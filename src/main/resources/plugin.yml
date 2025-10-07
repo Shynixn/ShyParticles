@@ -2,7 +2,7 @@ name: ShyParticles
 version: 1.0.0
 author: Shynixn
 main: com.github.shynixn.shyparticles.ShyParticlesPlugin
-softdepend: [PlaceholderAPI]
+softdepend: [ PlaceholderAPI]
 api-version: 1.13
 libraries:
   - com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0
@@ -10,24 +10,3 @@ libraries:
   - com.github.shynixn:fasterxml:1.2.0
   - org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.25
   - org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3
-commands:
-  shyparticles:
-    description: "Main command for ShyParticles plugin"
-    aliases: ["sparticles", "sp"]
-    usage: "/shyparticles help"
-permissions:
-  shyparticles.command:
-    description: "Allows using ShyParticles commands"
-    default: op
-  shyparticles.reload:
-    description: "Allows reloading particle effects"
-    default: op
-  shyparticles.create:
-    description: "Allows creating particle effects"
-    default: op
-  shyparticles.play:
-    description: "Allows playing particle effects"
-    default: op
-  shyparticles.stop:
-    description: "Allows stopping particle effects"
-    default: op

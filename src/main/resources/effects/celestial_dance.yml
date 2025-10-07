@@ -1,7 +1,5 @@
 # Advanced celestial dance effect
 name: "celestial_dance"
-displayName: "&5&lCelestial Dance"
-description: "Multiple celestial objects dancing in harmony"
 duration: 30
 repeat: true
 
@@ -130,13 +128,6 @@ layers:
         endAlpha: 0.0
       - type: "random"
         strength: 0.4
-
-conditions:
-  minTps: 16.0
-  maxInstances: 2
-  allowedTimes:
-    - start: 13000  # night time
-      end: 23000
 
 sounds:
   - sound: "BLOCK_BEACON_AMBIENT"

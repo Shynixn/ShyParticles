@@ -1,12 +1,6 @@
 # Unique identifier of the particle effect
 name: "fire_smoke_tornado"
 
-# Display name for the effect
-displayName: "&c&lFire Smoke Tornado"
-
-# Description of the effect
-description: "A spinning tornado of fire and smoke particles"
-
 # Duration of the effect in seconds (0 = infinite, repeats if repeat is true)
 duration: 20
 
@@ -54,20 +48,6 @@ layers:
         x: 0.2
         y: 0.0
         z: 0.2
-
-# Conditions for when this effect can play
-conditions:
-  # Minimum TPS required to play this effect
-  minTps: 15.0
-  
-  # Maximum number of this effect that can run simultaneously
-  maxInstances: 3
-  
-  # Biomes where this effect can play (empty = all biomes)
-  allowedBiomes: []
-  
-  # Worlds where this effect can play (empty = all worlds)
-  allowedWorlds: []
 
 # Sound effects to play with the particle effect
 sounds:

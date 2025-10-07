@@ -1,7 +1,5 @@
 # Simple explosion burst
 name: "explosion_burst"
-displayName: "&c&lExplosion Burst"
-description: "A quick burst of explosive particles"
 duration: 3
 repeat: false
 

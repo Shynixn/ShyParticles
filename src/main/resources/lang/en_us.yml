@@ -1,7 +1,18 @@
 # All language key identifiers for ShyParticles
 shyParticlesPlayerNotFoundMessage:
+  # Available types: "CHAT", "TITLE", "ACTIONBAR", "HIDDEN".
+  # Please notice that some messages do only support chat.
   type: "CHAT"
-  text: "[&9ShyParticles&f] &cPlayer %shyparticles_param_1% not found."
+  # The primary text to be sent.
+  text: "[&9ShyCommandSigns&f] &cPlayer %shycommandsigns_param_1% not found."
+  # Only available for type "TITLE". Adds a subTitle.
+  subTitle: ""
+  # Only available for type: "TITLE". Adds a fade in effect.
+  fadeInTicks: 20
+  # Only available for type: "TITLE". Adds a stay effect.
+  stayTicks: 60
+  # Only available for type: "TITLE". Adds a fade out effect.
+  fadeOutTicks: 20
 shyParticlesNoPermissionCommand:
   type: "CHAT"
   text: "[&9ShyParticles&f] &cYou do not have permission to execute this command."
@@ -47,15 +58,3 @@ shyParticlesStopCommandHint:
 shyParticlesListCommandHint:
   type: "CHAT"
   text: "Lists all available particle effects."
-shyParticlesCreateCommandHint:
-  type: "CHAT"
-  text: "Creates a new particle effect."
-shyParticlesMaxEffectsReached:
-  type: "CHAT"
-  text: "[&9ShyParticles&f] &cMaximum number of effects reached. Stop some effects first."
-shyParticlesInvalidLocation:
-  type: "CHAT"
-  text: "[&9ShyParticles&f] &cInvalid location specified."
-shyParticlesEffectCreated:
-  type: "CHAT"
-  text: "[&9ShyParticles&f] Created particle effect %shyparticles_param_1%."

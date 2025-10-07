@@ -11,9 +11,16 @@ class ShyParticlesListener(
     private val plugin: Plugin,
     private val particleService: ParticleEffectService
 ) : Listener {
+
+
+
+
     
     @EventHandler
     fun onPlayerQuit(event: PlayerQuitEvent) {
+
+
+
         // Stop all effects for the player when they quit
         runBlocking {
             particleService.stopAllEffects(event.player)

@@ -35,12 +35,4 @@ interface ShyParticlesLanguage : LanguageProvider {
   var shyParticlesStopCommandHint: LanguageItem
 
   var shyParticlesListCommandHint: LanguageItem
-
-  var shyParticlesCreateCommandHint: LanguageItem
-
-  var shyParticlesMaxEffectsReached: LanguageItem
-
-  var shyParticlesInvalidLocation: LanguageItem
-
-  var shyParticlesEffectCreated: LanguageItem
 }

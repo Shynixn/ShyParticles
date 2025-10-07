@@ -1,7 +1,5 @@
 # Sparkle fountain effect
 name: "sparkle_fountain"
-displayName: "&b&lSparkle Fountain"
-description: "A fountain of sparkling particles"
 duration: 15
 repeat: false
 

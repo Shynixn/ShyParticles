@@ -28,7 +28,7 @@ class ShyParticlesPlugin : JavaPlugin(), CoroutinePlugin {
     companion object {
         private val areLegacyVersionsIncluded: Boolean by lazy {
             try {
-                Class.forName("com.github.shynixn.shycommandsigns.lib.com.github.shynixn.mcutils.packet.nms.v1_8_R3.PacketSendServiceImpl")
+                Class.forName("com.github.shynixn.shyparticles.lib.com.github.shynixn.mcutils.packet.nms.v1_8_R3.PacketSendServiceImpl")
                 true
             } catch (e: ClassNotFoundException) {
                 false
@@ -37,7 +37,7 @@ class ShyParticlesPlugin : JavaPlugin(), CoroutinePlugin {
     }
 
     override fun onEnable() {
-        Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Loading ShyCommandSign ...")
+        Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Loading ShyParticles ...")
         this.saveDefaultConfig()
         this.reloadConfig()
         val versions = if (areLegacyVersionsIncluded) {
@@ -131,7 +131,7 @@ class ShyParticlesPlugin : JavaPlugin(), CoroutinePlugin {
         // Register CommandExecutor
         module!!.getService<ShyParticlesCommandExecutor>()
         plugin.launch {
-            Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Enabled ShyCommandSign " + plugin.description.version + " by Shynixn")
+            Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Enabled ShyParticles " + plugin.description.version + " by Shynixn")
         }
     }
 
