@@ -3,12 +3,12 @@ package com.github.shynixn.shyparticles.impl
 import com.github.shynixn.shyparticles.contract.ParticleEffect
 import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
 import com.github.shynixn.shyparticles.entity.ParticleLayer
-import com.github.shynixn.shyparticles.entity.ParticleEffectSettings
 import com.github.shynixn.shyparticles.enumeration.ParticleShape
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Particle
 import org.bukkit.entity.Player
+import org.bukkit.plugin.Plugin
 import java.util.*
 import kotlin.math.*
 
@@ -18,7 +18,7 @@ class ParticleEffectImpl(
     override val location: Location,
     override val player: Player?,
     private val meta: ParticleEffectMeta,
-    private val settings: ParticleEffectSettings
+    private val plugin : Plugin
 ) : ParticleEffect {
     
     override var isRunning: Boolean = false

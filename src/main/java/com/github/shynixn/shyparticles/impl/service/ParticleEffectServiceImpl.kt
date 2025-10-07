@@ -6,7 +6,6 @@ import com.github.shynixn.shyparticles.contract.ParticleEffect
 import com.github.shynixn.shyparticles.contract.ParticleEffectFactory
 import com.github.shynixn.shyparticles.contract.ParticleEffectService
 import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
-import com.github.shynixn.shyparticles.entity.ParticleEffectSettings
 import kotlinx.coroutines.launch
 import org.bukkit.Bukkit
 import org.bukkit.Location

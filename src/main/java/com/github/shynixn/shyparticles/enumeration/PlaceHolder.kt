@@ -12,21 +12,6 @@ enum class PlaceHolder(val fullPlaceHolder: String) {
     PLAYER_NAME("shyparticles_player_name"),
     
     /**
-     * Player location placeholder.
-     */
-    PLAYER_LOCATION("shyparticles_player_location"),
-    
-    /**
-     * Effect count placeholder.
-     */
-    EFFECT_COUNT("shyparticles_effect_count"),
-    
-    /**
-     * Running effects placeholder.
-     */
-    RUNNING_EFFECTS("shyparticles_running_effects"),
-    
-    /**
      * Parameter placeholder.
      */
     PARAM_1("shyparticles_param_1"),

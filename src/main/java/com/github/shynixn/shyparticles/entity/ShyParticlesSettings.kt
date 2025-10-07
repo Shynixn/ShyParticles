@@ -1,0 +1,28 @@
+package com.github.shynixn.shyparticles.entity
+
+import com.github.shynixn.shyparticles.enumeration.Permission
+
+class ShyParticlesSettings(private val reloadFun: (ShyParticlesSettings) -> Unit) {
+    /**
+     * Base Command.
+     */
+    var baseCommand: String = "shyparticles"
+
+    /**
+     * Command aliases.
+     */
+    var commandAliases: List<String> = ArrayList()
+
+    var commandPermission: String = Permission.COMMAND.text
+
+    var defaultParticles: List<Pair<String, String>> = listOf(
+        "sign/sample_sign.yml" to "sample_sign.yml"
+    )
+
+    /**
+     * Reloads the config.
+     */
+    fun reload() {
+        reloadFun.invoke(this)
+    }
+}

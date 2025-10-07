@@ -3,7 +3,7 @@ package com.github.shynixn.shyparticles.enumeration
 /**
  * Permission enumeration for ShyParticles.
  */
-enum class Permission(val permission: String) {
+enum class Permission(val text: String) {
     /**
      * Permission to use ShyParticles commands.
      */
@@ -13,12 +13,7 @@ enum class Permission(val permission: String) {
      * Permission to reload particle effects.
      */
     RELOAD("shyparticles.reload"),
-    
-    /**
-     * Permission to create particle effects.
-     */
-    CREATE("shyparticles.create"),
-    
+
     /**
      * Permission to play particle effects.
      */

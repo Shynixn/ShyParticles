@@ -1,6 +1,5 @@
 package com.github.shynixn.shyparticles.contract
 
-import java.util.*
 import org.bukkit.Location
 import org.bukkit.entity.Player
 

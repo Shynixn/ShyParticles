@@ -17,12 +17,6 @@ class ParticleEffectMeta : Element {
     @Comment("Unique identifier of the particle effect")
     override var name: String = ""
     
-    @Comment("Display name for the effect")
-    var displayName: String = ""
-    
-    @Comment("Description of the effect")
-    var description: String = ""
-    
     @Comment("Duration of the effect in seconds (0 = infinite)")
     var duration: Int = 0
     

@@ -13,7 +13,7 @@ import com.github.shynixn.mcutils.common.repository.CacheRepository
 import com.github.shynixn.shyparticles.contract.ParticleEffectService
 import com.github.shynixn.shyparticles.contract.ShyParticlesLanguage
 import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
-import com.github.shynixn.shyparticles.entity.ParticleEffectSettings
+import com.github.shynixn.shyparticles.entity.ShyParticlesSettings
 import com.github.shynixn.shyparticles.enumeration.Permission
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -22,8 +22,8 @@ import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import java.util.UUID
 
-class ParticleCommandExecutor(
-    private val settings: ParticleEffectSettings,
+class ShyParticlesCommandExecutor(
+    private val settings: ShyParticlesSettings,
     private val plugin: CoroutinePlugin,
     private val particleService: ParticleEffectService,
     private val language: ShyParticlesLanguage,

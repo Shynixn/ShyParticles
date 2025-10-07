@@ -9,11 +9,10 @@ import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.language.reloadTranslation
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderServiceImpl
-import com.github.shynixn.shyparticles.contract.ParticleEffectService
-import com.github.shynixn.shyparticles.entity.ParticleEffectSettings
+import com.github.shynixn.shyparticles.entity.ShyParticlesSettings
 import com.github.shynixn.shyparticles.enumeration.PlaceHolder
-import com.github.shynixn.shyparticles.impl.commandexecutor.ParticleCommandExecutor
-import com.github.shynixn.shyparticles.impl.listener.ParticleListener
+import com.github.shynixn.shyparticles.impl.commandexecutor.ShyParticlesCommandExecutor
+import com.github.shynixn.shyparticles.impl.listener.ShyParticlesListener
 import java.util.logging.Level
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.Job
@@ -29,9 +28,7 @@ class ShyParticlesPlugin : JavaPlugin(), CoroutinePlugin {
     companion object {
         private val areLegacyVersionsIncluded: Boolean by lazy {
             try {
-                Class.forName(
-                        "com.github.shynixn.shyparticles.lib.com.github.shynixn.mcutils.packet.nms.v1_8_R3.PacketSendServiceImpl"
-                )
+                Class.forName("com.github.shynixn.shycommandsigns.lib.com.github.shynixn.mcutils.packet.nms.v1_8_R3.PacketSendServiceImpl")
                 true
             } catch (e: ClassNotFoundException) {
                 false
@@ -40,59 +37,49 @@ class ShyParticlesPlugin : JavaPlugin(), CoroutinePlugin {
     }
 
     override fun onEnable() {
-        Bukkit.getServer()
-                .consoleSender
-                .sendMessage(prefix + ChatColor.GREEN + "Loading ShyParticles ...")
+        Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Loading ShyCommandSign ...")
         this.saveDefaultConfig()
         this.reloadConfig()
-
-        val versions =
-                if (areLegacyVersionsIncluded) {
-                    listOf(
-                            Version.VERSION_1_8_R3,
-                            Version.VERSION_1_9_R2,
-                            Version.VERSION_1_10_R1,
-                            Version.VERSION_1_11_R1,
-                            Version.VERSION_1_12_R1,
-                            Version.VERSION_1_13_R1,
-                            Version.VERSION_1_13_R2,
-                            Version.VERSION_1_14_R1,
-                            Version.VERSION_1_15_R1,
-                            Version.VERSION_1_16_R1,
-                            Version.VERSION_1_16_R2,
-                            Version.VERSION_1_16_R3,
-                            Version.VERSION_1_17_R1,
-                            Version.VERSION_1_18_R1,
-                            Version.VERSION_1_18_R2,
-                            Version.VERSION_1_19_R1,
-                            Version.VERSION_1_19_R2,
-                            Version.VERSION_1_19_R3,
-                            Version.VERSION_1_20_R1,
-                            Version.VERSION_1_20_R2,
-                            Version.VERSION_1_20_R3,
-                            Version.VERSION_1_20_R4,
-                            Version.VERSION_1_21_R1,
-                            Version.VERSION_1_21_R2,
-                            Version.VERSION_1_21_R3,
-                            Version.VERSION_1_21_R4,
-                            Version.VERSION_1_21_R5,
-                            Version.VERSION_1_21_R6,
-                    )
-                } else {
-                    listOf(Version.VERSION_1_21_R6)
-                }
+        val versions = if (areLegacyVersionsIncluded) {
+            listOf(
+                Version.VERSION_1_8_R3,
+                Version.VERSION_1_9_R2,
+                Version.VERSION_1_10_R1,
+                Version.VERSION_1_11_R1,
+                Version.VERSION_1_12_R1,
+                Version.VERSION_1_13_R1,
+                Version.VERSION_1_13_R2,
+                Version.VERSION_1_14_R1,
+                Version.VERSION_1_15_R1,
+                Version.VERSION_1_16_R1,
+                Version.VERSION_1_16_R2,
+                Version.VERSION_1_16_R3,
+                Version.VERSION_1_17_R1,
+                Version.VERSION_1_18_R1,
+                Version.VERSION_1_18_R2,
+                Version.VERSION_1_19_R1,
+                Version.VERSION_1_19_R2,
+                Version.VERSION_1_19_R3,
+                Version.VERSION_1_20_R1,
+                Version.VERSION_1_20_R2,
+                Version.VERSION_1_20_R3,
+                Version.VERSION_1_20_R4,
+                Version.VERSION_1_21_R1,
+                Version.VERSION_1_21_R2,
+                Version.VERSION_1_21_R3,
+                Version.VERSION_1_21_R4,
+                Version.VERSION_1_21_R5,
+                Version.VERSION_1_21_R6,
+            )
+        } else {
+            listOf(Version.VERSION_1_21_R6)
+        }
 
         if (!Version.serverVersion.isCompatible(*versions.toTypedArray())) {
             logger.log(Level.SEVERE, "================================================")
             logger.log(Level.SEVERE, "ShyParticles does not support your server version")
-            logger.log(
-                    Level.SEVERE,
-                    "Install v" + versions[0].from + " - v" + versions[versions.size - 1].to
-            )
-            logger.log(
-                    Level.SEVERE,
-                    "Need support for a particular version? Go to https://www.patreon.com/Shynixn"
-            )
+            logger.log(Level.SEVERE, "Install v" + versions[0].from + " - v" + versions[versions.size - 1].to)
+            logger.log(Level.SEVERE, "Need support for a particular version? Go to https://www.patreon.com/Shynixn")
             logger.log(Level.SEVERE, "Plugin gets now disabled!")
             logger.log(Level.SEVERE, "================================================")
             Bukkit.getPluginManager().disablePlugin(this)
@@ -103,16 +90,16 @@ class ShyParticlesPlugin : JavaPlugin(), CoroutinePlugin {
 
         if (mcCoroutineConfiguration.isFoliaLoaded && !checkIfFoliaIsLoadable()) {
             logger.log(Level.SEVERE, "================================================")
-            logger.log(
-                    Level.SEVERE,
-                    "ShyParticles for Folia requires ShyParticles-Premium-Folia.jar"
-            )
+            logger.log(Level.SEVERE, "ShyParticles for Folia requires ShyParticles-Premium-Folia.jar")
             logger.log(Level.SEVERE, "Go to https://www.patreon.com/Shynixn to download it.")
             logger.log(Level.SEVERE, "Plugin gets now disabled!")
             logger.log(Level.SEVERE, "================================================")
             Bukkit.getPluginManager().disablePlugin(this)
             return
         }
+
+        // Register Plugin Channel
+        server.messenger.registerOutgoingPluginChannel(this, "BungeeCord")
 
         // Register Language
         val language = ShyParticlesLanguageImpl()
@@ -121,48 +108,30 @@ class ShyParticlesPlugin : JavaPlugin(), CoroutinePlugin {
 
         // Module
         val plugin = this
-        val settings =
-                ParticleEffectSettings().apply {
-                    maxParticlesPerEffect =
-                            plugin.config.getInt("engine.maxParticlesPerEffect", 1000)
-                    maxEffectsPerPlayer = plugin.config.getInt("engine.maxEffectsPerPlayer", 5)
-                    maxGlobalEffects = plugin.config.getInt("engine.maxGlobalEffects", 50)
-                    updateFrequency = plugin.config.getInt("engine.updateFrequency", 1)
-                    renderDistance = plugin.config.getDouble("engine.renderDistance", 64.0)
-                    adaptivePerformance =
-                            plugin.config.getBoolean("performance.adaptivePerformance", true)
-                    tpsThreshold = plugin.config.getDouble("performance.tpsThreshold", 18.0)
-                    reductionFactor = plugin.config.getDouble("performance.reductionFactor", 0.5)
-                }
-
+        val settings = ShyParticlesSettings { settings ->
+        }
+        settings.reload()
         val placeHolderService = PlaceHolderServiceImpl(this)
-        this.module =
-                ShyParticlesDependencyInjectionModule(this, settings, language, placeHolderService)
-                        .build()
+        this.module = ShyParticlesDependencyInjectionModule(
+            this,
+            settings,
+            language,
+            placeHolderService
+        ).build()
 
         // Register PlaceHolders
         PlaceHolder.registerAll(
-                this,
-                this.module!!.getService<PlaceHolderService>(),
+            this,
+            this.module!!.getService<PlaceHolderService>(),
         )
 
         // Register Listeners
-        Bukkit.getPluginManager().registerEvents(module!!.getService<ParticleListener>(), this)
+        Bukkit.getPluginManager().registerEvents(module!!.getService<ShyParticlesListener>(), this)
 
         // Register CommandExecutor
-        module!!.getService<ParticleCommandExecutor>()
-        val particleService = module!!.getService<ParticleEffectService>()
+        module!!.getService<ShyParticlesCommandExecutor>()
         plugin.launch {
-            particleService.reload()
-            Bukkit.getServer()
-                    .consoleSender
-                    .sendMessage(
-                            prefix +
-                                    ChatColor.GREEN +
-                                    "Enabled ShyParticles " +
-                                    plugin.description.version +
-                                    " by Shynixn"
-                    )
+            Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Enabled ShyCommandSign " + plugin.description.version + " by Shynixn")
         }
     }
 

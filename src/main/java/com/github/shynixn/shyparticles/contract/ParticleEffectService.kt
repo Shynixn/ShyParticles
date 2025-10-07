@@ -7,7 +7,7 @@ import org.bukkit.entity.Player
 /** Service for managing particle effects. */
 interface ParticleEffectService {
     /** Plays a particle effect at the given location. */
-    suspend fun playEffect(effectName: String, location: Location, player: Player? = null): Boolean
+    suspend fun playEffect(effectName: String, location: Location, player: Player? = null): String
 
     /** Stops a running particle effect. */
     suspend fun stopEffect(effectId: String): Boolean
