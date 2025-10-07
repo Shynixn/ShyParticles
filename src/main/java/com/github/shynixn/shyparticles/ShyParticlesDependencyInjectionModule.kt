@@ -74,15 +74,12 @@ class ShyParticlesDependencyInjectionModule(
             ShyParticlesListener(module.getService(), module.getService())
         }
         module.addService<ParticleEffectFactory> {
-            ParticleEffectFactoryImpl(module.getService(), module.getService())
+            ParticleEffectFactoryImpl(module.getService())
         }
         module.addService<ParticleEffectService> {
             ParticleEffectServiceImpl(
                 module.getService(),
                 module.getService(),
-                module.getService(),
-                module.getService(),
-                module.getService()
             )
         }
         module.addService<ConfigurationService> { ConfigurationServiceImpl(module.getService()) }

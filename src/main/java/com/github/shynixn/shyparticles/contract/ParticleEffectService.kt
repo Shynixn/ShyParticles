@@ -7,13 +7,18 @@ import org.bukkit.entity.Player
 /** Service for managing particle effects. */
 interface ParticleEffectService : AutoCloseable {
     /** Plays a particle effect at the given location. */
-    suspend fun playEffect(effectName: String, location: () -> Location, player: Player? = null): String
+    fun startEffect(meta: ParticleEffectMeta, location: () -> Location, player: Player? = null): String
+
+    /**
+     * Tries to get an effect meta data.
+     */
+    fun getEffectMetaFromName(name: String): ParticleEffectMeta?
 
     /** Stops a running particle effect. */
-    suspend fun stopEffect(effectId: String): Boolean
+    fun stopEffect(effectId: String)
 
     /** Stops all running effects for a player. */
-    suspend fun stopAllEffects(player: Player? = null): Int
+    fun stopPlayerEffects(player: Player)
 
     /** Reloads all effects from disk. */
     suspend fun reload()

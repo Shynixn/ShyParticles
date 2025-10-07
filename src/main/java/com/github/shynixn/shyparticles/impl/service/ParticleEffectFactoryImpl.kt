@@ -7,14 +7,22 @@ import com.github.shynixn.shyparticles.impl.ParticleEffectImpl
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
-import java.util.*
 
 class ParticleEffectFactoryImpl(
     private val plugin: Plugin
 ) : ParticleEffectFactory {
-    
-    override fun createEffect(meta: ParticleEffectMeta, location: Location, player: Player?): ParticleEffect {
-        val id = UUID.randomUUID().toString()
-        return ParticleEffectImpl(id, meta.name, location, player, meta, settings)
+    private var counter = 1
+
+    /**
+     * Creates a new particle effect instance from meta.
+     */
+    override fun createEffect(
+        meta: ParticleEffectMeta,
+        location: () -> Location,
+        player: Player?
+    ): ParticleEffect {
+        val particleId = "particle_${counter}"
+        counter++
+        return ParticleEffectImpl(particleId, meta.name, location, player, plugin)
     }
 }
