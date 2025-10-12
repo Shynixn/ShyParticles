@@ -1,0 +1,17 @@
+# Simple blue circle using DUST particles with blue color
+name: "blue_circle"
+duration: 10
+repeat: true
+
+layers:
+  - particle: "dust"
+    shape: "circle"
+    options:
+      radius: 2.0
+      particleCount: 20
+      density: 1.0
+      speed: 0.0
+      red: 0
+      green: 100
+      blue: 255
+      scale: 1.5

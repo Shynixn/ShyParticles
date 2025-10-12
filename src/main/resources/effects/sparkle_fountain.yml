@@ -5,7 +5,7 @@ repeat: false
 
 layers:
   # Main fountain stream
-  - particle: "WATER_SPLASH"
+  - particle: "SPLASH"
     shape: "line"
     options:
       height: 4.0
@@ -21,7 +21,7 @@ layers:
         strength: 0.2
         
   # Sparkles at the top
-  - particle: "ENCHANTMENT_TABLE"
+  - particle: "ENCHANT"
     shape: "sphere"
     options:
       radius: 1.0

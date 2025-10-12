@@ -4,7 +4,7 @@ duration: 15
 repeat: true
 
 layers:
-  - particle: "WATER_DROP"
+  - particle: "RAIN"
     shape: "cylinder"
     options:
       radius: 2.0
@@ -13,4 +13,3 @@ layers:
       density: 0.8
       speed: 0.1
       offsetY: 2.0
-

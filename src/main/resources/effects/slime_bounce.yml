@@ -4,7 +4,7 @@ duration: 8
 repeat: true
 
 layers:
-  - particle: "SLIME"
+  - particle: "ITEM_SLIME"
     shape: "point"
     options:
       particleCount: 8
@@ -15,4 +15,3 @@ layers:
         speed: 2.5
         minScale: 0.7
         maxScale: 1.3
-

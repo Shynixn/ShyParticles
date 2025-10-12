@@ -4,11 +4,10 @@ duration: 8
 repeat: false
 
 layers:
-  - particle: "SMOKE_NORMAL"
+  - particle: "SMOKE"
     shape: "sphere"
     options:
       radius: 1.0
       particleCount: 20
       density: 0.8
       speed: 0.05
-

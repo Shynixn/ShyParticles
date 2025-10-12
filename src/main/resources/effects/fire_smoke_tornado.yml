@@ -10,7 +10,7 @@ repeat: true
 # Layers of particles that make up the effect
 layers:
   # Fire spiral layer
-  - particle: "FLAME"
+  - particle: "flame"
     shape: "spiral"
     options:
       radius: 1.2
@@ -28,7 +28,7 @@ layers:
         z: 0.1
         
   # Smoke spiral layer  
-  - particle: "CLOUD"
+  - particle: "cloud"
     shape: "spiral"
     options:
       radius: 1.5

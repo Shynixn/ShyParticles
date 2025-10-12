@@ -4,11 +4,10 @@ duration: 10
 repeat: true
 
 layers:
-  - particle: "FIREWORKS_SPARK"
+  - particle: "FIREWORK"
     shape: "circle"
     options:
       radius: 1.5
       particleCount: 16
       density: 1.0
       speed: 0.0
-

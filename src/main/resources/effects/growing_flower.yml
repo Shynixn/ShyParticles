@@ -5,7 +5,7 @@ repeat: false
 
 layers:
   # Stem growing up
-  - particle: "VILLAGER_HAPPY"
+  - particle: "HAPPY_VILLAGER"
     shape: "line"
     options:
       height: 2.0

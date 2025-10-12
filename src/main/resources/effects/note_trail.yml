@@ -1,14 +1,13 @@
-# Simple musical note trail
-name: "note_trail"
-duration: 12
+# Simple red circle
+name: "red_circle"
+duration: 10
 repeat: true
 
 layers:
-  - particle: "NOTE"
-    shape: "helix"
+  - particle: "REDSTONE"
+    shape: "circle"
     options:
-      radius: 1.0
-      height: 2.5
+      radius: 2.0
       particleCount: 20
       density: 1.0
       speed: 0.0

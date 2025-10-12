@@ -4,7 +4,7 @@ duration: 20
 repeat: true
 
 layers:
-  - particle: "TOWN_AURA"
+  - particle: "ASH"
     shape: "sphere"
     options:
       radius: 2.5
@@ -12,4 +12,3 @@ layers:
       density: 0.7
       speed: 0.05
       offsetY: 3.0
-

@@ -1,5 +1,8 @@
 package com.github.shynixn.shyparticles.entity
 
+import org.bukkit.Material
+import org.bukkit.inventory.ItemStack
+
 /**
  * Options for particle shapes and display.
  */
@@ -68,4 +71,65 @@ class ParticleOptions {
      * Speed of the particles.
      */
     var speed: Double = 0.0
+
+    // Color properties for DUST, ENTITY_EFFECT, DUST_COLOR_TRANSITION particles
+    /**
+     * Red component of particle color (0-255).
+     */
+    var red: Int = 255
+
+    /**
+     * Green component of particle color (0-255).
+     */
+    var green: Int = 255
+
+    /**
+     * Blue component of particle color (0-255).
+     */
+    var blue: Int = 255
+
+    /**
+     * Alpha component of particle color (0-255).
+     */
+    var alpha: Int = 255
+
+    /**
+     * To-color red component for transition particles (0-255).
+     */
+    var toRed: Int = 255
+
+    /**
+     * To-color green component for transition particles (0-255).
+     */
+    var toGreen: Int = 255
+
+    /**
+     * To-color blue component for transition particles (0-255).
+     */
+    var toBlue: Int = 255
+
+    /**
+     * To-color alpha component for transition particles (0-255).
+     */
+    var toAlpha: Int = 255
+
+    /**
+     * Scale/size for dust particles.
+     */
+    var scale: Double = 1.0
+
+    /**
+     * Roll value for certain particles.
+     */
+    var roll: Int = 0
+
+    /**
+     * Delay for shriek particles.
+     */
+    var delay: Int = 0
+
+    /**
+     * Vibration ticks for vibration particles.
+     */
+    var vibrationTicks: Int = 20
 }

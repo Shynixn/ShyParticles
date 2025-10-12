@@ -35,7 +35,7 @@ layers:
         axis: "Y"
         
   # Center sparkles
-  - particle: "ENCHANTMENT_TABLE"
+  - particle: "ENCHANT"
     shape: "sphere"
     options:
       radius: 0.8

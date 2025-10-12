@@ -239,9 +239,27 @@ class ParticleEffectImpl(
         val packet = PacketOutParticle(
             name = particleName,
             location = location,
-            offset = Vector(options.offsetX, options.offsetY, options.offsetZ),
+            offset = Vector(0.1, 0.1, 0.1),  // Small offset for particle spread
             speed = options.speed,
-            count = 1
+            count = 1,
+            // Color properties for DUST, ENTITY_EFFECT, DUST_COLOR_TRANSITION
+            fromRed = options.red,
+            fromGreen = options.green,
+            fromBlue = options.blue,
+            fromAlpha = options.alpha,
+            toRed = options.toRed,
+            toGreen = options.toGreen,
+            toBlue = options.toBlue,
+            toAlpha = options.toAlpha,
+            // Scale for DUST particles
+            scale = options.scale,
+            // Roll for SCULK_CHARGE particles
+            roll = options.roll,
+            // Delay for SHRIEK particles
+            delay = options.delay,
+            // Vibration properties
+            vibrationLocation = location,
+            vibrationTicks = options.vibrationTicks
         )
 
         if (player != null) {

@@ -4,7 +4,7 @@ duration: 10
 repeat: true
 
 layers:
-  - particle: "SNOW_SHOVEL"
+  - particle: "SNOWFLAKE"
     shape: "point"
     options:
       particleCount: 5
@@ -13,4 +13,3 @@ layers:
     modifiers:
       - type: "random"
         strength: 0.5
-

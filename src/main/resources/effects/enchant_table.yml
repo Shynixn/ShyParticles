@@ -4,7 +4,7 @@ duration: 15
 repeat: true
 
 layers:
-  - particle: "ENCHANTMENT_TABLE"
+  - particle: "ENCHANT"
     shape: "circle"
     options:
       radius: 1.5

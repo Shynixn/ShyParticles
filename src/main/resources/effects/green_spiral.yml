@@ -4,7 +4,7 @@ duration: 15
 repeat: true
 
 layers:
-  - particle: "VILLAGER_HAPPY"
+  - particle: "HAPPY_VILLAGER"
     shape: "helix"
     options:
       radius: 1.5
@@ -16,4 +16,3 @@ layers:
       - type: "rotate"
         speed: 30.0
         axis: "Y"
-

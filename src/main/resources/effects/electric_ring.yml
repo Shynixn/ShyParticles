@@ -4,7 +4,7 @@ duration: 10
 repeat: true
 
 layers:
-  - particle: "CRIT_MAGIC"
+  - particle: "ENCHANTED_HIT"
     shape: "circle"
     options:
       radius: 2.5
@@ -15,4 +15,3 @@ layers:
       - type: "rotate"
         speed: 45.0
         axis: "Y"
-
