@@ -10,6 +10,7 @@ import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
+import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierRotationImpl
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.bukkit.Location
@@ -31,6 +32,8 @@ class ParticleEffectImpl(
 
     private var job: Job? = null
     private var running = false
+    private val modifierRotation : ParticleModifierRotationImpl = ParticleModifierRotationImpl()
+
     override val startTime: Long = System.currentTimeMillis()
 
     /** Name of the effect template. */
@@ -127,7 +130,7 @@ class ParticleEffectImpl(
         for (modifier in modifiers) {
             when (modifier.type) {
                 ParticleModifierType.ROTATE -> {
-                    modifiedPoint = applyRotation(modifiedPoint, modifier, tickCount)
+                    modifiedPoint = modifierRotation.applyRotation(modifiedPoint, modifier, tickCount)
                 }
 
                 ParticleModifierType.WAVE -> {
@@ -162,31 +165,7 @@ class ParticleEffectImpl(
         return modifiedPoint
     }
 
-    private fun applyRotation(point: Vector, modifier: ParticleModifier, tickCount: Long): Vector {
-        val angle = tickCount * 0.05 * modifier.speed
 
-        return when (modifier.axis) {
-           ParticleAxisType.X  -> {
-                val y = point.y * cos(angle) - point.z * sin(angle)
-                val z = point.y * sin(angle) + point.z * cos(angle)
-                Vector(point.x, y, z)
-            }
-
-            ParticleAxisType.Y  -> {
-                val x = point.x * cos(angle) - point.z * sin(angle)
-                val z = point.x * sin(angle) + point.z * cos(angle)
-                Vector(x, point.y, z)
-            }
-
-            ParticleAxisType.Z  -> {
-                val x = point.x * cos(angle) - point.y * sin(angle)
-                val y = point.x * sin(angle) + point.y * cos(angle)
-                Vector(x, y, point.z)
-            }
-
-            else -> point
-        }
-    }
 
     private fun applyWave(point: Vector, modifier: ParticleModifier, tickCount: Long): Vector {
         val waveOffset = modifier.amplitude * sin(tickCount * modifier.frequency * 0.1 * modifier.speed)
