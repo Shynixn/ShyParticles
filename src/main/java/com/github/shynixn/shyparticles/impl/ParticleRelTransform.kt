@@ -34,100 +34,77 @@ object ParticleRelTransform {
         val yaw = Math.toRadians(baseLocation.yaw.toDouble())
         val pitch = Math.toRadians(baseLocation.pitch.toDouble())
 
-        // Calculate direction vectors based on the base location's orientation
-        val forwardX = -sin(yaw) * cos(pitch)
-        val forwardY = -sin(pitch)
-        val forwardZ = cos(yaw) * cos(pitch)
-
-        val rightX = -cos(yaw)
-        val rightY = 0.0
-        val rightZ = -sin(yaw)
-
-        val upX = sin(yaw) * sin(pitch)
-        val upY = cos(pitch)
-        val upZ = -cos(yaw) * sin(pitch)
-
-        return when (modifier.axis.uppercase()) {
+        // Calculate orbital motion (same as regular transform)
+        val orbitalVector = when (modifier.axis.uppercase()) {
             "X" -> {
-                // Relative orbit around X axis with directional offsets
-                val yOffset = modifier.y * cos(angle) +
-                             (modifier.forward * forwardY) +
-                             (modifier.sideward * rightY) +
-                             (modifier.updown * upY)
-                val zOffset = modifier.z * sin(angle) +
-                             (modifier.forward * forwardZ) +
-                             (modifier.sideward * rightZ) +
-                             (modifier.updown * upZ)
-                val xOffset = modifier.x +
-                             (modifier.forward * forwardX) +
-                             (modifier.sideward * rightX) +
-                             (modifier.updown * upX)
-                point.clone().add(Vector(xOffset, yOffset, zOffset))
+                // Orbit around X axis
+                val yOffset = modifier.y * cos(angle)
+                val zOffset = modifier.z * sin(angle)
+                Vector(modifier.x, yOffset, zOffset)
             }
             "Y" -> {
-                // Relative orbit around Y axis with directional offsets
-                val xOffset = modifier.x * cos(angle) +
-                             (modifier.forward * forwardX) +
-                             (modifier.sideward * rightX) +
-                             (modifier.updown * upX)
-                val zOffset = modifier.z * sin(angle) +
-                             (modifier.forward * forwardZ) +
-                             (modifier.sideward * rightZ) +
-                             (modifier.updown * upZ)
-                val yOffset = modifier.y +
-                             (modifier.forward * forwardY) +
-                             (modifier.sideward * rightY) +
-                             (modifier.updown * upY)
-                point.clone().add(Vector(xOffset, yOffset, zOffset))
+                // Orbit around Y axis
+                val xOffset = modifier.x * cos(angle)
+                val zOffset = modifier.z * sin(angle)
+                Vector(xOffset, modifier.y, zOffset)
             }
             "Z" -> {
-                // Relative orbit around Z axis with directional offsets
-                val xOffset = modifier.x * cos(angle) +
-                             (modifier.forward * forwardX) +
-                             (modifier.sideward * rightX) +
-                             (modifier.updown * upX)
-                val yOffset = modifier.y * sin(angle) +
-                             (modifier.forward * forwardY) +
-                             (modifier.sideward * rightY) +
-                             (modifier.updown * upY)
-                val zOffset = modifier.z +
-                             (modifier.forward * forwardZ) +
-                             (modifier.sideward * rightZ) +
-                             (modifier.updown * upZ)
-                point.clone().add(Vector(xOffset, yOffset, zOffset))
+                // Orbit around Z axis
+                val xOffset = modifier.x * cos(angle)
+                val yOffset = modifier.y * sin(angle)
+                Vector(xOffset, yOffset, modifier.z)
             }
             "ALL" -> {
-                // Complex relative orbital motion with directional offsets
-                val xOffset = modifier.x * cos(angle) +
-                             (modifier.forward * forwardX) +
-                             (modifier.sideward * rightX) +
-                             (modifier.updown * upX)
-                val yOffset = modifier.y * sin(angle * 1.3) +
-                             (modifier.forward * forwardY) +
-                             (modifier.sideward * rightY) +
-                             (modifier.updown * upY)
-                val zOffset = modifier.z * cos(angle * 0.7) +
-                             (modifier.forward * forwardZ) +
-                             (modifier.sideward * rightZ) +
-                             (modifier.updown * upZ)
-                point.clone().add(Vector(xOffset, yOffset, zOffset))
+                // Complex orbital motion using all three axes
+                val xOffset = modifier.x * cos(angle)
+                val yOffset = modifier.y * sin(angle * 1.3)
+                val zOffset = modifier.z * cos(angle * 0.7)
+                Vector(xOffset, yOffset, zOffset)
             }
-            else -> {
-                // Default: just apply directional offsets without orbital motion
-                val xOffset = modifier.x +
-                             (modifier.forward * forwardX) +
-                             (modifier.sideward * rightX) +
-                             (modifier.updown * upX)
-                val yOffset = modifier.y +
-                             (modifier.forward * forwardY) +
-                             (modifier.sideward * rightY) +
-                             (modifier.updown * upY)
-                val zOffset = modifier.z +
-                             (modifier.forward * forwardZ) +
-                             (modifier.sideward * rightZ) +
-                             (modifier.updown * upZ)
-                point.clone().add(Vector(xOffset, yOffset, zOffset))
-            }
+            else -> Vector(0.0, 0.0, 0.0)
         }
+
+        // Calculate relative directional offset with time-based oscillation
+        val relativeVector = Vector(
+            modifier.sideward * sin(angle),      // Oscillate left/right
+            modifier.updown * cos(angle * 1.1),  // Oscillate up/down with slightly different frequency
+            modifier.forward * cos(angle)        // Oscillate forward/backward
+        )
+
+        // Rotate both vectors by the base location's orientation
+        rotateVector(orbitalVector, yaw, pitch)
+        rotateVector(relativeVector, yaw, pitch)
+
+        // Combine orbital motion with relative offset and add to the original point
+        return point.clone().add(orbitalVector).add(relativeVector)
+    }
+
+    /**
+     * Rotates a vector by the given yaw and pitch angles.
+     * This applies the orientation transformation to align with the base location's direction.
+     *
+     * @param vector The vector to rotate (modified in place)
+     * @param yaw The yaw angle in radians
+     * @param pitch The pitch angle in radians
+     * @return The rotated vector (same instance)
+     */
+    private fun rotateVector(vector: Vector, yaw: Double, pitch: Double): Vector {
+        // First rotate around Y axis by yaw
+        val cosYaw = cos(yaw)
+        val sinYaw = sin(yaw)
+        val tempX = vector.x * cosYaw - vector.z * sinYaw
+        val tempZ = vector.x * sinYaw + vector.z * cosYaw
+
+        // Then rotate around X axis by pitch
+        val cosPitch = cos(pitch)
+        val sinPitch = sin(pitch)
+        val finalY = vector.y * cosPitch - tempZ * sinPitch
+        val finalZ = vector.y * sinPitch + tempZ * cosPitch
+
+        vector.x = tempX
+        vector.y = finalY
+        vector.z = finalZ
+
+        return vector
     }
 }
