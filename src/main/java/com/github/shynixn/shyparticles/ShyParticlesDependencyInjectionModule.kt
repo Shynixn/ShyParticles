@@ -50,7 +50,7 @@ class ShyParticlesDependencyInjectionModule(
             plugin,
             "effects",
             plugin.dataFolder.toPath().resolve("effects"),
-            emptyList(),
+            settings.defaultParticles,
             emptyList(),
             object : TypeReference<ParticleEffectMeta>() {}
         )

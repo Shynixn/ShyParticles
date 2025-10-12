@@ -194,7 +194,7 @@ class ShyParticlesCommandExecutor(
 
     private suspend fun listEffects(sender: CommandSender) {
         val effects = repository.getAll()
-        val effectList = effects.joinToString(", ")
+        val effectList = effects.sortedBy { e -> e.name }.joinToString(", ") { e -> e.name }
         sender.sendLanguageMessage(language.shyParticlesEffectListMessage, effectList)
     }
 
