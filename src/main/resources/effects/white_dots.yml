@@ -1,0 +1,16 @@
+# Simple white dots
+name: "white_dots"
+duration: 10
+repeat: true
+
+layers:
+  - particle: "SNOW_SHOVEL"
+    shape: "point"
+    options:
+      particleCount: 5
+      density: 1.0
+      speed: 0.1
+    modifiers:
+      - type: "random"
+        strength: 0.5
+

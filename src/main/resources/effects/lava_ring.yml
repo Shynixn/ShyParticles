@@ -1,0 +1,14 @@
+# Simple lava ring
+name: "lava_ring"
+duration: 10
+repeat: true
+
+layers:
+  - particle: "LAVA"
+    shape: "circle"
+    options:
+      radius: 1.8
+      particleCount: 18
+      density: 1.0
+      speed: 0.0
+

@@ -1,0 +1,18 @@
+# Simple electric ring
+name: "electric_ring"
+duration: 10
+repeat: true
+
+layers:
+  - particle: "CRIT_MAGIC"
+    shape: "circle"
+    options:
+      radius: 2.5
+      particleCount: 25
+      density: 1.0
+      speed: 0.0
+    modifiers:
+      - type: "rotate"
+        speed: 45.0
+        axis: "Y"
+

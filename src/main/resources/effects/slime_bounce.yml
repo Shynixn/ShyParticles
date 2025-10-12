@@ -1,0 +1,18 @@
+# Simple slime bounce
+name: "slime_bounce"
+duration: 8
+repeat: true
+
+layers:
+  - particle: "SLIME"
+    shape: "point"
+    options:
+      particleCount: 8
+      density: 1.0
+      speed: 0.2
+    modifiers:
+      - type: "pulse"
+        speed: 2.5
+        minScale: 0.7
+        maxScale: 1.3
+

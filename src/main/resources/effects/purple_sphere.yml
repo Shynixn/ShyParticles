@@ -1,0 +1,14 @@
+# Simple purple sphere
+name: "purple_sphere"
+duration: 10
+repeat: true
+
+layers:
+  - particle: "PORTAL"
+    shape: "sphere"
+    options:
+      radius: 1.5
+      particleCount: 30
+      density: 1.0
+      speed: 0.0
+

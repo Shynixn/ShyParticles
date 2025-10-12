@@ -1,0 +1,15 @@
+# Simple musical note trail
+name: "note_trail"
+duration: 12
+repeat: true
+
+layers:
+  - particle: "NOTE"
+    shape: "helix"
+    options:
+      radius: 1.0
+      height: 2.5
+      particleCount: 20
+      density: 1.0
+      speed: 0.0
+

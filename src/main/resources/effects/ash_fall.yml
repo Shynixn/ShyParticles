@@ -1,0 +1,15 @@
+# Simple ash fall
+name: "ash_fall"
+duration: 20
+repeat: true
+
+layers:
+  - particle: "TOWN_AURA"
+    shape: "sphere"
+    options:
+      radius: 2.5
+      particleCount: 25
+      density: 0.7
+      speed: 0.05
+      offsetY: 3.0
+

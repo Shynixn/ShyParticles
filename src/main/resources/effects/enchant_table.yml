@@ -1,0 +1,14 @@
+# Simple enchanting table effect
+name: "enchant_table"
+duration: 15
+repeat: true
+
+layers:
+  - particle: "ENCHANTMENT_TABLE"
+    shape: "circle"
+    options:
+      radius: 1.5
+      particleCount: 20
+      density: 1.0
+      speed: 0.0
+      offsetY: 1.0

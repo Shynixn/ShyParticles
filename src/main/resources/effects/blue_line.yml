@@ -1,0 +1,14 @@
+# Simple blue straight line
+name: "blue_line"
+duration: 10
+repeat: true
+
+layers:
+  - particle: "WATER_SPLASH"
+    shape: "line"
+    options:
+      length: 5.0
+      particleCount: 15
+      density: 1.0
+      speed: 0.0
+

@@ -1,0 +1,19 @@
+# Simple green spiral
+name: "green_spiral"
+duration: 15
+repeat: true
+
+layers:
+  - particle: "VILLAGER_HAPPY"
+    shape: "helix"
+    options:
+      radius: 1.5
+      height: 3.0
+      particleCount: 30
+      density: 1.0
+      speed: 0.0
+    modifiers:
+      - type: "rotate"
+        speed: 30.0
+        axis: "Y"
+
