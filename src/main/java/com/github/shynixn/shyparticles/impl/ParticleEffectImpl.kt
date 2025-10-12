@@ -94,15 +94,24 @@ class ParticleEffectImpl(
             ParticleShape.CIRCLE
         }
 
+        // Apply transform_absolute modifiers to the base location
+        var effectiveBaseLocation = baseLocation.clone()
+        for (modifier in layer.modifiers) {
+            if (modifier.type.lowercase() == "transform_absolute") {
+                val offset = applyTransformAbsolute(modifier, tickCount)
+                effectiveBaseLocation.add(offset)
+            }
+        }
+
         val points = generateShapePoints(shape, options, tickCount)
 
-        // Apply modifiers to each point
+        // Apply modifiers to each point (excluding transform_absolute)
         val modifiedPoints = points.map { point ->
             applyModifiers(point, layer.modifiers, tickCount, options)
         }
 
         for (point in modifiedPoints) {
-            val particleLocation = baseLocation.clone().add(point)
+            val particleLocation = effectiveBaseLocation.clone().add(point)
             spawnParticle(layer.particle, particleLocation, options, layer.modifiers, tickCount)
         }
     }
@@ -131,6 +140,9 @@ class ParticleEffectImpl(
                 }
                 "random" -> {
                     modifiedPoint = applyRandom(modifiedPoint, modifier)
+                }
+                "transform" -> {
+                    modifiedPoint = applyTransform(modifiedPoint, modifier, tickCount)
                 }
             }
         }
@@ -186,6 +198,49 @@ class ParticleEffectImpl(
         val randomY = (Math.random() - 0.5) * modifier.strength
         val randomZ = (Math.random() - 0.5) * modifier.strength
         return point.clone().add(Vector(randomX, randomY, randomZ))
+    }
+
+    private fun applyTransform(point: Vector, modifier: ParticleModifier, tickCount: Long): Vector {
+        val angle = tickCount * modifier.speed * 0.05
+
+        return when (modifier.axis.uppercase()) {
+            "X" -> {
+                // Orbit around X axis
+                val yOffset = modifier.y * cos(angle)
+                val zOffset = modifier.z * sin(angle)
+                point.clone().add(Vector(modifier.x, yOffset, zOffset))
+            }
+            "Y" -> {
+                // Orbit around Y axis
+                val xOffset = modifier.x * cos(angle)
+                val zOffset = modifier.z * sin(angle)
+                point.clone().add(Vector(xOffset, modifier.y, zOffset))
+            }
+            "Z" -> {
+                // Orbit around Z axis
+                val xOffset = modifier.x * cos(angle)
+                val yOffset = modifier.y * sin(angle)
+                point.clone().add(Vector(xOffset, yOffset, modifier.z))
+            }
+            "ALL" -> {
+                // Complex orbital motion using all three axes
+                val xOffset = modifier.x * cos(angle)
+                val yOffset = modifier.y * sin(angle * 1.3)
+                val zOffset = modifier.z * cos(angle * 0.7)
+                point.clone().add(Vector(xOffset, yOffset, zOffset))
+            }
+            else -> point
+        }
+    }
+
+    private fun applyTransformAbsolute(modifier: ParticleModifier, tickCount: Long): Vector {
+        // Calculate the absolute transform offset
+        val timeProgress = tickCount * modifier.speed * 0.05
+        return Vector(
+            modifier.x * timeProgress,
+            modifier.y * timeProgress,
+            modifier.z * timeProgress
+        )
     }
 
     private fun generateShapePoints(

@@ -1,0 +1,98 @@
+# Orbital Dance Effect - Demonstrates the transform modifier
+name: "orbital_dance"
+duration: 10
+repeat: true
+
+layers:
+  # Center point - stationary
+  - particle: "ENCHANT"
+    shape: "point"
+    options:
+      particleCount: 3
+      density: 1.0
+      speed: 0.0
+      offsetX: 0.0
+      offsetY: 1.5
+      offsetZ: 0.0
+      extra: 0.1
+
+  # Particles orbiting around Y axis (horizontal circle)
+  - particle: "REDSTONE"
+    shape: "point"
+    options:
+      particleCount: 1
+      density: 1.0
+      speed: 0.0
+      red: 255
+      green: 100
+      blue: 100
+      alpha: 255
+      scale: 1.0
+      extra: 0.0
+    modifiers:
+      - type: "transform"
+        axis: "Y"
+        x: 2.0      # Radius on X axis
+        y: 1.5      # Fixed Y position
+        z: 2.0      # Radius on Z axis
+        speed: 1.0
+
+  # Particles orbiting around X axis (vertical circle on YZ plane)
+  - particle: "REDSTONE"
+    shape: "point"
+    options:
+      particleCount: 1
+      density: 1.0
+      speed: 0.0
+      red: 100
+      green: 255
+      blue: 100
+      alpha: 255
+      scale: 1.0
+      extra: 0.0
+    modifiers:
+      - type: "transform"
+        axis: "X"
+        x: 0.0      # Fixed X position
+        y: 1.5      # Radius on Y axis
+        z: 1.5      # Radius on Z axis
+        speed: 1.5
+
+  # Particles orbiting around Z axis (vertical circle on XY plane)
+  - particle: "REDSTONE"
+    shape: "point"
+    options:
+      particleCount: 1
+      density: 1.0
+      speed: 0.0
+      red: 100
+      green: 100
+      blue: 255
+      alpha: 255
+      scale: 1.0
+      extra: 0.0
+    modifiers:
+      - type: "transform"
+        axis: "Z"
+        x: 1.5      # Radius on X axis
+        y: 1.5      # Radius on Y axis
+        z: 0.0      # Fixed Z position
+        speed: 2.0
+
+  # Complex orbital motion using ALL axes
+  - particle: "WITCH"
+    shape: "circle"
+    options:
+      radius: 0.5
+      particleCount: 8
+      density: 1.0
+      speed: 0.05
+      extra: 0.0
+    modifiers:
+      - type: "transform"
+        axis: "ALL"
+        x: 1.0      # X orbital radius
+        y: 2.0      # Y orbital radius
+        z: 1.5      # Z orbital radius
+        speed: 0.8
+

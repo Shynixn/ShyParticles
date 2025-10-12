@@ -1,0 +1,29 @@
+# Example effect demonstrating transform_absolute modifier
+# This creates a circle that moves in a linear direction
+name: "Moving Circle"
+duration: 10
+repeat: true
+
+layers:
+  - shape: "circle"
+    particle: "dust"
+    options:
+      radius: 1.0
+      particleCount: 20
+      density: 1.0
+      offsetX: 0.0
+      offsetY: 1.0
+      offsetZ: 0.0
+      red: 255
+      green: 100
+      blue: 100
+      alpha: 255
+      scale: 1.0
+    modifiers:
+      # This moves the entire circle effect forward (in Z direction)
+      - type: "transform_absolute"
+        x: 0.0
+        y: 0.0
+        z: 0.1  # Moves forward
+        speed: 1.0
+
