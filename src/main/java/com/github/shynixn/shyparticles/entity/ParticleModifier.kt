@@ -1,5 +1,6 @@
 package com.github.shynixn.shyparticles.entity
 
+import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 
 /**
@@ -19,7 +20,7 @@ class ParticleModifier {
     /**
      * Axis for rotation (X, Y, or Z).
      */
-    var axis: String = "Y"
+    var axis: ParticleAxisType = ParticleAxisType.Y
     
     /**
      * Fade time in seconds.

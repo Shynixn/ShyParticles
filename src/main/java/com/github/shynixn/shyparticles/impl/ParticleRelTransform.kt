@@ -1,6 +1,7 @@
 package com.github.shynixn.shyparticles.impl
 
 import com.github.shynixn.shyparticles.entity.ParticleModifier
+import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
 import org.bukkit.Location
 import org.bukkit.util.Vector
 import kotlin.math.cos
@@ -35,26 +36,26 @@ object ParticleRelTransform {
         val pitch = if (modifier.ignorePitch) 0.0 else Math.toRadians(baseLocation.pitch.toDouble())
 
         // Calculate orbital motion (same as regular transform)
-        val orbitalVector = when (modifier.axis.uppercase()) {
-            "X" -> {
+        val orbitalVector = when (modifier.axis) {
+            ParticleAxisType.X -> {
                 // Orbit around X axis
                 val yOffset = modifier.y * cos(angle)
                 val zOffset = modifier.z * sin(angle)
                 Vector(modifier.x, yOffset, zOffset)
             }
-            "Y" -> {
+            ParticleAxisType.Y -> {
                 // Orbit around Y axis
                 val xOffset = modifier.x * cos(angle)
                 val zOffset = modifier.z * sin(angle)
                 Vector(xOffset, modifier.y, zOffset)
             }
-            "Z" -> {
+            ParticleAxisType.Z -> {
                 // Orbit around Z axis
                 val xOffset = modifier.x * cos(angle)
                 val yOffset = modifier.y * sin(angle)
                 Vector(xOffset, yOffset, modifier.z)
             }
-            "ALL" -> {
+            ParticleAxisType.ALL -> {
                 // Complex orbital motion using all three axes
                 val xOffset = modifier.x * cos(angle)
                 val yOffset = modifier.y * sin(angle * 1.3)

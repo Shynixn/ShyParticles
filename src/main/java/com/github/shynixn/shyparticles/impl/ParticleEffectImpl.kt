@@ -7,6 +7,7 @@ import com.github.shynixn.shyparticles.contract.ParticleEffect
 import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
 import com.github.shynixn.shyparticles.entity.ParticleLayer
 import com.github.shynixn.shyparticles.entity.ParticleModifier
+import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
 import kotlinx.coroutines.Job
@@ -164,20 +165,20 @@ class ParticleEffectImpl(
     private fun applyRotation(point: Vector, modifier: ParticleModifier, tickCount: Long): Vector {
         val angle = tickCount * 0.05 * modifier.speed
 
-        return when (modifier.axis.uppercase()) {
-            "X" -> {
+        return when (modifier.axis) {
+           ParticleAxisType.X  -> {
                 val y = point.y * cos(angle) - point.z * sin(angle)
                 val z = point.y * sin(angle) + point.z * cos(angle)
                 Vector(point.x, y, z)
             }
 
-            "Y" -> {
+            ParticleAxisType.Y  -> {
                 val x = point.x * cos(angle) - point.z * sin(angle)
                 val z = point.x * sin(angle) + point.z * cos(angle)
                 Vector(x, point.y, z)
             }
 
-            "Z" -> {
+            ParticleAxisType.Z  -> {
                 val x = point.x * cos(angle) - point.y * sin(angle)
                 val y = point.x * sin(angle) + point.y * cos(angle)
                 Vector(x, y, point.z)
@@ -230,29 +231,29 @@ class ParticleEffectImpl(
     private fun applyTransform(point: Vector, modifier: ParticleModifier, tickCount: Long): Vector {
         val angle = tickCount * modifier.speed * 0.05
 
-        return when (modifier.axis.uppercase()) {
-            "X" -> {
+        return when (modifier.axis) {
+            ParticleAxisType.X  -> {
                 // Orbit around X axis
                 val yOffset = modifier.y * cos(angle)
                 val zOffset = modifier.z * sin(angle)
                 point.clone().add(Vector(modifier.x, yOffset, zOffset))
             }
 
-            "Y" -> {
+            ParticleAxisType.Y -> {
                 // Orbit around Y axis
                 val xOffset = modifier.x * cos(angle)
                 val zOffset = modifier.z * sin(angle)
                 point.clone().add(Vector(xOffset, modifier.y, zOffset))
             }
 
-            "Z" -> {
+            ParticleAxisType.Z  -> {
                 // Orbit around Z axis
                 val xOffset = modifier.x * cos(angle)
                 val yOffset = modifier.y * sin(angle)
                 point.clone().add(Vector(xOffset, yOffset, modifier.z))
             }
 
-            "ALL" -> {
+            ParticleAxisType.ALL -> {
                 // Complex orbital motion using all three axes
                 val xOffset = modifier.x * cos(angle)
                 val yOffset = modifier.y * sin(angle * 1.3)
