@@ -1,4 +1,4 @@
-package com.github.shynixn.shyparticles.impl
+package com.github.shynixn.shyparticles.impl.modifier
 
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import org.bukkit.Location
@@ -6,11 +6,7 @@ import org.bukkit.util.Vector
 import kotlin.math.cos
 import kotlin.math.sin
 
-/**
- * Utility class for particle-related calculations and transformations.
- */
-object ParticleUtils {
-
+class ParticleModifierRelativeTranslateAbsoluteImpl {
     /**
      * Applies relative transformation based on the base location's yaw and pitch.
      * This allows modifiers to work with relative directions (forward, sideward, updown)
@@ -53,19 +49,19 @@ object ParticleUtils {
 
         // Apply relative offsets using the calculated direction vectors
         val totalX = (modifier.x * timeProgress) +
-                    (modifier.forward * timeProgress * forwardX) +
-                    (modifier.sideward * timeProgress * rightX) +
-                    (modifier.updown * timeProgress * upX)
+                (modifier.forward * timeProgress * forwardX) +
+                (modifier.sideward * timeProgress * rightX) +
+                (modifier.updown * timeProgress * upX)
 
         val totalY = (modifier.y * timeProgress) +
-                    (modifier.forward * timeProgress * forwardY) +
-                    (modifier.sideward * timeProgress * rightY) +
-                    (modifier.updown * timeProgress * upY)
+                (modifier.forward * timeProgress * forwardY) +
+                (modifier.sideward * timeProgress * rightY) +
+                (modifier.updown * timeProgress * upY)
 
         val totalZ = (modifier.z * timeProgress) +
-                    (modifier.forward * timeProgress * forwardZ) +
-                    (modifier.sideward * timeProgress * rightZ) +
-                    (modifier.updown * timeProgress * upZ)
+                (modifier.forward * timeProgress * forwardZ) +
+                (modifier.sideward * timeProgress * rightZ) +
+                (modifier.updown * timeProgress * upZ)
 
         return Vector(totalX, totalY, totalZ)
     }

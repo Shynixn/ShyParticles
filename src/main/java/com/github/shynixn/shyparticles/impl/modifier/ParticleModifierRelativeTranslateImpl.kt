@@ -1,4 +1,4 @@
-package com.github.shynixn.shyparticles.impl
+package com.github.shynixn.shyparticles.impl.modifier
 
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
@@ -7,12 +7,7 @@ import org.bukkit.util.Vector
 import kotlin.math.cos
 import kotlin.math.sin
 
-/**
- * Utility class for relative particle transformations.
- * Provides transformation capabilities relative to a base location's orientation.
- */
-object ParticleRelTransform {
-
+class ParticleModifierRelativeTranslateImpl {
     /**
      * Applies relative transformation to a particle point based on the base location's yaw and pitch.
      * This is equivalent to the transform modifier but uses relative direction values.
