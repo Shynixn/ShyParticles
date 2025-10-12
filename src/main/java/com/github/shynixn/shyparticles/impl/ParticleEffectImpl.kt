@@ -18,6 +18,7 @@ import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierRotationImp
 import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierTranslateImpl
 import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierTranslateAbsoluteImpl
 import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierWaveImpl
+import com.github.shynixn.shyparticles.impl.shape.ParticleCircleShapeImpl
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.bukkit.Location
@@ -49,6 +50,8 @@ class ParticleEffectImpl(
     private val modifierRelativeTranslateAbsolute = ParticleModifierRelativeTranslateAbsoluteImpl()
     private val modifierRelativeTranslate = ParticleModifierRelativeTranslateImpl()
 
+    // Shapes
+    private val shapeCircle = ParticleCircleShapeImpl()
     override val startTime: Long = System.currentTimeMillis()
 
     /** Name of the effect template. */
@@ -197,12 +200,7 @@ class ParticleEffectImpl(
 
             when (shape) {
                 ParticleShapeType.CIRCLE -> {
-                    for (i in 0 until pointCount) {
-                        val angle = (2 * PI * i / pointCount) + (tickCount * 0.05)
-                        val x = options.radius * cos(angle) + options.offsetX
-                        val z = options.radius * sin(angle) + options.offsetZ
-                        yield(Vector(x, options.offsetY, z))
-                    }
+                    yieldAll(shapeCircle.circleShape(density, pointCount, tickCount, options))
                 }
 
                 ParticleShapeType.SPHERE -> {
