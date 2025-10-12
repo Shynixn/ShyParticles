@@ -148,6 +148,9 @@ class ParticleEffectImpl(
                 "transform" -> {
                     modifiedPoint = applyTransform(modifiedPoint, modifier, tickCount)
                 }
+                "reltransform" -> {
+                    modifiedPoint = ParticleRelTransform.applyRelativeTransform(modifiedPoint, modifier, tickCount, locationRef())
+                }
             }
         }
 
