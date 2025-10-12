@@ -10,6 +10,7 @@ import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
 import com.github.shynixn.shyparticles.impl.modifier.*
+import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierPulseImpl
 import com.github.shynixn.shyparticles.impl.shape.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -23,33 +24,37 @@ class ParticleEffectImpl(
     private val effectMeta: ParticleEffectMeta,
     val locationRef: () -> Location,
     override val player: Player?,
-    private val plugin: Plugin,
+    plugin: Plugin,
     private val packetService: PacketService
 ) : ParticleEffect {
+    companion object {
+        private val modifiers = mapOf(
+            ParticleModifierType.ROTATE to ParticleModifierRotationImpl(),
+            ParticleModifierType.PULSE to ParticleModifierPulseImpl(),
+            ParticleModifierType.RANDOM to ParticleModifierRandomImpl(),
+            ParticleModifierType.OFFSET to ParticleModifierOffsetImpl(),
+            ParticleModifierType.WAVE to ParticleModifierWaveImpl(),
+            ParticleModifierType.TRANSFORM to ParticleModifierTranslateImpl(),
+            ParticleModifierType.TRANSFORM_ABSOLUTE to ParticleModifierTranslateAbsoluteImpl(),
+            ParticleModifierType.RELATIVE_TRANSFORM to ParticleModifierRelativeTranslateImpl(),
+            ParticleModifierType.RELATIVE_TRANSFORM_ABSOLUTE to ParticleModifierRelativeTranslateAbsoluteImpl()
+        )
+        private val shapes = mapOf(
+            ParticleShapeType.CIRCLE to ParticleCircleShapeImpl(),
+            ParticleShapeType.CUBE to ParticleCubeShapeImpl(),
+            ParticleShapeType.HEART to ParticleHeartShapeImpl(),
+            ParticleShapeType.LINE to ParticleLineShapeImpl(),
+            ParticleShapeType.POINT to ParticlePointShapeImpl(),
+            ParticleShapeType.RANDOM to ParticleRandomShapeImpl(),
+            ParticleShapeType.RECTANGLE to ParticleRectangleShapeImpl(),
+            ParticleShapeType.SPHERE to ParticleSphereShapeImpl(),
+            ParticleShapeType.SPIRAL to ParticleSpiralShapeImpl(),
+            ParticleShapeType.STAR to ParticleStarShapeImpl(),
+        )
+    }
 
     private var job: Job? = null
     private var running = false
-    private val modifierRotation = ParticleModifierRotationImpl()
-    private val modifierPulse = ParticleModifierPulseImpl()
-    private val modifierRandom = ParticleModifierRandomImpl()
-    private val modifierOffSet = ParticleModifierOffsetImpl()
-    private val modifierWave = ParticleModifierWaveImpl()
-    private val modifierTranslate = ParticleModifierTranslateImpl()
-    private val modifierTranslateAbsolute = ParticleModifierTranslateAbsoluteImpl()
-    private val modifierRelativeTranslateAbsolute = ParticleModifierRelativeTranslateAbsoluteImpl()
-    private val modifierRelativeTranslate = ParticleModifierRelativeTranslateImpl()
-    private val shapes = mapOf(
-        ParticleShapeType.CIRCLE to ParticleCircleShapeImpl(),
-        ParticleShapeType.CUBE to ParticleCubeShapeImpl(),
-        ParticleShapeType.HEART to ParticleHeartShapeImpl(),
-        ParticleShapeType.LINE to ParticleLineShapeImpl(),
-        ParticleShapeType.POINT to ParticlePointShapeImpl(),
-        ParticleShapeType.RANDOM to ParticleRandomShapeImpl(),
-        ParticleShapeType.RECTANGLE to ParticleRectangleShapeImpl(),
-        ParticleShapeType.SPHERE to ParticleSphereShapeImpl(),
-        ParticleShapeType.SPIRAL to ParticleSpiralShapeImpl(),
-        ParticleShapeType.STAR to ParticleStarShapeImpl(),
-    )
     override val startTime: Long = System.currentTimeMillis()
 
     /** Name of the effect template. */
@@ -114,11 +119,20 @@ class ParticleEffectImpl(
         val effectiveBaseLocation = baseLocation.clone()
         for (modifier in layer.modifiers) {
             if (modifier.type == ParticleModifierType.TRANSFORM_ABSOLUTE) {
-                val offset = modifierTranslateAbsolute.applyTranslateAbsolute(modifier, tickCount)
+                val offset = modifiers[ParticleModifierType.TRANSFORM_ABSOLUTE]!!.apply(
+                    Vector(),
+                    modifier,
+                    tickCount,
+                    locationRef()
+                )
                 effectiveBaseLocation.add(offset)
             } else if (modifier.type == ParticleModifierType.RELATIVE_TRANSFORM_ABSOLUTE) {
-                val offset =
-                    modifierRelativeTranslateAbsolute.applyRelativeTransformAbsolute(modifier, tickCount, baseLocation)
+                val offset = modifiers[ParticleModifierType.RELATIVE_TRANSFORM_ABSOLUTE]!!.apply(
+                    Vector(),
+                    modifier,
+                    tickCount,
+                    locationRef()
+                )
                 effectiveBaseLocation.add(offset)
             }
         }
@@ -127,7 +141,7 @@ class ParticleEffectImpl(
 
         // Apply modifiers to each point (excluding transform_absolute)
         val modifiedPoints = points.map { point ->
-            applyModifiers(point, layer.modifiers, tickCount, options)
+            applyModifiers(point, layer.modifiers, tickCount)
         }
 
         for (point in modifiedPoints) {
@@ -138,54 +152,17 @@ class ParticleEffectImpl(
 
     private fun applyModifiers(
         point: Vector,
-        modifiers: List<ParticleModifier>,
+        modifierActions: List<ParticleModifier>,
         tickCount: Long,
-        options: com.github.shynixn.shyparticles.entity.ParticleOptions
     ): Vector {
         var modifiedPoint = point.clone()
-
-        for (modifier in modifiers) {
-            when (modifier.type) {
-                ParticleModifierType.ROTATE -> {
-                    modifiedPoint = modifierRotation.applyRotation(modifiedPoint, modifier, tickCount)
-                }
-
-                ParticleModifierType.WAVE -> {
-                    modifiedPoint = modifierWave.applyWave(modifiedPoint, modifier, tickCount)
-                }
-
-                ParticleModifierType.PULSE -> {
-                    modifiedPoint = modifierPulse.applyPulse(modifiedPoint, modifier, tickCount)
-                }
-
-                ParticleModifierType.OFFSET -> {
-                    modifiedPoint = modifierOffSet.applyOffset(modifiedPoint, modifier, tickCount)
-                }
-
-                ParticleModifierType.RANDOM -> {
-                    modifiedPoint = modifierRandom.applyRandom(modifiedPoint, modifier)
-                }
-
-                ParticleModifierType.TRANSFORM -> {
-                    modifiedPoint = modifierTranslate.applyTranslate(modifiedPoint, modifier, tickCount)
-                }
-
-                ParticleModifierType.RELATIVE_TRANSFORM -> {
-                    modifiedPoint = modifierRelativeTranslate.applyRelativeTransform(
-                        modifiedPoint,
-                        modifier,
-                        tickCount,
-                        locationRef()
-                    )
-                }
-
-                else -> {}
-            }
+        val location = locationRef()
+        for (modifier in modifierActions) {
+            modifiedPoint = modifiers[modifier.type]!!.apply(modifiedPoint, modifier, tickCount, location)
         }
 
         return modifiedPoint
     }
-
 
     private fun generateShapePoints(
         shapeType: ParticleShapeType,

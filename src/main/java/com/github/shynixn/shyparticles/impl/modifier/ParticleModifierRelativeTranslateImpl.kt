@@ -1,5 +1,6 @@
 package com.github.shynixn.shyparticles.impl.modifier
 
+import com.github.shynixn.shyparticles.contract.ParticleModifier as ParticleModifierContract
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
 import org.bukkit.Location
@@ -7,18 +8,8 @@ import org.bukkit.util.Vector
 import kotlin.math.cos
 import kotlin.math.sin
 
-class ParticleModifierRelativeTranslateImpl {
-    /**
-     * Applies relative transformation to a particle point based on the base location's yaw and pitch.
-     * This is equivalent to the transform modifier but uses relative direction values.
-     *
-     * @param point The original particle point
-     * @param modifier The particle modifier containing transformation parameters
-     * @param tickCount Current tick count for time-based calculations
-     * @param baseLocation The base location with yaw and pitch orientation
-     * @return Vector representing the transformed particle point
-     */
-    fun applyRelativeTransform(
+class ParticleModifierRelativeTranslateImpl : ParticleModifierContract {
+    override fun apply(
         point: Vector,
         modifier: ParticleModifier,
         tickCount: Long,
