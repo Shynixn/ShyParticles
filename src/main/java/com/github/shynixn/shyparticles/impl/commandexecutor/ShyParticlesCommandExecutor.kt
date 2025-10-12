@@ -166,6 +166,13 @@ class ShyParticlesCommandExecutor(
                         }
                     }
             }
+            subCommand("playPlayer") {
+                toolTip { language.shyParticlesPlayCommandHint.text }
+                builder().argument("effect").validator(effectMustExist)
+                    .tabs(effectTabs).executePlayer(senderHasToBePlayer) { player, effectMeta ->
+                        playPlayerEffect(player, effectMeta, player)
+                    }
+            }
             subCommand("list") {
                 permission(settings.listPermission)
                 toolTip { language.shyParticlesListCommandHint.text }
@@ -185,6 +192,11 @@ class ShyParticlesCommandExecutor(
                 }
             }.helpCommand()
         }.build()
+    }
+
+    private fun playPlayerEffect(sender: CommandSender, effectMeta: ParticleEffectMeta, player : Player) {
+        val sessionId = particleService.startEffect(effectMeta, { player.location })
+        sender.sendLanguageMessage(language.shyParticlesEffectPlayMessage, effectMeta.name, sessionId)
     }
 
     private fun playEffect(sender: CommandSender, effectMeta: ParticleEffectMeta, location: Location) {
