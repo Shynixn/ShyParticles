@@ -5,7 +5,7 @@ repeat: true
 
 layers:
   - particle: "RAIN"
-    shape: "cylinder"
+    shape: "SPHERE"
     options:
       radius: 2.0
       height: 3.0

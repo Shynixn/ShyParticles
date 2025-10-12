@@ -5,7 +5,7 @@ repeat: true
 
 layers:
   - particle: "SPLASH"
-    shape: "line"
+    shape: "LINE"
     options:
       length: 5.0
       particleCount: 15

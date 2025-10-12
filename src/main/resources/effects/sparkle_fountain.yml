@@ -6,30 +6,30 @@ repeat: false
 layers:
   # Main fountain stream
   - particle: "SPLASH"
-    shape: "line"
+    shape: "LINE"
     options:
       height: 4.0
       particleCount: 8
       density: 1.0
       speed: 0.1
     modifiers:
-      - type: "wave"
+      - type: "WAVE"
         amplitude: 0.3
         frequency: 3.0
         axis: "X"
-      - type: "random"
+      - type: "RANDOM"
         strength: 0.2
         
   # Sparkles at the top
   - particle: "ENCHANT"
-    shape: "sphere"
+    shape: "SPHERE"
     options:
       radius: 1.0
       particleCount: 5
       density: 0.5
       offsetY: 4.0
     modifiers:
-      - type: "random"
+      - type: "RANDOM"
         strength: 0.5
 
 sounds:

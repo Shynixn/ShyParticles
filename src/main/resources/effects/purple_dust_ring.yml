@@ -4,18 +4,19 @@ duration: 10
 repeat: true
 # Simple red circle using DUST particles with red color
 layers:
-  - particle: "dust"
-    shape: "circle"
+  - particle: "DUST"
+    shape: "CIRCLE"
     options:
-      radius: 2.5
-      particleCount: 30
+      radius: 2.0
+      particleCount: 20
       density: 1.0
       speed: 0.0
       red: 128
       green: 0
-      blue: 128
-      scale: 1.8
+      blue: 255
+      alpha: 255
+      scale: 1.5
     modifiers:
-      - type: "rotate"
-        speed: 45.0
+      - type: "ROTATE"
+        speed: 30.0
         axis: "Y"

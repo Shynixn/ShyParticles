@@ -5,7 +5,7 @@ repeat: false
 
 layers:
   - particle: "SMOKE"
-    shape: "sphere"
+    shape: "SPHERE"
     options:
       radius: 1.0
       particleCount: 20

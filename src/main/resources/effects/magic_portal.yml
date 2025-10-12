@@ -6,23 +6,23 @@ repeat: true
 layers:
   # Outer ring
   - particle: "PORTAL"
-    shape: "circle"
+    shape: "CIRCLE"
     options:
       radius: 3.0
       particleCount: 20
       density: 1.0
     modifiers:
-      - type: "rotate"
+      - type: "ROTATE"
         speed: 45.0
         axis: "Y"
-      - type: "wave"
+      - type: "WAVE"
         amplitude: 0.5
         frequency: 2.0
         axis: "Y"
         
   # Inner spiral
   - particle: "WITCH"
-    shape: "spiral"
+    shape: "SPIRAL"
     options:
       radius: 1.5
       height: 2.0
@@ -30,17 +30,17 @@ layers:
       density: 0.7
       particleCount: 2
     modifiers:
-      - type: "rotate"
+      - type: "ROTATE"
         speed: -60.0  # counter-clockwise
         axis: "Y"
         
   # Center sparkles
   - particle: "ENCHANT"
-    shape: "sphere"
+    shape: "SPHERE"
     options:
       radius: 0.8
       particleCount: 5
       density: 0.3
     modifiers:
-      - type: "random"
+      - type: "RANDOM"
         strength: 0.4

@@ -6,38 +6,38 @@ repeat: false
 layers:
   # Stem growing up
   - particle: "HAPPY_VILLAGER"
-    shape: "line"
+    shape: "LINE"
     options:
       height: 2.0
       particleCount: 6
       density: 0.8
       speed: 0.05
     modifiers:
-      - type: "offset"
+      - type: "OFFSET"
         x: 0.05
         y: 0.0
         z: 0.05
         
   # Petals blooming
   - particle: "HEART"
-    shape: "circle"
+    shape: "CIRCLE"
     options:
       radius: 1.0
       particleCount: 8
       density: 1.0
       offsetY: 2.0
     modifiers:
-      - type: "pulse"
+      - type: "PULSE"
         speed: 1.5
         minScale: 0.5
         maxScale: 1.2
-      - type: "rotate"
+      - type: "ROTATE"
         speed: 10.0
         axis: "Y"
         
   # Pollen effect
   - particle: "FALLING_DUST"
-    shape: "random"
+    shape: "RANDOM"
     options:
       radius: 1.5
       particleCount: 3
@@ -45,5 +45,5 @@ layers:
       offsetY: 2.5
       speed: 0.02
     modifiers:
-      - type: "random"
+      - type: "RANDOM"
         strength: 0.4

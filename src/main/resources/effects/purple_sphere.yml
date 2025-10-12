@@ -5,10 +5,9 @@ repeat: true
 
 layers:
   - particle: "PORTAL"
-    shape: "sphere"
+    shape: "SPHERE"
     options:
       radius: 1.5
       particleCount: 30
       density: 1.0
       speed: 0.0
-

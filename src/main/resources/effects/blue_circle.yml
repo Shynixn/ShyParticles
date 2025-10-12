@@ -5,7 +5,7 @@ repeat: true
 
 layers:
   - particle: "dust"
-    shape: "circle"
+    shape: "CIRCLE"
     options:
       radius: 2.0
       particleCount: 20

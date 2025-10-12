@@ -11,7 +11,7 @@ repeat: true
 layers:
   # Fire spiral layer
   - particle: "flame"
-    shape: "spiral"
+    shape: "SPIRAL"
     options:
       radius: 1.2
       height: 6.0
@@ -19,17 +19,17 @@ layers:
       density: 0.8
       particleCount: 3
     modifiers:
-      - type: "rotate"
+      - type: "ROTATE"
         speed: 30.0  # degrees per second
         axis: "Y"
-      - type: "offset"
+      - type: "OFFSET"
         x: 0.1
         y: 0.0
         z: 0.1
         
   # Smoke spiral layer  
   - particle: "cloud"
-    shape: "spiral"
+    shape: "SPIRAL"
     options:
       radius: 1.5
       height: 6.0
@@ -37,14 +37,14 @@ layers:
       density: 0.6
       particleCount: 2
     modifiers:
-      - type: "rotate"
+      - type: "ROTATE"
         speed: 15.0  # degrees per second
         axis: "Y"
-      - type: "fade"
+      - type: "FADE"
         fadeTime: 3.0  # seconds
         startAlpha: 1.0
         endAlpha: 0.0
-      - type: "offset"
+      - type: "OFFSET"
         x: 0.2
         y: 0.0
         z: 0.2

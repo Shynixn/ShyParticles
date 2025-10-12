@@ -5,10 +5,9 @@ repeat: true
 
 layers:
   - particle: "LAVA"
-    shape: "circle"
+    shape: "CIRCLE"
     options:
       radius: 1.8
       particleCount: 18
       density: 1.0
       speed: 0.0
-

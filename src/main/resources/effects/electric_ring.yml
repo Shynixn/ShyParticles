@@ -5,13 +5,13 @@ repeat: true
 
 layers:
   - particle: "ENCHANTED_HIT"
-    shape: "circle"
+    shape: "CIRCLE"
     options:
       radius: 2.5
       particleCount: 25
       density: 1.0
       speed: 0.0
     modifiers:
-      - type: "rotate"
+      - type: "ROTATE"
         speed: 45.0
         axis: "Y"

@@ -6,7 +6,7 @@ repeat: true
 layers:
   # Center point - stationary
   - particle: "ENCHANT"
-    shape: "point"
+    shape: "POINT"
     options:
       particleCount: 3
       density: 1.0
@@ -18,7 +18,7 @@ layers:
 
   # Particles orbiting around Y axis (horizontal circle)
   - particle: "REDSTONE"
-    shape: "point"
+    shape: "POINT"
     options:
       particleCount: 1
       density: 1.0
@@ -30,7 +30,7 @@ layers:
       scale: 1.0
       extra: 0.0
     modifiers:
-      - type: "transform"
+      - type: "TRANSFORM"
         axis: "Y"
         x: 2.0      # Radius on X axis
         y: 1.5      # Fixed Y position
@@ -39,7 +39,7 @@ layers:
 
   # Particles orbiting around X axis (vertical circle on YZ plane)
   - particle: "REDSTONE"
-    shape: "point"
+    shape: "POINT"
     options:
       particleCount: 1
       density: 1.0
@@ -51,7 +51,7 @@ layers:
       scale: 1.0
       extra: 0.0
     modifiers:
-      - type: "transform"
+      - type: "TRANSFORM"
         axis: "X"
         x: 0.0      # Fixed X position
         y: 1.5      # Radius on Y axis
@@ -60,7 +60,7 @@ layers:
 
   # Particles orbiting around Z axis (vertical circle on XY plane)
   - particle: "REDSTONE"
-    shape: "point"
+    shape: "POINT"
     options:
       particleCount: 1
       density: 1.0
@@ -72,7 +72,7 @@ layers:
       scale: 1.0
       extra: 0.0
     modifiers:
-      - type: "transform"
+      - type: "TRANSFORM"
         axis: "Z"
         x: 1.5      # Radius on X axis
         y: 1.5      # Radius on Y axis
@@ -81,7 +81,7 @@ layers:
 
   # Complex orbital motion using ALL axes
   - particle: "WITCH"
-    shape: "circle"
+    shape: "CIRCLE"
     options:
       radius: 0.5
       particleCount: 8
@@ -89,10 +89,9 @@ layers:
       speed: 0.05
       extra: 0.0
     modifiers:
-      - type: "transform"
+      - type: "TRANSFORM"
         axis: "ALL"
         x: 1.0      # X orbital radius
         y: 2.0      # Y orbital radius
         z: 1.5      # Z orbital radius
         speed: 0.8
-

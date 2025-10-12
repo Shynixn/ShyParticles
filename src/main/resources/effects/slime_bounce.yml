@@ -5,13 +5,13 @@ repeat: true
 
 layers:
   - particle: "ITEM_SLIME"
-    shape: "point"
+    shape: "POINT"
     options:
       particleCount: 8
       density: 1.0
       speed: 0.2
     modifiers:
-      - type: "pulse"
+      - type: "PULSE"
         speed: 2.5
         minScale: 0.7
         maxScale: 1.3

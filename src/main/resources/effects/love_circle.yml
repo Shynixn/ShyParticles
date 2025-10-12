@@ -5,13 +5,13 @@ repeat: false
 
 layers:
   - particle: "HEART"
-    shape: "circle"
+    shape: "CIRCLE"
     options:
       radius: 2.0
       particleCount: 12
       density: 1.0
     modifiers:
-      - type: "pulse"
+      - type: "PULSE"
         speed: 2.0  # pulses per second
         minScale: 0.8
         maxScale: 1.2

@@ -6,7 +6,7 @@ repeat: false
 layers:
   # Main explosion
   - particle: "EXPLOSION"
-    shape: "point"
+    shape: "POINT"
     options:
       particleCount: 1
       density: 1.0
@@ -14,30 +14,30 @@ layers:
     
   # Smoke trails
   - particle: "LARGE_SMOKE"
-    shape: "sphere"
+    shape: "SPHERE"
     options:
       radius: 2.0
       particleCount: 15
       density: 0.8
       speed: 0.1
     modifiers:
-      - type: "fade"
+      - type: "FADE"
         fadeTime: 2.0
         startAlpha: 1.0
         endAlpha: 0.0
-      - type: "random"
+      - type: "RANDOM"
         strength: 0.6
         
   # Sparks flying out
   - particle: "LAVA"
-    shape: "sphere"
+    shape: "SPHERE"
     options:
       radius: 1.5
       particleCount: 20
       density: 0.6
       speed: 0.2
     modifiers:
-      - type: "random"
+      - type: "RANDOM"
         strength: 0.8
 
 sounds:

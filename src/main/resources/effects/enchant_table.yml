@@ -5,7 +5,7 @@ repeat: true
 
 layers:
   - particle: "ENCHANT"
-    shape: "circle"
+    shape: "CIRCLE"
     options:
       radius: 1.5
       particleCount: 20

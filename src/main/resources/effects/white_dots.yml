@@ -5,11 +5,11 @@ repeat: true
 
 layers:
   - particle: "SNOWFLAKE"
-    shape: "point"
+    shape: "POINT"
     options:
       particleCount: 5
       density: 1.0
       speed: 0.1
     modifiers:
-      - type: "random"
+      - type: "RANDOM"
         strength: 0.5
