@@ -21,7 +21,7 @@ class ShyParticlesSettings(private val reloadFun: (ShyParticlesSettings) -> Unit
 
     var defaultParticles: List<Pair<String, String>> = listOf(
         "effects/blue_line.yml" to "blue_line.yml",
-        "effects/red_circle.yml" to "red_circle.yml",
+        "effects/blue_circle.yml" to "blue_circle.yml",
     )
 
     /**

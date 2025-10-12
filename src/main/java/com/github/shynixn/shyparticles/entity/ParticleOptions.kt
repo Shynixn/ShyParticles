@@ -1,8 +1,5 @@
 package com.github.shynixn.shyparticles.entity
 
-import org.bukkit.Material
-import org.bukkit.inventory.ItemStack
-
 /**
  * Options for particle shapes and display.
  */
