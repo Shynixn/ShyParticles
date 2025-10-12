@@ -88,4 +88,10 @@ class ParticleModifier {
      * Up/down offset relative to the pitch direction.
      */
     var updown: Double = 0.0
+
+    /**
+     * Whether to ignore pitch when applying transformations.
+     * If true, only yaw rotation will be applied.
+     */
+    var ignorePitch: Boolean = false
 }

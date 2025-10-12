@@ -32,7 +32,7 @@ object ParticleRelTransform {
 
         // Get yaw and pitch from the base location in radians
         val yaw = Math.toRadians(baseLocation.yaw.toDouble())
-        val pitch = Math.toRadians(baseLocation.pitch.toDouble())
+        val pitch = if (modifier.ignorePitch) 0.0 else Math.toRadians(baseLocation.pitch.toDouble())
 
         // Calculate orbital motion (same as regular transform)
         val orbitalVector = when (modifier.axis.uppercase()) {

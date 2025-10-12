@@ -31,7 +31,7 @@ object ParticleUtils {
 
         // Get yaw and pitch from the base location in radians
         val yaw = Math.toRadians(baseLocation.yaw.toDouble())
-        val pitch = Math.toRadians(baseLocation.pitch.toDouble())
+        val pitch = if (modifier.ignorePitch) 0.0 else Math.toRadians(baseLocation.pitch.toDouble())
 
         // Calculate forward vector (direction the location is facing)
         // In Minecraft: -sin(yaw) for X, -sin(pitch) for Y, cos(yaw) for Z
