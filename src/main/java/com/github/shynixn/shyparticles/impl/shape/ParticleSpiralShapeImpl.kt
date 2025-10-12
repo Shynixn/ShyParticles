@@ -1,13 +1,14 @@
 package com.github.shynixn.shyparticles.impl.shape
 
+import com.github.shynixn.shyparticles.contract.ParticleShape
 import com.github.shynixn.shyparticles.entity.ParticleOptions
 import org.bukkit.util.Vector
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-class ParticleSpiralShapeImpl {
-    fun spiralShape(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
+class ParticleSpiralShapeImpl : ParticleShape {
+    override fun apply(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
         return sequence {
             val totalPoints = pointCount * options.turns
             for (i in 0 until totalPoints) {
@@ -21,4 +22,3 @@ class ParticleSpiralShapeImpl {
         }
     }
 }
-

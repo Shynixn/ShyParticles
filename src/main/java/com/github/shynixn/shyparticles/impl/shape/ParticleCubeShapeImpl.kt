@@ -1,10 +1,11 @@
 package com.github.shynixn.shyparticles.impl.shape
 
+import com.github.shynixn.shyparticles.contract.ParticleShape
 import com.github.shynixn.shyparticles.entity.ParticleOptions
 import org.bukkit.util.Vector
 
-class ParticleCubeShapeImpl {
-    fun cubeShape(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
+class ParticleCubeShapeImpl : ParticleShape {
+    override fun apply(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
         return sequence {
             val pointsPerEdge = (pointCount / 12.0).toInt().coerceAtLeast(1)
             // Bottom face edges
@@ -18,4 +19,3 @@ class ParticleCubeShapeImpl {
         }
     }
 }
-

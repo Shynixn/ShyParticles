@@ -9,34 +9,14 @@ import com.github.shynixn.shyparticles.entity.ParticleLayer
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
-import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierOffsetImpl
-import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierPulseImpl
-import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierRandomImpl
-import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierRelativeTranslateAbsoluteImpl
-import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierRelativeTranslateImpl
-import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierRotationImpl
-import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierTranslateImpl
-import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierTranslateAbsoluteImpl
-import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierWaveImpl
-import com.github.shynixn.shyparticles.impl.shape.ParticleCircleShapeImpl
-import com.github.shynixn.shyparticles.impl.shape.ParticleCubeShapeImpl
-import com.github.shynixn.shyparticles.impl.shape.ParticleHeartShapeImpl
-import com.github.shynixn.shyparticles.impl.shape.ParticleLineShapeImpl
-import com.github.shynixn.shyparticles.impl.shape.ParticleRandomShapeImpl
-import com.github.shynixn.shyparticles.impl.shape.ParticleSphereShapeImpl
-import com.github.shynixn.shyparticles.impl.shape.ParticleSpiralShapeImpl
-import com.github.shynixn.shyparticles.impl.shape.ParticleStarShapeImpl
-import com.github.shynixn.shyparticles.impl.shape.ParticlePointShapeImpl
-import com.github.shynixn.shyparticles.impl.shape.ParticleRectangleShapeImpl
+import com.github.shynixn.shyparticles.impl.modifier.*
+import com.github.shynixn.shyparticles.impl.shape.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.util.Vector
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
 
 class ParticleEffectImpl(
     override val id: String,
@@ -58,18 +38,18 @@ class ParticleEffectImpl(
     private val modifierTranslateAbsolute = ParticleModifierTranslateAbsoluteImpl()
     private val modifierRelativeTranslateAbsolute = ParticleModifierRelativeTranslateAbsoluteImpl()
     private val modifierRelativeTranslate = ParticleModifierRelativeTranslateImpl()
-
-    // Shapes
-    private val shapeCircle = ParticleCircleShapeImpl()
-    private val shapeSphere = ParticleSphereShapeImpl()
-    private val shapeSpiral = ParticleSpiralShapeImpl()
-    private val shapeLine = ParticleLineShapeImpl()
-    private val shapeRectangle = ParticleRectangleShapeImpl()
-    private val shapeCube = ParticleCubeShapeImpl()
-    private val shapeHeart = ParticleHeartShapeImpl()
-    private val shapeStar = ParticleStarShapeImpl()
-    private val shapePoint = ParticlePointShapeImpl()
-    private val shapeRandom = ParticleRandomShapeImpl()
+    private val shapes = mapOf(
+        ParticleShapeType.CIRCLE to ParticleCircleShapeImpl(),
+        ParticleShapeType.CUBE to ParticleCubeShapeImpl(),
+        ParticleShapeType.HEART to ParticleHeartShapeImpl(),
+        ParticleShapeType.LINE to ParticleLineShapeImpl(),
+        ParticleShapeType.POINT to ParticlePointShapeImpl(),
+        ParticleShapeType.RANDOM to ParticleRandomShapeImpl(),
+        ParticleShapeType.RECTANGLE to ParticleRectangleShapeImpl(),
+        ParticleShapeType.SPHERE to ParticleSphereShapeImpl(),
+        ParticleShapeType.SPIRAL to ParticleSpiralShapeImpl(),
+        ParticleShapeType.STAR to ParticleStarShapeImpl(),
+    )
     override val startTime: Long = System.currentTimeMillis()
 
     /** Name of the effect template. */
@@ -208,55 +188,15 @@ class ParticleEffectImpl(
 
 
     private fun generateShapePoints(
-        shape: ParticleShapeType,
+        shapeType: ParticleShapeType,
         options: com.github.shynixn.shyparticles.entity.ParticleOptions,
         tickCount: Long
     ): Sequence<Vector> {
         return sequence {
             val density = options.density.coerceIn(0.1, 1.0)
             val pointCount = (options.particleCount * density).toInt().coerceAtLeast(1)
-
-            when (shape) {
-                ParticleShapeType.CIRCLE -> {
-                    yieldAll(shapeCircle.circleShape(density, pointCount, tickCount, options))
-                }
-
-                ParticleShapeType.SPHERE -> {
-                    yieldAll(shapeSphere.sphereShape(density, pointCount, tickCount, options))
-                }
-
-                ParticleShapeType.SPIRAL -> {
-                    yieldAll(shapeSpiral.spiralShape(density, pointCount, tickCount, options))
-                }
-
-                ParticleShapeType.LINE -> {
-                    yieldAll(shapeLine.lineShape(density, pointCount, tickCount, options))
-                }
-
-                ParticleShapeType.RECTANGLE -> {
-                    yieldAll(shapeRectangle.rectangleShape(density, pointCount, tickCount, options))
-                }
-
-                ParticleShapeType.CUBE -> {
-                    yieldAll(shapeCube.cubeShape(density, pointCount, tickCount, options))
-                }
-
-                ParticleShapeType.HEART -> {
-                    yieldAll(shapeHeart.heartShape(density, pointCount, tickCount, options))
-                }
-
-                ParticleShapeType.STAR -> {
-                    yieldAll(shapeStar.starShape(density, pointCount, tickCount, options))
-                }
-
-                ParticleShapeType.POINT -> {
-                    yieldAll(shapePoint.pointShape(density, pointCount, tickCount, options))
-                }
-
-                ParticleShapeType.RANDOM -> {
-                    yieldAll(shapeRandom.randomShape(density, pointCount, tickCount, options))
-                }
-            }
+            val shape = shapes[shapeType]!!
+            yieldAll(shape.apply(density, pointCount, tickCount, options))
         }
     }
 
