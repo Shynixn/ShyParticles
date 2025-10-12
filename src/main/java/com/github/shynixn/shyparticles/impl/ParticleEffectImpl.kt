@@ -101,6 +101,10 @@ class ParticleEffectImpl(
                 val offset = applyTransformAbsolute(modifier, tickCount)
                 effectiveBaseLocation.add(offset)
             }
+            else if (modifier.type.lowercase() == "reltransform_absolute") {
+                val offset = ParticleUtils.applyRelativeTransformAbsolute(modifier, tickCount, baseLocation)
+                effectiveBaseLocation.add(offset)
+            }
         }
 
         val points = generateShapePoints(shape, options, tickCount)

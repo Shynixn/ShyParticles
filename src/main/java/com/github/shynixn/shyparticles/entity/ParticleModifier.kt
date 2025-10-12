@@ -73,4 +73,19 @@ class ParticleModifier {
      * Z offset for offset modifiers.
      */
     var z: Double = 0.0
+
+    /**
+     * Forward offset relative to the yaw direction.
+     */
+    var forward: Double = 0.0
+
+    /**
+     * Sideward offset relative to the yaw direction (left/right).
+     */
+    var sideward: Double = 0.0
+
+    /**
+     * Up/down offset relative to the pitch direction.
+     */
+    var updown: Double = 0.0
 }
