@@ -4,7 +4,7 @@ shyParticlesPlayerNotFoundMessage:
   # Please notice that some messages do only support chat.
   type: "CHAT"
   # The primary text to be sent.
-  text: "[&9ShyCommandSigns&f] &cPlayer %shycommandsigns_param_1% not found."
+  text: "[&9ShyParticles&f] &cPlayer %shyparticles_param_1% not found."
   # Only available for type "TITLE". Adds a subTitle.
   subTitle: ""
   # Only available for type: "TITLE". Adds a fade in effect.
@@ -39,7 +39,7 @@ shyParticlesEffectNotFoundMessage:
   text: "[&9ShyParticles&f] &cParticle effect %shyparticles_param_1% not found."
 shyParticlesEffectPlayMessage:
   type: "CHAT"
-  text: "[&9ShyParticles&f] Playing particle effect %shyparticles_param_1%."
+  text: "[&9ShyParticles&f] Playing particle effect %shyparticles_param_1% with session %shyparticles_param_2%."
 shyParticlesEffectStopMessage:
   type: "CHAT"
   text: "[&9ShyParticles&f] Stopped particle effect %shyparticles_param_1%."
@@ -58,3 +58,9 @@ shyParticlesStopCommandHint:
 shyParticlesListCommandHint:
   type: "CHAT"
   text: "Lists all available particle effects."
+shyParticlesCoordinateValueMessage:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] &cThe value %shyparticles_param_1% has to be a number with the following supported formats: 2, 2.0, -3.0, ~2.2 ~-2.3"
+shyParticlesWorldNotFoundMessage:
+  type: "CHAT"
+  text: "[&9ShyParticles&f] &cWorld %shyparticles_param_1% not found."

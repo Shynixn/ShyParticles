@@ -1,32 +1,45 @@
 package com.github.shynixn.shyparticles.enumeration
 
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
+import org.bukkit.entity.Player
+import org.bukkit.plugin.Plugin
+import java.util.*
 
 /**
  * PlaceHolder enumeration for ShyParticles.
  */
-enum class PlaceHolder(val fullPlaceHolder: String) {
-    /**
-     * Player name placeholder.
-     */
-    PLAYER_NAME("shyparticles_player_name"),
-    
-    /**
-     * Parameter placeholder.
-     */
-    PARAM_1("shyparticles_param_1"),
-    PARAM_2("shyparticles_param_2"),
-    PARAM_3("shyparticles_param_3");
-    
+enum class PlaceHolder(
+    val text: String,
+    val f: ((Player?, Map<String, Any>) -> String?),
+) {
+    PLAYER_NAME("player_name", { p, _ -> p?.name }),
+    PARAM_1("param_1", { _, context ->
+        val item = context["0"] as String?
+        item
+    }),
+    PARAM_2("param_2", { _, context ->
+        val item = context["1"] as String?
+        item
+    })
+    ;
+
+    fun getFullPlaceHolder(plugin: Plugin): String {
+        return "%${plugin.name.lowercase(Locale.ENGLISH)}_${text}%"
+    }
+
     companion object {
         /**
-         * Registers all placeholders.
+         * Registers all placeHolder. Overrides previously registered placeholders.
          */
         fun registerAll(
-            plugin: Any,
-            placeHolderService: PlaceHolderService
+            plugin: Plugin,
+            placeHolderService: PlaceHolderService,
         ) {
-            // Register placeholders here if needed
+            for (placeHolder in PlaceHolder.values()) {
+                placeHolderService.register(placeHolder.getFullPlaceHolder(plugin)) { player, context ->
+                    placeHolder.f.invoke(player, context)
+                }
+            }
         }
     }
 }

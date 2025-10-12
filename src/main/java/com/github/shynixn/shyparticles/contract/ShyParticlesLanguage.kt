@@ -35,4 +35,8 @@ interface ShyParticlesLanguage : LanguageProvider {
   var shyParticlesStopCommandHint: LanguageItem
 
   var shyParticlesListCommandHint: LanguageItem
+
+  var shyParticlesCoordinateValueMessage: LanguageItem
+
+  var shyParticlesWorldNotFoundMessage: LanguageItem
 }

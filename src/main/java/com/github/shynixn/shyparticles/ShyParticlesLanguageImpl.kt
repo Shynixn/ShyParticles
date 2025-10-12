@@ -24,7 +24,7 @@ class ShyParticlesLanguageImpl : ShyParticlesLanguage {
 
  override var shyParticlesEffectNotFoundMessage = LanguageItem("[&9ShyParticles&f] &cParticle effect %shyparticles_param_1% not found.")
 
- override var shyParticlesEffectPlayMessage = LanguageItem("[&9ShyParticles&f] Playing particle effect %shyparticles_param_1%.")
+ override var shyParticlesEffectPlayMessage = LanguageItem("[&9ShyParticles&f] Playing particle effect %shyparticles_param_1% with session %shyparticles_param_2%.")
 
  override var shyParticlesEffectStopMessage = LanguageItem("[&9ShyParticles&f] Stopped particle effect %shyparticles_param_1%.")
 
@@ -37,4 +37,8 @@ class ShyParticlesLanguageImpl : ShyParticlesLanguage {
  override var shyParticlesStopCommandHint = LanguageItem("Stops a running particle effect.")
 
  override var shyParticlesListCommandHint = LanguageItem("Lists all available particle effects.")
+
+ override var shyParticlesCoordinateValueMessage = LanguageItem("[&9ShyParticles&f] &cThe value %shyparticles_param_1% has to be a number with the following supported formats: 2, 2.0, -3.0, ~2.2 ~-2.3")
+
+ override var shyParticlesWorldNotFoundMessage = LanguageItem("[&9ShyParticles&f] &cWorld %shyparticles_param_1% not found.")
 }

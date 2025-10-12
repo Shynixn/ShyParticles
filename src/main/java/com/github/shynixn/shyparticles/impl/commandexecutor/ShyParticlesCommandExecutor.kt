@@ -14,13 +14,12 @@ import com.github.shynixn.shyparticles.contract.ParticleEffectService
 import com.github.shynixn.shyparticles.contract.ShyParticlesLanguage
 import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
 import com.github.shynixn.shyparticles.entity.ShyParticlesSettings
-import com.github.shynixn.shyparticles.enumeration.Permission
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.World
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import org.bukkit.plugin.Plugin
-import java.util.UUID
+import java.util.*
 
 class ShyParticlesCommandExecutor(
     private val settings: ShyParticlesSettings,
@@ -31,9 +30,9 @@ class ShyParticlesCommandExecutor(
     private val repository: CacheRepository<ParticleEffectMeta>,
     private val placeHolderService: PlaceHolderService
 ) {
-    
+
     private val senderHasToBePlayer: () -> String = {
-        language.commandSenderHasToBePlayer.text
+        language.shyParticlesCommandSenderHasToBePlayer.text
     }
 
     private val effectTabs: (CommandSender) -> List<String> = {
@@ -49,9 +48,52 @@ class ShyParticlesCommandExecutor(
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
             return placeHolderService.resolvePlaceHolder(
-                language.effectNotFoundMessage.text,
+                language.shyParticlesEffectNotFoundMessage.text,
                 sender as? Player,
-                mapOf("shyparticles_param_1" to openArgs[0])
+                mapOf("0" to openArgs[0])
+            )
+        }
+    }
+
+    private val worldMustExist = object : Validator<World> {
+        override suspend fun transform(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): World? {
+            try {
+                return Bukkit.getWorld(openArgs[0])
+            } catch (e: Exception) {
+                return null
+            }
+        }
+
+        override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
+            return placeHolderService.resolvePlaceHolder(
+                language.shyParticlesWorldNotFoundMessage.text,
+                sender as? Player,
+                mapOf("0" to openArgs[0])
+            )
+        }
+    }
+
+    private val coordinateValue = object : Validator<String> {
+        override suspend fun transform(
+            sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>
+        ): String? {
+            val value = openArgs[0]
+            if (value.toDoubleOrNull() != null) {
+                return value
+            }
+
+            if (value.startsWith("~") && value.substring(1).toDoubleOrNull() != null) {
+                return value
+            }
+
+            return null
+        }
+
+        override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
+            return placeHolderService.resolvePlaceHolder(
+                language.shyParticlesCoordinateValueMessage.text,
+                sender as? Player,
+                mapOf("0" to openArgs[0])
             )
         }
     }
@@ -79,146 +121,81 @@ class ShyParticlesCommandExecutor(
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
             return placeHolderService.resolvePlaceHolder(
-                language.playerNotFoundMessage.text,
+                language.shyParticlesPlayerNotFoundMessage.text,
                 sender as? Player,
-                mapOf("shyparticles_param_1" to openArgs[0])
+                mapOf("0" to openArgs[0])
             )
         }
     }
 
-    private val coordinateValidator = object : Validator<Double> {
-        override suspend fun transform(
-            sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>
-        ): Double? {
-            return try {
-                openArgs[0].toDouble()
-            } catch (e: NumberFormatException) {
-                null
-            }
-        }
-
-        override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return language.invalidLocation.text
-        }
-    }
-
     init {
-        CommandBuilder(plugin, "shyparticles", chatMessageService) {
-            usage(language.commandUsage.text)
-            description(language.commandDescription.text)
-            aliases(listOf("sparticles", "sp"))
-            permission(Permission.COMMAND.permission)
-            permissionMessage(language.noPermissionCommand.text)
-            
+        CommandBuilder(plugin, settings.baseCommand, chatMessageService) {
+            usage(language.shyParticlesCommandUsage.text)
+            description(language.shyParticlesCommandDescription.text)
+            aliases(settings.commandAliases)
+            permission(settings.commandPermission)
+            permissionMessage(language.shyParticlesNoPermissionCommand.text)
             subCommand("play") {
-                permission(Permission.PLAY.permission)
-                toolTip { language.playCommandHint.text }
+                toolTip { language.shyParticlesPlayCommandHint.text }
                 builder().argument("effect").validator(effectMustExist)
                     .tabs(effectTabs).executePlayer(senderHasToBePlayer) { player, effectMeta ->
-                        plugin.launch {
-                            playEffect(player, effectMeta, player.location)
-                        }
-                    }.argument("x").validator(coordinateValidator)
-                    .argument("y").validator(coordinateValidator)
-                    .argument("z").validator(coordinateValidator)
-                    .executePlayer(senderHasToBePlayer) { player, effectMeta, x, y, z ->
-                        plugin.launch {
-                            val world = player.world
-                            val location = Location(world, x, y, z)
-                            playEffect(player, effectMeta, location)
+                        playEffect(player, effectMeta, player.location)
+                    }.argument("x").validator(coordinateValue)
+                    .executePlayer(senderHasToBePlayer) { player, effectMeta, xRaw ->
+                        val location = player.location.clone()
+                        setXRaw(location, xRaw)
+                        playEffect(player, effectMeta, location)
+                    }.argument("y").validator(coordinateValue)
+                    .executePlayer(senderHasToBePlayer) { player, effectMeta, xRaw, yRaw ->
+                        val location = player.location.clone()
+                        setXRaw(location, xRaw)
+                        setYRaw(location, yRaw)
+                        playEffect(player, effectMeta, location)
+                    }.argument("z").validator(coordinateValue)
+                    .executePlayer(senderHasToBePlayer) { player, effectMeta, xRaw, yRaw, zRaw ->
+                        val location = player.location.clone()
+                        setXRaw(location, xRaw)
+                        setYRaw(location, yRaw)
+                        setZRaw(location, zRaw)
+                        playEffect(player, effectMeta, location)
+                    }.argument("world").validator(worldMustExist)
+                    .execute { sender, effectMeta, xRaw, yRaw, zRaw, world ->
+                        if (xRaw.toDoubleOrNull() != null && yRaw.toDoubleOrNull() != null && zRaw.toDoubleOrNull() != null) {
+                            val location = Location(world, xRaw.toDouble(), yRaw.toDouble(), zRaw.toDouble())
+                            playEffect(sender, effectMeta, location)
                         }
                     }
             }
-            
-            subCommand("stop") {
-                permission(Permission.STOP.permission)
-                toolTip { language.stopCommandHint.text }
-                builder().argument("effectId").tabs({ listOf("all", "[effectId]") })
-                    .execute { sender, effectId ->
-                        plugin.launch {
-                            stopEffect(sender, effectId)
-                        }
-                    }
-            }
-            
             subCommand("list") {
-                permission(Permission.COMMAND.permission)
-                toolTip { language.listCommandHint.text }
+                permission(settings.listPermission)
+                toolTip { language.shyParticlesListCommandHint.text }
                 builder().execute { sender ->
-                    plugin.launch {
-                        listEffects(sender)
-                    }
+                    listEffects(sender)
                 }
             }
-            
             subCommand("reload") {
-                permission(Permission.RELOAD.permission)
-                toolTip { language.reloadCommandHint.text }
+                permission(settings.reloadPermission)
+                toolTip { language.shyParticlesReloadCommandHint.text }
                 builder().execute { sender ->
-                    plugin.launch {
-                        reloadEffects(sender)
-                    }
-                }
-            }
-            
-            subCommand("create") {
-                permission(Permission.CREATE.permission)
-                toolTip { language.createCommandHint.text }
-                builder().argument("name").execute { sender, name ->
-                    plugin.launch {
-                        createEffect(sender, name)
-                    }
+                    plugin.saveDefaultConfig()
+                    plugin.reloadConfig()
+                    plugin.reloadTranslation(language)
+                    particleService.reload()
+                    sender.sendLanguageMessage(language.shyParticlesReloadMessage)
                 }
             }.helpCommand()
         }.build()
     }
 
-    private suspend fun playEffect(sender: CommandSender, effectMeta: ParticleEffectMeta, location: Location) {
-        val success = particleService.playEffect(effectMeta.name, location, sender as? Player)
-        if (success) {
-            sender.sendLanguageMessage(language.effectPlayMessage, effectMeta.name)
-        } else {
-            sender.sendLanguageMessage(language.maxEffectsReached)
-        }
-    }
-
-    private suspend fun stopEffect(sender: CommandSender, effectId: String) {
-        if (effectId == "all") {
-            val stopped = particleService.stopAllEffects(sender as? Player)
-            if (stopped > 0) {
-                sender.sendLanguageMessage(language.effectStopAllMessage)
-            } else {
-                chatMessageService.sendChatMessage("&cNo effects to stop.", sender)
-            }
-        } else {
-            val success = particleService.stopEffect(effectId)
-            if (success) {
-                sender.sendLanguageMessage(language.effectStopMessage, effectId)
-            } else {
-                chatMessageService.sendChatMessage("&cEffect not found or already stopped.", sender)
-            }
-        }
+    private fun playEffect(sender: CommandSender, effectMeta: ParticleEffectMeta, location: Location) {
+        val sessionId = particleService.startEffect(effectMeta, { location })
+        sender.sendLanguageMessage(language.shyParticlesEffectPlayMessage, effectMeta.name, sessionId)
     }
 
     private suspend fun listEffects(sender: CommandSender) {
-        val effects = particleService.getAvailableEffects()
-        if (effects.isEmpty()) {
-            chatMessageService.sendChatMessage("&cNo particle effects available.", sender)
-        } else {
-            val effectList = effects.joinToString(", ")
-            sender.sendLanguageMessage(language.effectListMessage, effectList)
-        }
-    }
-
-    private suspend fun reloadEffects(sender: CommandSender) {
-        particleService.reload()
-        (plugin as Plugin).reloadTranslation(language)
-        sender.sendLanguageMessage(language.reloadMessage)
-    }
-
-    private suspend fun createEffect(sender: CommandSender, name: String) {
-        chatMessageService.sendChatMessage("&eParticle effect creation via commands is not yet implemented.", sender)
-        chatMessageService.sendChatMessage("&eCreate effects by adding YAML files to the /plugins/ShyParticles/effects/ folder.", sender)
+        val effects = repository.getAll()
+        val effectList = effects.joinToString(", ")
+        sender.sendLanguageMessage(language.shyParticlesEffectListMessage, effectList)
     }
 
     private fun CommandSender.sendLanguageMessage(languageItem: LanguageItem, vararg args: String) {
@@ -227,5 +204,28 @@ class ShyParticlesCommandExecutor(
             chatMessageService.sendLanguageMessage(sender, languageItem, *args)
         }
     }
-}
+
+    private fun setXRaw(location: Location, raw: String) {
+        if (raw.startsWith("~")) {
+            location.x += raw.substring(1).toDouble()
+        } else {
+            location.x = raw.toDouble()
+        }
+    }
+
+    private fun setYRaw(location: Location, raw: String) {
+        if (raw.startsWith("~")) {
+            location.y += raw.substring(1).toDouble()
+        } else {
+            location.y = raw.toDouble()
+        }
+    }
+
+    private fun setZRaw(location: Location, raw: String) {
+        if (raw.startsWith("~")) {
+            location.z += raw.substring(1).toDouble()
+        } else {
+            location.z = raw.toDouble()
+        }
+    }
 }

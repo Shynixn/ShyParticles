@@ -15,9 +15,14 @@ enum class Permission(val text: String) {
     RELOAD("shyparticles.reload"),
 
     /**
+     * Permission to list particle effects.
+     */
+    LIST("shyparticles.list"),
+
+    /**
      * Permission to play particle effects.
      */
-    PLAY("shyparticles.play"),
+    PLAY_DYNAMIC("shyparticles.play."),
     
     /**
      * Permission to stop particle effects.

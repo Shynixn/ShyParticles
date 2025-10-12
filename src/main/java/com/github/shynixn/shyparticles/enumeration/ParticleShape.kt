@@ -3,63 +3,54 @@ package com.github.shynixn.shyparticles.enumeration
 /**
  * Supported particle shapes.
  */
-enum class ParticleShape(val shapeName: String) {
+enum class ParticleShape {
     /**
      * Circular arrangement of particles.
      */
-    CIRCLE("circle"),
+    CIRCLE,
     
     /**
      * Spherical arrangement of particles.
      */
-    SPHERE("sphere"),
+    SPHERE,
     
     /**
      * Spiral arrangement of particles.
      */
-    SPIRAL("spiral"),
+    SPIRAL,
     
     /**
      * Line arrangement of particles.
      */
-    LINE("line"),
+    LINE,
     
     /**
      * Rectangle arrangement of particles.
      */
-    RECTANGLE("rectangle"),
+    RECTANGLE,
     
     /**
      * Cube arrangement of particles.
      */
-    CUBE("cube"),
+    CUBE,
     
     /**
      * Random arrangement of particles.
      */
-    RANDOM("random"),
+    RANDOM,
     
     /**
      * Single point particle.
      */
-    POINT("point"),
+    POINT,
     
     /**
      * Heart shape arrangement.
      */
-    HEART("heart"),
+    HEART,
     
     /**
      * Star shape arrangement.
      */
-    STAR("star");
-    
-    companion object {
-        /**
-         * Gets a shape by name.
-         */
-        fun fromName(name: String): ParticleShape? {
-            return values().find { it.shapeName.equals(name, ignoreCase = true) }
-        }
-    }
+    STAR;
 }

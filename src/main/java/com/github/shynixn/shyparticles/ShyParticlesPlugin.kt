@@ -98,9 +98,6 @@ class ShyParticlesPlugin : JavaPlugin(), CoroutinePlugin {
             return
         }
 
-        // Register Plugin Channel
-        server.messenger.registerOutgoingPluginChannel(this, "BungeeCord")
-
         // Register Language
         val language = ShyParticlesLanguageImpl()
         reloadTranslation(language)
