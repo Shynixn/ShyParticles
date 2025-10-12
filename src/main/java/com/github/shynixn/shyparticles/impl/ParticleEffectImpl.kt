@@ -6,6 +6,7 @@ import com.github.shynixn.mcutils.packet.api.packet.PacketOutParticle
 import com.github.shynixn.shyparticles.contract.ParticleEffect
 import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
 import com.github.shynixn.shyparticles.entity.ParticleLayer
+import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.enumeration.ParticleShape
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -95,10 +96,96 @@ class ParticleEffectImpl(
 
         val points = generateShapePoints(shape, options, tickCount)
 
-        for (point in points) {
-            val particleLocation = baseLocation.clone().add(point)
-            spawnParticle(layer.particle, particleLocation, options)
+        // Apply modifiers to each point
+        val modifiedPoints = points.map { point ->
+            applyModifiers(point, layer.modifiers, tickCount, options)
         }
+
+        for (point in modifiedPoints) {
+            val particleLocation = baseLocation.clone().add(point)
+            spawnParticle(layer.particle, particleLocation, options, layer.modifiers, tickCount)
+        }
+    }
+
+    private fun applyModifiers(
+        point: Vector,
+        modifiers: List<ParticleModifier>,
+        tickCount: Long,
+        options: com.github.shynixn.shyparticles.entity.ParticleOptions
+    ): Vector {
+        var modifiedPoint = point.clone()
+
+        for (modifier in modifiers) {
+            when (modifier.type.lowercase()) {
+                "rotate" -> {
+                    modifiedPoint = applyRotation(modifiedPoint, modifier, tickCount)
+                }
+                "wave" -> {
+                    modifiedPoint = applyWave(modifiedPoint, modifier, tickCount)
+                }
+                "pulse" -> {
+                    modifiedPoint = applyPulse(modifiedPoint, modifier, tickCount)
+                }
+                "offset" -> {
+                    modifiedPoint = applyOffset(modifiedPoint, modifier, tickCount)
+                }
+                "random" -> {
+                    modifiedPoint = applyRandom(modifiedPoint, modifier)
+                }
+            }
+        }
+
+        return modifiedPoint
+    }
+
+    private fun applyRotation(point: Vector, modifier: ParticleModifier, tickCount: Long): Vector {
+        val angle = tickCount * 0.05 * modifier.speed
+
+        return when (modifier.axis.uppercase()) {
+            "X" -> {
+                val y = point.y * cos(angle) - point.z * sin(angle)
+                val z = point.y * sin(angle) + point.z * cos(angle)
+                Vector(point.x, y, z)
+            }
+            "Y" -> {
+                val x = point.x * cos(angle) - point.z * sin(angle)
+                val z = point.x * sin(angle) + point.z * cos(angle)
+                Vector(x, point.y, z)
+            }
+            "Z" -> {
+                val x = point.x * cos(angle) - point.y * sin(angle)
+                val y = point.x * sin(angle) + point.y * cos(angle)
+                Vector(x, y, point.z)
+            }
+            else -> point
+        }
+    }
+
+    private fun applyWave(point: Vector, modifier: ParticleModifier, tickCount: Long): Vector {
+        val waveOffset = modifier.amplitude * sin(tickCount * modifier.frequency * 0.1 * modifier.speed)
+        return point.clone().add(Vector(0.0, waveOffset, 0.0))
+    }
+
+    private fun applyPulse(point: Vector, modifier: ParticleModifier, tickCount: Long): Vector {
+        val pulseValue = sin(tickCount * modifier.speed * 0.1)
+        val scale = modifier.minScale + (modifier.maxScale - modifier.minScale) * (pulseValue + 1) / 2
+        return point.clone().multiply(scale)
+    }
+
+    private fun applyOffset(point: Vector, modifier: ParticleModifier, tickCount: Long): Vector {
+        val timeProgress = tickCount * modifier.speed * 0.05
+        return point.clone().add(Vector(
+            modifier.x * timeProgress,
+            modifier.y * timeProgress,
+            modifier.z * timeProgress
+        ))
+    }
+
+    private fun applyRandom(point: Vector, modifier: ParticleModifier): Vector {
+        val randomX = (Math.random() - 0.5) * modifier.strength
+        val randomY = (Math.random() - 0.5) * modifier.strength
+        val randomZ = (Math.random() - 0.5) * modifier.strength
+        return point.clone().add(Vector(randomX, randomY, randomZ))
     }
 
     private fun generateShapePoints(
@@ -234,19 +321,30 @@ class ParticleEffectImpl(
     private fun spawnParticle(
         particleName: String,
         location: Location,
-        options: com.github.shynixn.shyparticles.entity.ParticleOptions
+        options: com.github.shynixn.shyparticles.entity.ParticleOptions,
+        modifiers: List<ParticleModifier> = emptyList(),
+        tickCount: Long = 0
     ) {
+        // Calculate fade modifier effect on alpha if present
+        var effectiveAlpha = options.alpha
+        for (modifier in modifiers) {
+            if (modifier.type.lowercase() == "fade") {
+                val fadeProgress = (tickCount * 0.05 / modifier.fadeTime).coerceIn(0.0, 1.0)
+                effectiveAlpha = (modifier.startAlpha + (modifier.endAlpha - modifier.startAlpha) * fadeProgress * 255).toInt()
+            }
+        }
+
         val packet = PacketOutParticle(
             name = particleName,
             location = location,
-            offset = Vector(0.1, 0.1, 0.1),  // Small offset for particle spread
+            offset = Vector(options.extra, options.extra, options.extra),  // Use extra for particle spread
             speed = options.speed,
             count = 1,
             // Color properties for DUST, ENTITY_EFFECT, DUST_COLOR_TRANSITION
             fromRed = options.red,
             fromGreen = options.green,
             fromBlue = options.blue,
-            fromAlpha = options.alpha,
+            fromAlpha = effectiveAlpha,
             toRed = options.toRed,
             toGreen = options.toGreen,
             toBlue = options.toBlue,
