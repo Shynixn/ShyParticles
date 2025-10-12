@@ -1,5 +1,7 @@
 package com.github.shynixn.shyparticles.entity
 
+import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
+
 /**
  * Represents a layer of particles in an effect.
  */
@@ -12,7 +14,7 @@ class ParticleLayer {
     /**
      * Shape of the particle arrangement.
      */
-    var shape: String = "circle"
+    var shape: ParticleShapeType = ParticleShapeType.CIRCLE
     
     /**
      * Options for the shape and particle display.

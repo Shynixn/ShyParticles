@@ -3,7 +3,7 @@ package com.github.shynixn.shyparticles.enumeration
 /**
  * Supported particle shapes.
  */
-enum class ParticleShape {
+enum class ParticleShapeType {
     /**
      * Circular arrangement of particles.
      */

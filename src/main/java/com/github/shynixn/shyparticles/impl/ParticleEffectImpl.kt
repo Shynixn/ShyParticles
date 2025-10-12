@@ -7,7 +7,8 @@ import com.github.shynixn.shyparticles.contract.ParticleEffect
 import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
 import com.github.shynixn.shyparticles.entity.ParticleLayer
 import com.github.shynixn.shyparticles.entity.ParticleModifier
-import com.github.shynixn.shyparticles.enumeration.ParticleShape
+import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
+import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.bukkit.Location
@@ -88,26 +89,20 @@ class ParticleEffectImpl(
 
     private fun renderLayer(layer: ParticleLayer, baseLocation: Location, tickCount: Long) {
         val options = layer.options
-        val shape = try {
-            ParticleShape.valueOf(layer.shape.uppercase())
-        } catch (e: Exception) {
-            ParticleShape.CIRCLE
-        }
 
         // Apply transform_absolute modifiers to the base location
-        var effectiveBaseLocation = baseLocation.clone()
+        val effectiveBaseLocation = baseLocation.clone()
         for (modifier in layer.modifiers) {
-            if (modifier.type.lowercase() == "transform_absolute") {
+            if (modifier.type == ParticleModifierType.TRANSFORM_ABSOLUTE) {
                 val offset = applyTransformAbsolute(modifier, tickCount)
                 effectiveBaseLocation.add(offset)
-            }
-            else if (modifier.type.lowercase() == "reltransform_absolute") {
+            } else if (modifier.type == ParticleModifierType.RELATIVE_TRANSFORM_ABSOLUTE) {
                 val offset = ParticleUtils.applyRelativeTransformAbsolute(modifier, tickCount, baseLocation)
                 effectiveBaseLocation.add(offset)
             }
         }
 
-        val points = generateShapePoints(shape, options, tickCount)
+        val points = generateShapePoints(layer.shape, options, tickCount)
 
         // Apply modifiers to each point (excluding transform_absolute)
         val modifiedPoints = points.map { point ->
@@ -129,28 +124,37 @@ class ParticleEffectImpl(
         var modifiedPoint = point.clone()
 
         for (modifier in modifiers) {
-            when (modifier.type.lowercase()) {
-                "rotate" -> {
+            when (modifier.type) {
+                ParticleModifierType.ROTATE -> {
                     modifiedPoint = applyRotation(modifiedPoint, modifier, tickCount)
                 }
-                "wave" -> {
+
+                ParticleModifierType.WAVE -> {
                     modifiedPoint = applyWave(modifiedPoint, modifier, tickCount)
                 }
-                "pulse" -> {
+
+                ParticleModifierType.PULSE -> {
                     modifiedPoint = applyPulse(modifiedPoint, modifier, tickCount)
                 }
-                "offset" -> {
+
+                ParticleModifierType.OFFSET -> {
                     modifiedPoint = applyOffset(modifiedPoint, modifier, tickCount)
                 }
-                "random" -> {
+
+                ParticleModifierType.RANDOM -> {
                     modifiedPoint = applyRandom(modifiedPoint, modifier)
                 }
-                "transform" -> {
+
+                ParticleModifierType.TRANSFORM -> {
                     modifiedPoint = applyTransform(modifiedPoint, modifier, tickCount)
                 }
-                "reltransform" -> {
-                    modifiedPoint = ParticleRelTransform.applyRelativeTransform(modifiedPoint, modifier, tickCount, locationRef())
+
+                ParticleModifierType.RELATIVE_TRANSFORM -> {
+                    modifiedPoint =
+                        ParticleRelTransform.applyRelativeTransform(modifiedPoint, modifier, tickCount, locationRef())
                 }
+
+                else -> {}
             }
         }
 
@@ -166,16 +170,19 @@ class ParticleEffectImpl(
                 val z = point.y * sin(angle) + point.z * cos(angle)
                 Vector(point.x, y, z)
             }
+
             "Y" -> {
                 val x = point.x * cos(angle) - point.z * sin(angle)
                 val z = point.x * sin(angle) + point.z * cos(angle)
                 Vector(x, point.y, z)
             }
+
             "Z" -> {
                 val x = point.x * cos(angle) - point.y * sin(angle)
                 val y = point.x * sin(angle) + point.y * cos(angle)
                 Vector(x, y, point.z)
             }
+
             else -> point
         }
     }
@@ -193,11 +200,24 @@ class ParticleEffectImpl(
 
     private fun applyOffset(point: Vector, modifier: ParticleModifier, tickCount: Long): Vector {
         val timeProgress = tickCount * modifier.speed * 0.05
-        return point.clone().add(Vector(
+        return point.clone().add(
+            Vector(
+                modifier.x * timeProgress,
+                modifier.y * timeProgress,
+                modifier.z * timeProgress
+            )
+        )
+    }
+
+
+    private fun applyTransformAbsolute(modifier: ParticleModifier, tickCount: Long): Vector {
+        // Calculate the absolute transform offset
+        val timeProgress = tickCount * modifier.speed * 0.05
+        return Vector(
             modifier.x * timeProgress,
             modifier.y * timeProgress,
             modifier.z * timeProgress
-        ))
+        )
     }
 
     private fun applyRandom(point: Vector, modifier: ParticleModifier): Vector {
@@ -217,18 +237,21 @@ class ParticleEffectImpl(
                 val zOffset = modifier.z * sin(angle)
                 point.clone().add(Vector(modifier.x, yOffset, zOffset))
             }
+
             "Y" -> {
                 // Orbit around Y axis
                 val xOffset = modifier.x * cos(angle)
                 val zOffset = modifier.z * sin(angle)
                 point.clone().add(Vector(xOffset, modifier.y, zOffset))
             }
+
             "Z" -> {
                 // Orbit around Z axis
                 val xOffset = modifier.x * cos(angle)
                 val yOffset = modifier.y * sin(angle)
                 point.clone().add(Vector(xOffset, yOffset, modifier.z))
             }
+
             "ALL" -> {
                 // Complex orbital motion using all three axes
                 val xOffset = modifier.x * cos(angle)
@@ -236,22 +259,13 @@ class ParticleEffectImpl(
                 val zOffset = modifier.z * cos(angle * 0.7)
                 point.clone().add(Vector(xOffset, yOffset, zOffset))
             }
+
             else -> point
         }
     }
 
-    private fun applyTransformAbsolute(modifier: ParticleModifier, tickCount: Long): Vector {
-        // Calculate the absolute transform offset
-        val timeProgress = tickCount * modifier.speed * 0.05
-        return Vector(
-            modifier.x * timeProgress,
-            modifier.y * timeProgress,
-            modifier.z * timeProgress
-        )
-    }
-
     private fun generateShapePoints(
-        shape: ParticleShape,
+        shape: ParticleShapeType,
         options: com.github.shynixn.shyparticles.entity.ParticleOptions,
         tickCount: Long
     ): List<Vector> {
@@ -260,7 +274,7 @@ class ParticleEffectImpl(
         val pointCount = (options.particleCount * density).toInt().coerceAtLeast(1)
 
         when (shape) {
-            ParticleShape.CIRCLE -> {
+            ParticleShapeType.CIRCLE -> {
                 for (i in 0 until pointCount) {
                     val angle = (2 * PI * i / pointCount) + (tickCount * 0.05)
                     val x = options.radius * cos(angle) + options.offsetX
@@ -269,7 +283,7 @@ class ParticleEffectImpl(
                 }
             }
 
-            ParticleShape.SPHERE -> {
+            ParticleShapeType.SPHERE -> {
                 val phiSteps = (pointCount * 0.5).toInt().coerceAtLeast(2)
                 val thetaSteps = pointCount / phiSteps
                 for (i in 0 until phiSteps) {
@@ -284,7 +298,7 @@ class ParticleEffectImpl(
                 }
             }
 
-            ParticleShape.SPIRAL -> {
+            ParticleShapeType.SPIRAL -> {
                 val totalPoints = pointCount * options.turns
                 for (i in 0 until totalPoints) {
                     val angle = (2 * PI * options.turns * i / totalPoints) + (tickCount * 0.05)
@@ -296,7 +310,7 @@ class ParticleEffectImpl(
                 }
             }
 
-            ParticleShape.LINE -> {
+            ParticleShapeType.LINE -> {
                 for (i in 0 until pointCount) {
                     val progress = i.toDouble() / pointCount
                     val y = options.height * progress + options.offsetY
@@ -304,7 +318,7 @@ class ParticleEffectImpl(
                 }
             }
 
-            ParticleShape.RECTANGLE -> {
+            ParticleShapeType.RECTANGLE -> {
                 val perimeter = 2 * (options.width + options.length)
                 val spacing = perimeter / pointCount
                 var distance = 0.0
@@ -331,7 +345,7 @@ class ParticleEffectImpl(
                 }
             }
 
-            ParticleShape.CUBE -> {
+            ParticleShapeType.CUBE -> {
                 val pointsPerEdge = (pointCount / 12.0).toInt().coerceAtLeast(1)
                 // Bottom face edges
                 for (i in 0 until pointsPerEdge) {
@@ -343,7 +357,7 @@ class ParticleEffectImpl(
                 }
             }
 
-            ParticleShape.HEART -> {
+            ParticleShapeType.HEART -> {
                 for (i in 0 until pointCount) {
                     val t = 2 * PI * i / pointCount
                     val x = options.radius * 16 * sin(t) * sin(t) * sin(t) / 16 + options.offsetX
@@ -353,7 +367,7 @@ class ParticleEffectImpl(
                 }
             }
 
-            ParticleShape.STAR -> {
+            ParticleShapeType.STAR -> {
                 for (i in 0 until pointCount) {
                     val angle = (2 * PI * i / pointCount) + (tickCount * 0.05)
                     val radius = if (i % 2 == 0) options.radius else options.radius / 2
@@ -363,11 +377,11 @@ class ParticleEffectImpl(
                 }
             }
 
-            ParticleShape.POINT -> {
+            ParticleShapeType.POINT -> {
                 points.add(Vector(options.offsetX, options.offsetY, options.offsetZ))
             }
 
-            ParticleShape.RANDOM -> {
+            ParticleShapeType.RANDOM -> {
                 for (i in 0 until pointCount) {
                     val x = (Math.random() - 0.5) * 2 * options.radius + options.offsetX
                     val y = (Math.random() - 0.5) * 2 * options.height + options.offsetY
@@ -390,9 +404,10 @@ class ParticleEffectImpl(
         // Calculate fade modifier effect on alpha if present
         var effectiveAlpha = options.alpha
         for (modifier in modifiers) {
-            if (modifier.type.lowercase() == "fade") {
+            if (modifier.type == ParticleModifierType.FADE) {
                 val fadeProgress = (tickCount * 0.05 / modifier.fadeTime).coerceIn(0.0, 1.0)
-                effectiveAlpha = (modifier.startAlpha + (modifier.endAlpha - modifier.startAlpha) * fadeProgress * 255).toInt()
+                effectiveAlpha =
+                    (modifier.startAlpha + (modifier.endAlpha - modifier.startAlpha) * fadeProgress * 255).toInt()
             }
         }
 

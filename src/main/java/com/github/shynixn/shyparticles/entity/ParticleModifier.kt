@@ -1,5 +1,7 @@
 package com.github.shynixn.shyparticles.entity
 
+import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
+
 /**
  * Modifiers that affect particles over time.
  */
@@ -7,7 +9,7 @@ class ParticleModifier {
     /**
      * Type of modifier (rotate, fade, pulse, wave, etc.).
      */
-    var type: String = "none"
+    var type: ParticleModifierType = ParticleModifierType.NONE
     
     /**
      * Speed of the modifier effect.
