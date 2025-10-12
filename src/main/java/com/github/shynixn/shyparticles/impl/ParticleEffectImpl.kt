@@ -19,6 +19,15 @@ import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierTranslateIm
 import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierTranslateAbsoluteImpl
 import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierWaveImpl
 import com.github.shynixn.shyparticles.impl.shape.ParticleCircleShapeImpl
+import com.github.shynixn.shyparticles.impl.shape.ParticleCubeShapeImpl
+import com.github.shynixn.shyparticles.impl.shape.ParticleHeartShapeImpl
+import com.github.shynixn.shyparticles.impl.shape.ParticleLineShapeImpl
+import com.github.shynixn.shyparticles.impl.shape.ParticleRandomShapeImpl
+import com.github.shynixn.shyparticles.impl.shape.ParticleSphereShapeImpl
+import com.github.shynixn.shyparticles.impl.shape.ParticleSpiralShapeImpl
+import com.github.shynixn.shyparticles.impl.shape.ParticleStarShapeImpl
+import com.github.shynixn.shyparticles.impl.shape.ParticlePointShapeImpl
+import com.github.shynixn.shyparticles.impl.shape.ParticleRectangleShapeImpl
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.bukkit.Location
@@ -52,6 +61,15 @@ class ParticleEffectImpl(
 
     // Shapes
     private val shapeCircle = ParticleCircleShapeImpl()
+    private val shapeSphere = ParticleSphereShapeImpl()
+    private val shapeSpiral = ParticleSpiralShapeImpl()
+    private val shapeLine = ParticleLineShapeImpl()
+    private val shapeRectangle = ParticleRectangleShapeImpl()
+    private val shapeCube = ParticleCubeShapeImpl()
+    private val shapeHeart = ParticleHeartShapeImpl()
+    private val shapeStar = ParticleStarShapeImpl()
+    private val shapePoint = ParticlePointShapeImpl()
+    private val shapeRandom = ParticleRandomShapeImpl()
     override val startTime: Long = System.currentTimeMillis()
 
     /** Name of the effect template. */
@@ -204,110 +222,39 @@ class ParticleEffectImpl(
                 }
 
                 ParticleShapeType.SPHERE -> {
-                    val phiSteps = (pointCount * 0.5).toInt().coerceAtLeast(2)
-                    val thetaSteps = pointCount / phiSteps
-                    for (i in 0 until phiSteps) {
-                        val phi = PI * i / phiSteps
-                        for (j in 0 until thetaSteps) {
-                            val theta = 2 * PI * j / thetaSteps
-                            val x = options.radius * sin(phi) * cos(theta) + options.offsetX
-                            val y = options.radius * cos(phi) + options.offsetY
-                            val z = options.radius * sin(phi) * sin(theta) + options.offsetZ
-                            yield(Vector(x, y, z))
-                        }
-                    }
+                    yieldAll(shapeSphere.sphereShape(density, pointCount, tickCount, options))
                 }
 
                 ParticleShapeType.SPIRAL -> {
-                    val totalPoints = pointCount * options.turns
-                    for (i in 0 until totalPoints) {
-                        val angle = (2 * PI * options.turns * i / totalPoints) + (tickCount * 0.05)
-                        val heightProgress = options.height * i / totalPoints
-                        val x = options.radius * cos(angle) + options.offsetX
-                        val y = heightProgress + options.offsetY
-                        val z = options.radius * sin(angle) + options.offsetZ
-                        yield(Vector(x, y, z))
-                    }
+                    yieldAll(shapeSpiral.spiralShape(density, pointCount, tickCount, options))
                 }
 
                 ParticleShapeType.LINE -> {
-                    for (i in 0 until pointCount) {
-                        val progress = i.toDouble() / pointCount
-                        val y = options.height * progress + options.offsetY
-                        yield(Vector(options.offsetX, y, options.offsetZ))
-                    }
+                    yieldAll(shapeLine.lineShape(density, pointCount, tickCount, options))
                 }
 
                 ParticleShapeType.RECTANGLE -> {
-                    val perimeter = 2 * (options.width + options.length)
-                    val spacing = perimeter / pointCount
-                    var distance = 0.0
-                    for (i in 0 until pointCount) {
-                        val (x, z) = when {
-                            distance < options.width -> Pair(distance - options.width / 2, -options.length / 2)
-                            distance < options.width + options.length -> Pair(
-                                options.width / 2,
-                                distance - options.width - options.length / 2
-                            )
-
-                            distance < 2 * options.width + options.length -> Pair(
-                                options.width / 2 - (distance - options.width - options.length),
-                                options.length / 2
-                            )
-
-                            else -> Pair(
-                                -options.width / 2,
-                                options.length / 2 - (distance - 2 * options.width - options.length)
-                            )
-                        }
-                        yield(Vector(x + options.offsetX, options.offsetY, z + options.offsetZ))
-                        distance += spacing
-                    }
+                    yieldAll(shapeRectangle.rectangleShape(density, pointCount, tickCount, options))
                 }
 
                 ParticleShapeType.CUBE -> {
-                    val pointsPerEdge = (pointCount / 12.0).toInt().coerceAtLeast(1)
-                    // Bottom face edges
-                    for (i in 0 until pointsPerEdge) {
-                        val t = i.toDouble() / pointsPerEdge
-                        yield(Vector(-options.width / 2 + t * options.width, -options.height / 2, -options.depth / 2))
-                        yield(Vector(-options.width / 2 + t * options.width, -options.height / 2, options.depth / 2))
-                        yield(Vector(-options.width / 2, -options.height / 2, -options.depth / 2 + t * options.depth))
-                        yield(Vector(options.width / 2, -options.height / 2, -options.depth / 2 + t * options.depth))
-                    }
+                    yieldAll(shapeCube.cubeShape(density, pointCount, tickCount, options))
                 }
 
                 ParticleShapeType.HEART -> {
-                    for (i in 0 until pointCount) {
-                        val t = 2 * PI * i / pointCount
-                        val x = options.radius * 16 * sin(t) * sin(t) * sin(t) / 16 + options.offsetX
-                        val y =
-                            options.radius * (13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t)) / 16 + options.offsetY
-                        yield(Vector(x, y, options.offsetZ))
-                    }
+                    yieldAll(shapeHeart.heartShape(density, pointCount, tickCount, options))
                 }
 
                 ParticleShapeType.STAR -> {
-                    for (i in 0 until pointCount) {
-                        val angle = (2 * PI * i / pointCount) + (tickCount * 0.05)
-                        val radius = if (i % 2 == 0) options.radius else options.radius / 2
-                        val x = radius * cos(angle) + options.offsetX
-                        val z = radius * sin(angle) + options.offsetZ
-                        yield(Vector(x, options.offsetY, z))
-                    }
+                    yieldAll(shapeStar.starShape(density, pointCount, tickCount, options))
                 }
 
                 ParticleShapeType.POINT -> {
-                    yield(Vector(options.offsetX, options.offsetY, options.offsetZ))
+                    yieldAll(shapePoint.pointShape(density, pointCount, tickCount, options))
                 }
 
                 ParticleShapeType.RANDOM -> {
-                    for (i in 0 until pointCount) {
-                        val x = (Math.random() - 0.5) * 2 * options.radius + options.offsetX
-                        val y = (Math.random() - 0.5) * 2 * options.height + options.offsetY
-                        val z = (Math.random() - 0.5) * 2 * options.radius + options.offsetZ
-                        yield(Vector(x, y, z))
-                    }
+                    yieldAll(shapeRandom.randomShape(density, pointCount, tickCount, options))
                 }
             }
         }

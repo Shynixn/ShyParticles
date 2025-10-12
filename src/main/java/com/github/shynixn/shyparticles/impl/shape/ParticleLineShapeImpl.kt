@@ -1,0 +1,17 @@
+package com.github.shynixn.shyparticles.impl.shape
+
+import com.github.shynixn.shyparticles.entity.ParticleOptions
+import org.bukkit.util.Vector
+
+class ParticleLineShapeImpl {
+    fun lineShape(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
+        return sequence {
+            for (i in 0 until pointCount) {
+                val progress = i.toDouble() / pointCount
+                val y = options.height * progress + options.offsetY
+                yield(Vector(options.offsetX, y, options.offsetZ))
+            }
+        }
+    }
+}
+
