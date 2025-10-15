@@ -8,13 +8,17 @@ import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.command.CommandServiceImpl
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
+import com.github.shynixn.mcutils.common.item.ItemService
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.common.repository.CacheRepository
 import com.github.shynixn.mcutils.common.repository.CachedRepositoryImpl
 import com.github.shynixn.mcutils.common.repository.Repository
 import com.github.shynixn.mcutils.common.repository.YamlFileRepositoryImpl
+import com.github.shynixn.mcutils.packet.api.MaterialService
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.mcutils.packet.impl.service.ChatMessageServiceImpl
+import com.github.shynixn.mcutils.packet.impl.service.ItemServiceImpl
+import com.github.shynixn.mcutils.packet.impl.service.MaterialServiceImpl
 import com.github.shynixn.mcutils.packet.impl.service.PacketServiceImpl
 import com.github.shynixn.shyparticles.contract.ParticleEffectFactory
 import com.github.shynixn.shyparticles.contract.ParticleEffectService
@@ -74,7 +78,7 @@ class ShyParticlesDependencyInjectionModule(
             ShyParticlesListener(module.getService(), module.getService())
         }
         module.addService<ParticleEffectFactory> {
-            ParticleEffectFactoryImpl(module.getService(), module.getService())
+            ParticleEffectFactoryImpl(module.getService(), module.getService(), module.getService(), module.getService())
         }
         module.addService<ParticleEffectService> {
             ParticleEffectServiceImpl(
@@ -84,6 +88,8 @@ class ShyParticlesDependencyInjectionModule(
         }
         module.addService<ConfigurationService> { ConfigurationServiceImpl(module.getService()) }
         module.addService<PacketService> { PacketServiceImpl(module.getService()) }
+        module.addService<ItemService> { ItemServiceImpl() }
+        module.addService<MaterialService> { MaterialServiceImpl() }
         module.addService<CommandService> { CommandServiceImpl(module.getService()) }
         module.addService<ChatMessageService> {
             ChatMessageServiceImpl(module.getService(), module.getService())

@@ -23,21 +23,6 @@ class ParticleModifier {
     var axis: ParticleAxisType = ParticleAxisType.Y
     
     /**
-     * Fade time in seconds.
-     */
-    var fadeTime: Double = 1.0
-    
-    /**
-     * Starting alpha value for fade.
-     */
-    var startAlpha: Double = 1.0
-    
-    /**
-     * Ending alpha value for fade.
-     */
-    var endAlpha: Double = 0.0
-    
-    /**
      * Minimum scale for pulse effects.
      */
     var minScale: Double = 0.8

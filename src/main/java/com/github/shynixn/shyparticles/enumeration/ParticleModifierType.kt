@@ -30,7 +30,4 @@ enum class ParticleModifierType {
     OFFSET,
 
     RANDOM,
-
-    FADE
-
 }

@@ -1,94 +1,104 @@
 package com.github.shynixn.shyparticles.entity
 
+import com.github.shynixn.mcutils.common.item.Item
+
 /**
  * Options for particle shapes and display.
  */
 class ParticleOptions {
+    // region Packet Options - All options provided by the Minecraft Protocol.
     /**
-     * Radius for circular shapes.
+     * Range of random spread around the location.
      */
-    var radius: Double = 1.0
-    
+    var spreadOffSetX: Double = 0.0
+
     /**
-     * Height for vertical shapes like spirals or cylinders.
+     * Range of random spread around the location.
      */
-    var height: Double = 1.0
-    
+    var spreadOffSetY: Double = 0.0
+
     /**
-     * Number of turns for spiral shapes.
+     * Range of random spread around the location.
      */
-    var turns: Int = 1
-    
+    var spreadOffSetZ: Double = 0.0
+
     /**
-     * Density of particles (0.0 to 1.0).
-     */
-    var density: Double = 1.0
-    
-    /**
-     * Number of particles to spawn per update.
-     */
-    var particleCount: Int = 1
-    
-    /**
-     * Width for rectangular shapes.
-     */
-    var width: Double = 1.0
-    
-    /**
-     * Length for rectangular shapes.
-     */
-    var length: Double = 1.0
-    
-    /**
-     * Depth for 3D shapes.
-     */
-    var depth: Double = 1.0
-    
-    /**
-     * X offset from center.
-     */
-    var offsetX: Double = 0.0
-    
-    /**
-     * Y offset from center.
-     */
-    var offsetY: Double = 0.0
-    
-    /**
-     * Z offset from center.
-     */
-    var offsetZ: Double = 0.0
-    
-    /**
-     * Extra data for the particle (color, size, etc.).
-     */
-    var extra: Double = 0.0
-    
-    /**
-     * Speed of the particles.
+     * Speed of the particle.
      */
     var speed: Double = 0.0
 
-    // Color properties for DUST, ENTITY_EFFECT, DUST_COLOR_TRANSITION particles
+    /**
+     * Amount of actually spawning particle with a single packet.
+     */
+    var count: Int = 1
+
     /**
      * Red component of particle color (0-255).
      */
-    var red: Int = 255
+    @Suppress("unused") // Use for de-serialization.
+    var red: Int
+        get() {
+            return fromRed
+        }
+        set(value) {
+            fromRed = value
+        }
 
     /**
      * Green component of particle color (0-255).
      */
-    var green: Int = 255
+    @Suppress("unused") // Use for de-serialization.
+    var green: Int
+        get() {
+            return fromGreen
+        }
+        set(value) {
+            fromGreen = value
+        }
 
     /**
      * Blue component of particle color (0-255).
      */
-    var blue: Int = 255
+    @Suppress("unused") // Use for de-serialization.
+    var blue: Int
+        get() {
+            return fromBlue
+        }
+        set(value) {
+            fromBlue = value
+        }
 
     /**
      * Alpha component of particle color (0-255).
      */
-    var alpha: Int = 255
+    @Suppress("unused") // Use for de-serialization.
+    var alpha: Int
+        get() {
+            return fromAlpha
+        }
+        set(value) {
+            fromAlpha = value
+        }
+
+    /**
+     * Red component of particle color (0-255).
+     */
+    var fromRed: Int = 255
+
+    /**
+     * Green component of particle color (0-255).
+     */
+    var fromGreen: Int = 255
+
+    /**
+     * Blue component of particle color (0-255).
+     */
+    var fromBlue: Int = 255
+
+    /**
+     * Alpha component of particle color (0-255).
+     */
+    var fromAlpha: Int = 255
 
     /**
      * To-color red component for transition particles (0-255).
@@ -111,6 +121,11 @@ class ParticleOptions {
     var toAlpha: Int = 255
 
     /**
+     * Item for BlockStates and items.
+     */
+    var item: Item? = null
+
+    /**
      * Scale/size for dust particles.
      */
     var scale: Double = 1.0
@@ -129,4 +144,65 @@ class ParticleOptions {
      * Vibration ticks for vibration particles.
      */
     var vibrationTicks: Int = 20
+
+    // endregion
+
+    // region Additional Options - All options provided additionally by the API.
+
+    /**
+     * Density of particles (0.0 to 1.0).
+     */
+    var density: Double = 1.0
+
+    /**
+     * Number of particles to spawn per update.
+     */
+    var particleCount: Int = 1
+
+    /**
+     * Radius for circular shapes.
+     */
+    var radius: Double = 1.0
+
+    /**
+     * Height for vertical shapes like spirals or cylinders.
+     */
+    var height: Double = 1.0
+
+    /**
+     * Number of turns for spiral shapes.
+     */
+    var turns: Int = 1
+
+    /**
+     * Width for rectangular shapes.
+     */
+    var width: Double = 1.0
+
+    /**
+     * Length for rectangular shapes.
+     */
+    var length: Double = 1.0
+
+    /**
+     * Depth for 3D shapes.
+     */
+    var depth: Double = 1.0
+
+    /**
+     * X offset from center.
+     */
+    var offsetX: Double = 0.0
+
+    /**
+     * Y offset from center.
+     */
+    var offsetY: Double = 0.0
+
+    /**
+     * Z offset from center.
+     */
+    var offsetZ: Double = 0.0
+
+    // endregion
 }

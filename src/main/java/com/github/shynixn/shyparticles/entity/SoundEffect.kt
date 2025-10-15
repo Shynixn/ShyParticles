@@ -22,15 +22,10 @@ class SoundEffect {
     /**
      * Delay before playing the sound in ticks.
      */
-    var delay: Int = 0
+    var delayTicks: Int = 0
     
     /**
      * Whether the sound should repeat.
      */
     var repeat: Boolean = false
-    
-    /**
-     * Interval between repeats in ticks.
-     */
-    var interval: Int = 20
 }

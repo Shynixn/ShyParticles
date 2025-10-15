@@ -1,6 +1,9 @@
 package com.github.shynixn.shyparticles.impl
 
 import com.github.shynixn.mccoroutine.folia.launch
+import com.github.shynixn.mccoroutine.folia.ticks
+import com.github.shynixn.mcutils.common.item.ItemService
+import com.github.shynixn.mcutils.packet.api.MaterialService
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.mcutils.packet.api.packet.PacketOutParticle
 import com.github.shynixn.shyparticles.contract.ParticleEffect
@@ -24,8 +27,10 @@ class ParticleEffectImpl(
     private val effectMeta: ParticleEffectMeta,
     val locationRef: () -> Location,
     override val player: Player?,
-    plugin: Plugin,
-    private val packetService: PacketService
+    private val plugin: Plugin,
+    private val packetService: PacketService,
+    private val materialService: MaterialService,
+    private val itemService: ItemService
 ) : ParticleEffect {
     companion object {
         private val modifiers = mapOf(
@@ -83,9 +88,8 @@ class ParticleEffectImpl(
 
     private suspend fun playEffect() {
         val startTime = System.currentTimeMillis()
-        val durationMillis = if (effectMeta.duration > 0) effectMeta.duration * 1000L else Long.MAX_VALUE
+        val durationMillis = if (effectMeta.durationSec > 0) effectMeta.durationSec * 1000L else Long.MAX_VALUE
 
-        // Play sounds at start
         playSounds()
 
         var tickCount = 0L
@@ -108,6 +112,7 @@ class ParticleEffectImpl(
             // Reset tick count if repeating
             if (effectMeta.repeat && (System.currentTimeMillis() - startTime) >= durationMillis) {
                 tickCount = 0
+                playSounds()
             }
         }
     }
@@ -146,7 +151,7 @@ class ParticleEffectImpl(
 
         for (point in modifiedPoints) {
             val particleLocation = effectiveBaseLocation.clone().add(point)
-            spawnParticle(layer.particle, particleLocation, options, layer.modifiers, tickCount)
+            spawnParticle(layer.particle, particleLocation, options)
         }
     }
 
@@ -181,44 +186,36 @@ class ParticleEffectImpl(
         particleName: String,
         location: Location,
         options: com.github.shynixn.shyparticles.entity.ParticleOptions,
-        modifiers: List<ParticleModifier> = emptyList(),
-        tickCount: Long = 0
     ) {
-        // Calculate fade modifier effect on alpha if present
-        var effectiveAlpha = options.alpha
-        for (modifier in modifiers) {
-            if (modifier.type == ParticleModifierType.FADE) {
-                val fadeProgress = (tickCount * 0.05 / modifier.fadeTime).coerceIn(0.0, 1.0)
-                effectiveAlpha =
-                    (modifier.startAlpha + (modifier.endAlpha - modifier.startAlpha) * fadeProgress * 255).toInt()
-            }
-        }
-
         val packet = PacketOutParticle(
             name = particleName,
             location = location,
-            offset = Vector(options.extra, options.extra, options.extra),  // Use extra for particle spread
+            offset = Vector(
+                options.spreadOffSetX,
+                options.spreadOffSetY,
+                options.spreadOffSetZ
+            ),  // Use extra for particle spread
             speed = options.speed,
-            count = 1,
-            // Color properties for DUST, ENTITY_EFFECT, DUST_COLOR_TRANSITION
-            fromRed = options.red,
-            fromGreen = options.green,
-            fromBlue = options.blue,
-            fromAlpha = effectiveAlpha,
+            count = options.count,
+            fromRed = options.fromRed,
+            fromGreen = options.fromGreen,
+            fromBlue = options.fromBlue,
+            fromAlpha = options.fromAlpha,
             toRed = options.toRed,
             toGreen = options.toGreen,
             toBlue = options.toBlue,
             toAlpha = options.toAlpha,
-            // Scale for DUST particles
             scale = options.scale,
-            // Roll for SCULK_CHARGE particles
             roll = options.roll,
-            // Delay for SHRIEK particles
             delay = options.delay,
-            // Vibration properties
             vibrationLocation = location,
             vibrationTicks = options.vibrationTicks
         )
+
+        if (options.item != null) {
+            packet.material = materialService.findMaterialFromName(options.item!!.typeName)
+            packet.item = itemService.toItemStack(options.item!!)
+        }
 
         if (player != null) {
             packetService.sendPacketOutParticle(player, packet)
@@ -235,13 +232,17 @@ class ParticleEffectImpl(
 
     private fun playSounds() {
         for (sound in effectMeta.sounds) {
-            val currentLocation = locationRef()
-            val world = currentLocation.world ?: continue
-
-            if (player != null) {
-                player.playSound(currentLocation, sound.sound, sound.volume, sound.pitch)
-            } else {
-                world.playSound(currentLocation, sound.sound, sound.volume, sound.pitch)
+            plugin.launch {
+                delay(sound.delayTicks.ticks)
+                val currentLocation = locationRef()
+                val world = currentLocation.world
+                if(world != null){
+                    if (player != null) {
+                        player.playSound(currentLocation, sound.sound, sound.volume, sound.pitch)
+                    } else {
+                        world.playSound(currentLocation, sound.sound, sound.volume, sound.pitch)
+                    }
+                }
             }
         }
     }
