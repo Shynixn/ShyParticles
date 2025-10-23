@@ -5,7 +5,7 @@ repeat: false
 
 layers:
   - particle: "HEART"
-    shape: "CIRCLE"
+    shape: "HEART"
     options:
       radius: 2.0
       particleCount: 12

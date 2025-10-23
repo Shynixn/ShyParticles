@@ -59,10 +59,6 @@ layers:
       - type: "ROTATE"
         speed: 20.0
         axis: "Y"
-      - type: "FADE"
-        fadeTime: 4.0
-        startAlpha: 0.8
-        endAlpha: 0.0
         
   # Second planet orbit
   - particle: "DUST"

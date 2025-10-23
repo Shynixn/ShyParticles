@@ -21,10 +21,6 @@ layers:
       density: 0.8
       speed: 0.1
     modifiers:
-      - type: "FADE"
-        fadeTime: 2.0
-        startAlpha: 1.0
-        endAlpha: 0.0
       - type: "RANDOM"
         strength: 0.6
         

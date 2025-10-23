@@ -5,7 +5,7 @@ repeat: true
 
 layers:
   - particle: "FIREWORK"
-    shape: "CIRCLE"
+    shape: "STAR"
     options:
       radius: 1.5
       particleCount: 16
