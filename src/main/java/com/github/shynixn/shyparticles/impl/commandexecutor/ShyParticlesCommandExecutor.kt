@@ -173,6 +173,18 @@ class ShyParticlesCommandExecutor(
                         playPlayerEffect(player, effectMeta, player)
                     }
             }
+            subCommand("stop") {
+                toolTip { language.shyParticlesStopCommandHint.text }
+                builder().argument("sessionId").execute {sender, sessionId ->
+                    stopEffects(sender, sessionId)
+                }
+            }
+            subCommand("stopPlayer") {
+                toolTip { language.shyParticlesStopCommandHint.text }
+                builder().executePlayer(senderHasToBePlayer) { player->
+                    stopAllPlayerEffects(player, player)
+                }
+            }
             subCommand("list") {
                 permission(settings.listPermission)
                 toolTip { language.shyParticlesListCommandHint.text }
@@ -192,6 +204,16 @@ class ShyParticlesCommandExecutor(
                 }
             }.helpCommand()
         }.build()
+    }
+
+    private fun stopEffects(sender: CommandSender, sessionId : String){
+        particleService.stopEffect(sessionId)
+        sender.sendLanguageMessage(language.shyParticlesStopCommandHint)
+    }
+
+    private fun stopAllPlayerEffects(sender: CommandSender, player: Player){
+        particleService.stopPlayerEffects(player)
+        sender.sendLanguageMessage(language.shyParticlesEffectStopAllMessage)
     }
 
     private fun playPlayerEffect(sender: CommandSender, effectMeta: ParticleEffectMeta, player : Player) {
