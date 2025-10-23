@@ -4,23 +4,33 @@ import com.github.shynixn.shyparticles.contract.ParticleShape
 import com.github.shynixn.shyparticles.entity.ParticleOptions
 import org.bukkit.util.Vector
 import kotlin.math.PI
+import kotlin.math.acos
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.sqrt
 
 class ParticleSphereShapeImpl : ParticleShape {
     override fun apply(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
         return sequence {
-            val phiSteps = (pointCount * 0.5).toInt().coerceAtLeast(2)
-            val thetaSteps = pointCount / phiSteps
-            for (i in 0 until phiSteps) {
-                val phi = PI * i / phiSteps
-                for (j in 0 until thetaSteps) {
-                    val theta = 2 * PI * j / thetaSteps
-                    val x = options.radius * sin(phi) * cos(theta) + options.offsetX
-                    val y = options.radius * cos(phi) + options.offsetY
-                    val z = options.radius * sin(phi) * sin(theta) + options.offsetZ
-                    yield(Vector(x, y, z))
-                }
+            // Use Fibonacci sphere algorithm for uniform distribution
+            val goldenRatio = (1 + sqrt(5.0)) / 2
+            val angleIncrement = 2 * PI * goldenRatio
+
+            for (i in 0 until pointCount) {
+                // Calculate theta (azimuthal angle)
+                val theta = angleIncrement * i
+
+                // Calculate phi (polar angle) using normalized index
+                // Map i from [0, pointCount-1] to [-1, 1] for even distribution
+                val t = (2.0 * i + 1.0) / pointCount - 1.0
+                val phi = acos(t)
+
+                // Convert spherical coordinates to Cartesian
+                val x = options.radius * sin(phi) * cos(theta) + options.offsetX
+                val y = options.radius * cos(phi) + options.offsetY
+                val z = options.radius * sin(phi) * sin(theta) + options.offsetZ
+
+                yield(Vector(x, y, z))
             }
         }
     }
