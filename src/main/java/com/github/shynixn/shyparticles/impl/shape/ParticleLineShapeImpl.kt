@@ -15,3 +15,4 @@ class ParticleLineShapeImpl : ParticleShape {
         }
     }
 }
+// TODO: SUpport dirfferent direction.

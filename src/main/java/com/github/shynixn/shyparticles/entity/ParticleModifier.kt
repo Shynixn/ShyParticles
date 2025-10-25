@@ -46,40 +46,39 @@ class ParticleModifier {
      * Strength for random effects.
      */
     var strength: Double = 1.0
-    
+
     /**
-     * X offset for offset modifiers.
+     * X offset from center.
      */
     var x: Double = 0.0
-    
+
     /**
-     * Y offset for offset modifiers.
+     * Y offset from center.
      */
     var y: Double = 0.0
-    
+
     /**
-     * Z offset for offset modifiers.
+     * Z offset from center.
      */
     var z: Double = 0.0
 
     /**
-     * Forward offset relative to the yaw direction.
+     * Forward offset.
      */
     var forward: Double = 0.0
 
     /**
-     * Sideward offset relative to the yaw direction (left/right).
+     * Forward offset.
      */
     var sideward: Double = 0.0
 
     /**
-     * Up/down offset relative to the pitch direction.
+     * Upwards offset.
      */
-    var updown: Double = 0.0
+    var upward: Double = 0.0
 
     /**
-     * Whether to ignore pitch when applying transformations.
-     * If true, only yaw rotation will be applied.
+     * Ignore pitch.
      */
-    var ignorePitch: Boolean = false
+    var ignorePitch : Boolean = false
 }
