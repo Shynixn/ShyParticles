@@ -32,28 +32,27 @@ class ParticleEffectImpl(
     private val materialService: MaterialService,
     private val itemService: ItemService
 ) : ParticleEffect {
-    companion object {
-        private val modifiers = mapOf(
-            ParticleModifierType.ROTATE to ParticleModifierRotationImpl(),
-            ParticleModifierType.PULSE to ParticleModifierPulseImpl(),
-            ParticleModifierType.RANDOM to ParticleModifierRandomImpl(),
-            ParticleModifierType.MOVE to ParticleMoveImpl(),
-            ParticleModifierType.WAVE to ParticleModifierWaveImpl(),
-            ParticleModifierType.OSCILLATE to ParticleModifierOscillateImpl(),
-        )
-        private val shapes = mapOf(
-            ParticleShapeType.CIRCLE to ParticleCircleShapeImpl(),
-            ParticleShapeType.CUBE to ParticleCubeShapeImpl(),
-            ParticleShapeType.HEART to ParticleHeartShapeImpl(),
-            ParticleShapeType.LINE to ParticleLineShapeImpl(),
-            ParticleShapeType.POINT to ParticlePointShapeImpl(),
-            ParticleShapeType.RANDOM to ParticleRandomShapeImpl(),
-            ParticleShapeType.RECTANGLE to ParticleRectangleShapeImpl(),
-            ParticleShapeType.SPHERE to ParticleSphereShapeImpl(),
-            ParticleShapeType.SPIRAL to ParticleSpiralShapeImpl(),
-            ParticleShapeType.STAR to ParticleStarShapeImpl(),
-        )
-    }
+    private var offset: Vector = Vector(0.0, 0.0, 0.0)
+    private val modifiers = mapOf(
+        ParticleModifierType.ROTATE to ParticleModifierRotationImpl(),
+        ParticleModifierType.PULSE to ParticleModifierPulseImpl(),
+        ParticleModifierType.RANDOM to ParticleModifierRandomImpl(),
+        ParticleModifierType.MOVE to ParticleMoveImpl(offset),
+        ParticleModifierType.WAVE to ParticleModifierWaveImpl(),
+        ParticleModifierType.OSCILLATE to ParticleModifierOscillateImpl(),
+    )
+    private val shapes = mapOf(
+        ParticleShapeType.CIRCLE to ParticleCircleShapeImpl(),
+        ParticleShapeType.CUBE to ParticleCubeShapeImpl(),
+        ParticleShapeType.HEART to ParticleHeartShapeImpl(),
+        ParticleShapeType.LINE to ParticleLineShapeImpl(),
+        ParticleShapeType.POINT to ParticlePointShapeImpl(),
+        ParticleShapeType.RANDOM to ParticleRandomShapeImpl(),
+        ParticleShapeType.RECTANGLE to ParticleRectangleShapeImpl(),
+        ParticleShapeType.SPHERE to ParticleSphereShapeImpl(),
+        ParticleShapeType.SPIRAL to ParticleSpiralShapeImpl(),
+        ParticleShapeType.STAR to ParticleStarShapeImpl(),
+    )
 
     private var job: Job? = null
     private var running = false
@@ -111,6 +110,7 @@ class ParticleEffectImpl(
                 tickCount = 0
                 playSounds()
                 effectStartTime = System.currentTimeMillis()
+                offset = Vector(0.0, 0.0, 0.0) // Reset offset for MOVE modifier
             }
         }
     }
@@ -129,7 +129,7 @@ class ParticleEffectImpl(
         }
 
         for (point in modifiedPoints) {
-            val particleLocation = effectiveBaseLocation.clone().add(point)
+            val particleLocation = effectiveBaseLocation.clone().add(offset).add(point)
             spawnParticle(layer.particle, particleLocation, options)
         }
     }
@@ -140,7 +140,7 @@ class ParticleEffectImpl(
         tickCount: Long,
     ): Vector {
         var modifiedPoint = point.clone()
-        val location = locationRef()
+        val location = locationRef() // Only used for yaw and pitch.
         for (modifier in modifierActions) {
             val elapsedTime = System.currentTimeMillis() - effectStartTime
             // Only apply modifier if its delay has elapsed
@@ -164,12 +164,7 @@ class ParticleEffectImpl(
             val shape = shapes[shapeType]!!
             yieldAll(shape.apply(density, pointCount, tickCount, options).map { vector ->
                 VectorUtil.applyDirectionalOffsets(
-                    vector,
-                    options.forward,
-                    options.sideward,
-                    options.upward,
-                    options.ignorePitch,
-                    location
+                    vector, options.forward, options.sideward, options.upward, options.ignorePitch, location
                 )
             })
         }
@@ -185,9 +180,7 @@ class ParticleEffectImpl(
             name = particleName,
             location = location,
             offset = Vector(
-                options.spreadX,
-                options.spreadY,
-                options.spreadZ
+                options.spreadX, options.spreadY, options.spreadZ
             ),  // Use extra for particle spread
             speed = options.speed,
             count = options.count,
