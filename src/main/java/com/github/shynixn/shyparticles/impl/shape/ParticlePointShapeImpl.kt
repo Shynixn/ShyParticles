@@ -7,7 +7,7 @@ import org.bukkit.util.Vector
 class ParticlePointShapeImpl : ParticleShape {
     override fun apply(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
         return sequence {
-            yield(Vector(options.offsetX, options.offsetY, options.offsetZ))
+            yield(Vector(options.x, options.y, options.z))
         }
     }
 }

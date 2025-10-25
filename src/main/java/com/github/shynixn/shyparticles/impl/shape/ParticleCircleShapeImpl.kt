@@ -12,9 +12,9 @@ class ParticleCircleShapeImpl : ParticleShape {
         return sequence {
             for (i in 0 until pointCount) {
                 val angle = (2 * PI * i / pointCount) + (tickCount * 0.05)
-                val x = options.radius * cos(angle) + options.offsetX
-                val z = options.radius * sin(angle) + options.offsetZ
-                yield(Vector(x, options.offsetY, z))
+                val x = options.radius * cos(angle) + options.x
+                val z = options.radius * sin(angle) + options.z
+                yield(Vector(x, options.y, z))
             }
         }
     }

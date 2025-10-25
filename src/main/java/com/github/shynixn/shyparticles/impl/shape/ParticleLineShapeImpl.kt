@@ -9,8 +9,8 @@ class ParticleLineShapeImpl : ParticleShape {
         return sequence {
             for (i in 0 until pointCount) {
                 val progress = i.toDouble() / pointCount
-                val y = options.height * progress + options.offsetY
-                yield(Vector(options.offsetX, y, options.offsetZ))
+                val y = options.height * progress + options.y
+                yield(Vector(options.x, y, options.z))
             }
         }
     }

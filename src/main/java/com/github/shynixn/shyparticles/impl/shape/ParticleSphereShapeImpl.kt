@@ -26,9 +26,9 @@ class ParticleSphereShapeImpl : ParticleShape {
                 val phi = acos(t)
 
                 // Convert spherical coordinates to Cartesian
-                val x = options.radius * sin(phi) * cos(theta) + options.offsetX
-                val y = options.radius * cos(phi) + options.offsetY
-                val z = options.radius * sin(phi) * sin(theta) + options.offsetZ
+                val x = options.radius * sin(phi) * cos(theta) + options.x
+                val y = options.radius * cos(phi) + options.y
+                val z = options.radius * sin(phi) * sin(theta) + options.z
 
                 yield(Vector(x, y, z))
             }

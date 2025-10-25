@@ -8,9 +8,9 @@ class ParticleRandomShapeImpl : ParticleShape {
     override fun apply(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
         return sequence {
             for (i in 0 until pointCount) {
-                val x = (Math.random() - 0.5) * 2 * options.radius + options.offsetX
-                val y = (Math.random() - 0.5) * 2 * options.height + options.offsetY
-                val z = (Math.random() - 0.5) * 2 * options.radius + options.offsetZ
+                val x = (Math.random() - 0.5) * 2 * options.radius + options.x
+                val y = (Math.random() - 0.5) * 2 * options.height + options.y
+                val z = (Math.random() - 0.5) * 2 * options.radius + options.z
                 yield(Vector(x, y, z))
             }
         }

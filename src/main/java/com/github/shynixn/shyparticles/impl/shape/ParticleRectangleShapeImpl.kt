@@ -26,7 +26,7 @@ class ParticleRectangleShapeImpl : ParticleShape {
                         options.length / 2 - (distance - 2 * options.width - options.length)
                     )
                 }
-                yield(Vector(x + options.offsetX, options.offsetY, z + options.offsetZ))
+                yield(Vector(x + options.x, options.y, z + options.z))
                 distance += spacing
             }
         }

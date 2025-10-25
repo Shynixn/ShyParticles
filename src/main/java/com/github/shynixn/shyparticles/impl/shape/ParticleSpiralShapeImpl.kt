@@ -14,9 +14,9 @@ class ParticleSpiralShapeImpl : ParticleShape {
             for (i in 0 until totalPoints) {
                 val angle = (2 * PI * options.turns * i / totalPoints) + (tickCount * 0.05)
                 val heightProgress = options.height * i / totalPoints
-                val x = options.radius * cos(angle) + options.offsetX
-                val y = heightProgress + options.offsetY
-                val z = options.radius * sin(angle) + options.offsetZ
+                val x = options.radius * cos(angle) + options.x
+                val y = heightProgress + options.y
+                val z = options.radius * sin(angle) + options.z
                 yield(Vector(x, y, z))
             }
         }

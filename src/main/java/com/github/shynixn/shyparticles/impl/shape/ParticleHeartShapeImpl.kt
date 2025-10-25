@@ -12,10 +12,10 @@ class ParticleHeartShapeImpl : ParticleShape {
         return sequence {
             for (i in 0 until pointCount) {
                 val t = 2 * PI * i / pointCount
-                val x = options.radius * 16 * sin(t) * sin(t) * sin(t) / 16 + options.offsetX
+                val x = options.radius * 16 * sin(t) * sin(t) * sin(t) / 16 + options.x
                 val y =
-                    options.radius * (13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t)) / 16 + options.offsetY
-                yield(Vector(x, y, options.offsetZ))
+                    options.radius * (13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t)) / 16 + options.y
+                yield(Vector(x, y, options.z))
             }
         }
     }

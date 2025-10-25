@@ -11,4 +11,4 @@ layers:
       particleCount: 25
       density: 0.7
       speed: 0.05
-      offsetY: 3.0
+      y: 3.0

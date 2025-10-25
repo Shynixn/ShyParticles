@@ -165,7 +165,7 @@ class ParticleEffectImpl(
     }
 
     private fun applyDirectionalOffsets(vector: Vector, options: ParticleOptions, location: Location): Vector {
-        if (options.forwardOffset == 0.0 && options.sidewardOffset == 0.0 && options.upwardOffset == 0.0) {
+        if (options.forward == 0.0 && options.sideward == 0.0 && options.upward == 0.0) {
             return vector
         }
 
@@ -174,13 +174,13 @@ class ParticleEffectImpl(
 
         if (options.ignorePitch) {
             // All offsets operate in horizontal plane when ignoring pitch
-            val forwardX = -sin(yaw) * options.forwardOffset
-            val forwardZ = cos(yaw) * options.forwardOffset
+            val forwardX = -sin(yaw) * options.forward
+            val forwardZ = cos(yaw) * options.forward
 
-            val sidewardX = cos(yaw) * options.sidewardOffset
-            val sidewardZ = sin(yaw) * options.sidewardOffset
+            val sidewardX = cos(yaw) * options.sideward
+            val sidewardZ = sin(yaw) * options.sideward
 
-            val upwardY = options.upwardOffset
+            val upwardY = options.upward
 
             return vector.clone().add(Vector(
                 forwardX + sidewardX,
@@ -191,23 +191,23 @@ class ParticleEffectImpl(
             // All offsets use full 3D orientation when not ignoring pitch
 
             // Forward direction: straight ahead in look direction
-            val forwardHorizontal = cos(pitch) * options.forwardOffset
+            val forwardHorizontal = cos(pitch) * options.forward
             val forwardX = -sin(yaw) * forwardHorizontal
-            val forwardY = -sin(pitch) * options.forwardOffset
+            val forwardY = -sin(pitch) * options.forward
             val forwardZ = cos(yaw) * forwardHorizontal
 
             // Sideward direction: perpendicular to look direction (right/left)
             // This is the cross product of the forward direction and world up vector
-            val sidewardHorizontal = cos(pitch) * options.sidewardOffset
+            val sidewardHorizontal = cos(pitch) * options.sideward
             val sidewardX = cos(yaw) * sidewardHorizontal
             val sidewardY = 0.0 // Sideward stays horizontal to the pitch plane
             val sidewardZ = sin(yaw) * sidewardHorizontal
 
             // Upward direction: perpendicular to look direction (up relative to view)
             // This is essentially the pitch-rotated up vector
-            val upwardHorizontal = -sin(pitch) * options.upwardOffset
+            val upwardHorizontal = -sin(pitch) * options.upward
             val upwardX = -sin(yaw) * upwardHorizontal
-            val upwardY = cos(pitch) * options.upwardOffset
+            val upwardY = cos(pitch) * options.upward
             val upwardZ = cos(yaw) * upwardHorizontal
 
             return vector.clone().add(Vector(
@@ -227,9 +227,9 @@ class ParticleEffectImpl(
             name = particleName,
             location = location,
             offset = Vector(
-                options.spreadOffSetX,
-                options.spreadOffSetY,
-                options.spreadOffSetZ
+                options.spreadX,
+                options.spreadY,
+                options.spreadZ
             ),  // Use extra for particle spread
             speed = options.speed,
             count = options.count,

@@ -10,17 +10,17 @@ class ParticleOptions {
     /**
      * Range of random spread around the location.
      */
-    var spreadOffSetX: Double = 0.0
+    var spreadX: Double = 0.0
 
     /**
      * Range of random spread around the location.
      */
-    var spreadOffSetY: Double = 0.0
+    var spreadY: Double = 0.0
 
     /**
      * Range of random spread around the location.
      */
-    var spreadOffSetZ: Double = 0.0
+    var spreadZ: Double = 0.0
 
     /**
      * Speed of the particle.
@@ -192,32 +192,32 @@ class ParticleOptions {
     /**
      * X offset from center.
      */
-    var offsetX: Double = 0.0
+    var x: Double = 0.0
 
     /**
      * Y offset from center.
      */
-    var offsetY: Double = 0.0
+    var y: Double = 0.0
 
     /**
      * Z offset from center.
      */
-    var offsetZ: Double = 0.0
+    var z: Double = 0.0
 
     /**
      * Forward offset.
      */
-    var forwardOffset: Double = 0.0
+    var forward: Double = 0.0
 
     /**
      * Forward offset.
      */
-    var sidewardOffset: Double = 0.0
+    var sideward: Double = 0.0
 
     /**
      * Upwards offset.
      */
-    var upwardOffset: Double = 0.0
+    var upward: Double = 0.0
 
     /**
      * Ignore pitch.
