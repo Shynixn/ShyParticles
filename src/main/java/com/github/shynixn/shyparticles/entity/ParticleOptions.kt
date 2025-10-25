@@ -165,11 +165,6 @@ class ParticleOptions {
     var radius: Double = 1.0
 
     /**
-     * Height for vertical shapes like spirals or cylinders.
-     */
-    var height: Double = 0.0
-
-    /**
      * Number of turns for spiral shapes.
      */
     var turns: Int = 1
@@ -185,9 +180,9 @@ class ParticleOptions {
     var length: Double = 0.0
 
     /**
-     * Depth for rectangular shapes.
+     * Height for vertical shapes like spirals or cylinders.
      */
-    var depth: Double = 0.0
+    var height: Double = 0.0
 
     /**
      * X offset from center.
