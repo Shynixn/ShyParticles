@@ -43,7 +43,6 @@ class ParticleEffectImpl(
             ParticleModifierType.OFFSET to ParticleModifierOffsetImpl(),
             ParticleModifierType.WAVE to ParticleModifierWaveImpl(),
             ParticleModifierType.OSCILLATE to ParticleModifierOscillateImpl(),
-            ParticleModifierType.OSCILLATE_RELATIVE to ParticleModifierRelativeTranslateImpl(),
         )
         private val shapes = mapOf(
             ParticleShapeType.CIRCLE to ParticleCircleShapeImpl(),
@@ -166,17 +165,57 @@ class ParticleEffectImpl(
     }
 
     private fun applyDirectionalOffsets(vector: Vector, options: ParticleOptions, location: Location): Vector {
-        if (options.forwardOffset == 0.0 && options.sidewardOffset == 0.0) {
+        if (options.forwardOffset == 0.0 && options.sidewardOffset == 0.0 && options.upwardOffset == 0.0) {
             return vector
         }
 
         val yaw = Math.toRadians(location.yaw.toDouble())
-        val forwardX = -sin(yaw) * options.forwardOffset
-        val forwardZ = cos(yaw) * options.forwardOffset
-        val sidewardX = cos(yaw) * options.sidewardOffset
-        val sidewardZ = sin(yaw) * options.sidewardOffset
+        val pitch = Math.toRadians(location.pitch.toDouble())
 
-        return vector.clone().add(Vector(forwardX + sidewardX, 0.0, forwardZ + sidewardZ))
+        if (options.ignorePitch) {
+            // All offsets operate in horizontal plane when ignoring pitch
+            val forwardX = -sin(yaw) * options.forwardOffset
+            val forwardZ = cos(yaw) * options.forwardOffset
+
+            val sidewardX = cos(yaw) * options.sidewardOffset
+            val sidewardZ = sin(yaw) * options.sidewardOffset
+
+            val upwardY = options.upwardOffset
+
+            return vector.clone().add(Vector(
+                forwardX + sidewardX,
+                upwardY,
+                forwardZ + sidewardZ
+            ))
+        } else {
+            // All offsets use full 3D orientation when not ignoring pitch
+
+            // Forward direction: straight ahead in look direction
+            val forwardHorizontal = cos(pitch) * options.forwardOffset
+            val forwardX = -sin(yaw) * forwardHorizontal
+            val forwardY = -sin(pitch) * options.forwardOffset
+            val forwardZ = cos(yaw) * forwardHorizontal
+
+            // Sideward direction: perpendicular to look direction (right/left)
+            // This is the cross product of the forward direction and world up vector
+            val sidewardHorizontal = cos(pitch) * options.sidewardOffset
+            val sidewardX = cos(yaw) * sidewardHorizontal
+            val sidewardY = 0.0 // Sideward stays horizontal to the pitch plane
+            val sidewardZ = sin(yaw) * sidewardHorizontal
+
+            // Upward direction: perpendicular to look direction (up relative to view)
+            // This is essentially the pitch-rotated up vector
+            val upwardHorizontal = -sin(pitch) * options.upwardOffset
+            val upwardX = -sin(yaw) * upwardHorizontal
+            val upwardY = cos(pitch) * options.upwardOffset
+            val upwardZ = cos(yaw) * upwardHorizontal
+
+            return vector.clone().add(Vector(
+                forwardX + sidewardX + upwardX,
+                forwardY + sidewardY + upwardY,
+                forwardZ + sidewardZ + upwardZ
+            ))
+        }
     }
 
     private fun spawnParticle(

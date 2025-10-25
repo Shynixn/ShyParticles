@@ -19,10 +19,3 @@ layers:
       blue: 100
       alpha: 255
       scale: 1.0
-    modifiers:
-      # This moves the entire circle effect forward (in Z direction)
-      - type: "TRANSFORM_ABSOLUTE"
-        x: 0.0
-        y: 0.0
-        z: 0.1  # Moves forward
-        speed: 1.0

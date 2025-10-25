@@ -214,5 +214,15 @@ class ParticleOptions {
      */
     var sidewardOffset: Double = 0.0
 
+    /**
+     * Upwards offset.
+     */
+    var upwardOffset: Double = 0.0
+
+    /**
+     * Ignore pitch.
+     */
+    var ignorePitch : Boolean = false
+
     // endregion
 }

@@ -5,8 +5,6 @@ enum class ParticleModifierType {
 
     OSCILLATE, E,
 
-    OSCILLATE_RELATIVE,
-
     ROTATE,
 
     WAVE,
