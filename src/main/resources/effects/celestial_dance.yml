@@ -41,7 +41,7 @@ layers:
       radius: 3.0
       particleCount: 1
       density: 1.0
-      offsetY: 0.5
+      y: 0.5
     modifiers:
       - type: "ROTATE"
         speed: 20.0
@@ -54,7 +54,7 @@ layers:
       radius: 3.0
       particleCount: 8
       density: 0.4
-      offsetY: 0.5
+      y: 0.5
     modifiers:
       - type: "ROTATE"
         speed: 20.0
@@ -67,7 +67,7 @@ layers:
       radius: 5.0
       particleCount: 1
       density: 1.0
-      offsetY: -0.3
+      y: -0.3
     modifiers:
       - type: "ROTATE"
         speed: -12.0  # counter-clockwise

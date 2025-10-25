@@ -11,10 +11,9 @@ layers:
       particleCount: 3
       density: 1.0
       speed: 0.0
-      offsetX: 0.0
-      offsetY: 1.5
-      offsetZ: 0.0
-      extra: 0.1
+      x: 0.0
+      y: 1.5
+      z: 0.0
 
   # Particles orbiting around Y axis (horizontal circle)
   - particle: "REDSTONE"
@@ -28,7 +27,6 @@ layers:
       blue: 100
       alpha: 255
       scale: 1.0
-      extra: 0.0
     modifiers:
       - type: "OSCILLATE"
         axis: "Y"
@@ -49,7 +47,6 @@ layers:
       blue: 100
       alpha: 255
       scale: 1.0
-      extra: 0.0
     modifiers:
       - type: "OSCILLATE"
         axis: "X"
@@ -70,7 +67,6 @@ layers:
       blue: 255
       alpha: 255
       scale: 1.0
-      extra: 0.0
     modifiers:
       - type: "OSCILLATE"
         axis: "Z"
@@ -87,7 +83,6 @@ layers:
       particleCount: 8
       density: 1.0
       speed: 0.05
-      extra: 0.0
     modifiers:
       - type: "OSCILLATE"
         axis: "ALL"
