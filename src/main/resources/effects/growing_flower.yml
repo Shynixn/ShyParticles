@@ -13,7 +13,7 @@ layers:
       density: 0.8
       speed: 0.05
     modifiers:
-      - type: "OFFSET"
+      - type: "MOVE"
         x: 0.05
         y: 0.0
         z: 0.05

@@ -10,7 +10,6 @@ import com.github.shynixn.shyparticles.contract.ParticleEffect
 import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
 import com.github.shynixn.shyparticles.entity.ParticleLayer
 import com.github.shynixn.shyparticles.entity.ParticleModifier
-import com.github.shynixn.shyparticles.entity.ParticleOptions
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
 import com.github.shynixn.shyparticles.impl.modifier.*
@@ -22,8 +21,6 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.util.Vector
-import kotlin.math.cos
-import kotlin.math.sin
 
 class ParticleEffectImpl(
     override val id: String,
@@ -60,7 +57,7 @@ class ParticleEffectImpl(
 
     private var job: Job? = null
     private var running = false
-    override val startTime: Long = System.currentTimeMillis()
+    private var effectStartTime: Long = System.currentTimeMillis()
 
     /** Name of the effect template. */
     override val name: String
@@ -87,13 +84,13 @@ class ParticleEffectImpl(
     }
 
     private suspend fun playEffect() {
-        val startTime = System.currentTimeMillis()
-        val durationMillis = if (effectMeta.durationSec > 0) effectMeta.durationSec * 1000L else Long.MAX_VALUE
+        effectStartTime = System.currentTimeMillis()
+        val durationMillis = if (effectMeta.duration > 0) effectMeta.duration * 1000L else Long.MAX_VALUE
 
         playSounds()
 
         var tickCount = 0L
-        while (running && (System.currentTimeMillis() - startTime) < durationMillis) {
+        while (running && (System.currentTimeMillis() - effectStartTime) < durationMillis) {
             val currentLocation = locationRef()
 
             // Render each layer
@@ -105,14 +102,15 @@ class ParticleEffectImpl(
             delay(50) // 1 tick = 50ms (20 ticks per second)
 
             // Check if effect finished and should repeat
-            if (!effectMeta.repeat && (System.currentTimeMillis() - startTime) >= durationMillis) {
+            if (!effectMeta.repeat && (System.currentTimeMillis() - effectStartTime) >= durationMillis) {
                 break
             }
 
             // Reset tick count if repeating
-            if (effectMeta.repeat && (System.currentTimeMillis() - startTime) >= durationMillis) {
+            if (effectMeta.repeat && (System.currentTimeMillis() - effectStartTime) >= durationMillis) {
                 tickCount = 0
                 playSounds()
+                effectStartTime = System.currentTimeMillis()
             }
         }
     }
@@ -144,7 +142,11 @@ class ParticleEffectImpl(
         var modifiedPoint = point.clone()
         val location = locationRef()
         for (modifier in modifierActions) {
-            modifiedPoint = modifiers[modifier.type]!!.apply(modifiedPoint, modifier, tickCount, location)
+            val elapsedTime = System.currentTimeMillis() - effectStartTime
+            // Only apply modifier if its delay has elapsed
+            if (elapsedTime >= modifier.startMs && elapsedTime <= modifier.endMs) {
+                modifiedPoint = modifiers[modifier.type]!!.apply(modifiedPoint, modifier, tickCount, location)
+            }
         }
 
         return modifiedPoint

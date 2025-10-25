@@ -19,7 +19,4 @@ interface ParticleEffect : AutoCloseable {
 
     /** Whether this effect is currently running. */
     val isRunning: Boolean
-
-    /** Start time of the effect. */
-    val startTime: Long
 }

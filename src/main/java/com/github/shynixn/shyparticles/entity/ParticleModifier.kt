@@ -81,4 +81,14 @@ class ParticleModifier {
      * Ignore pitch.
      */
     var ignorePitch : Boolean = false
+
+    /**
+     * Delay in milliseconds before applying the modifier.
+     */
+    var startMs : Int = 0
+
+    /**
+     * Delay in milliseconds before applying the modifier.
+     */
+    var endMs : Int = Int.MAX_VALUE
 }
