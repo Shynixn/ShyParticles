@@ -8,7 +8,7 @@ import org.bukkit.util.Vector
 import kotlin.math.cos
 import kotlin.math.sin
 
-class ParticleModifierTranslateImpl : ParticleModifierContract {
+class ParticleModifierOscillateImpl : ParticleModifierContract {
     override fun apply(
         point: Vector,
         modifier: ParticleModifier,

@@ -42,10 +42,8 @@ class ParticleEffectImpl(
             ParticleModifierType.RANDOM to ParticleModifierRandomImpl(),
             ParticleModifierType.OFFSET to ParticleModifierOffsetImpl(),
             ParticleModifierType.WAVE to ParticleModifierWaveImpl(),
-            ParticleModifierType.TRANSFORM to ParticleModifierTranslateImpl(),
-            ParticleModifierType.TRANSFORM_ABSOLUTE to ParticleModifierTranslateAbsoluteImpl(),
-            ParticleModifierType.RELATIVE_TRANSFORM to ParticleModifierRelativeTranslateImpl(),
-            ParticleModifierType.RELATIVE_TRANSFORM_ABSOLUTE to ParticleModifierRelativeTranslateAbsoluteImpl()
+            ParticleModifierType.OSCILLATE to ParticleModifierOscillateImpl(),
+            ParticleModifierType.OSCILLATE_RELATIVE to ParticleModifierRelativeTranslateImpl(),
         )
         private val shapes = mapOf(
             ParticleShapeType.CIRCLE to ParticleCircleShapeImpl(),
@@ -126,26 +124,6 @@ class ParticleEffectImpl(
 
         // Apply transform_absolute modifiers to the base location
         val effectiveBaseLocation = baseLocation.clone()
-        for (modifier in layer.modifiers) {
-            if (modifier.type == ParticleModifierType.TRANSFORM_ABSOLUTE) {
-                val offset = modifiers[ParticleModifierType.TRANSFORM_ABSOLUTE]!!.apply(
-                    Vector(),
-                    modifier,
-                    tickCount,
-                    locationRef()
-                )
-                effectiveBaseLocation.add(offset)
-            } else if (modifier.type == ParticleModifierType.RELATIVE_TRANSFORM_ABSOLUTE) {
-                val offset = modifiers[ParticleModifierType.RELATIVE_TRANSFORM_ABSOLUTE]!!.apply(
-                    Vector(),
-                    modifier,
-                    tickCount,
-                    locationRef()
-                )
-                effectiveBaseLocation.add(offset)
-            }
-        }
-
         val points = generateShapePoints(layer.shape, options, tickCount, location)
 
         // Apply modifiers to each point (excluding transform_absolute)

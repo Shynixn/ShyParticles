@@ -30,7 +30,7 @@ layers:
       scale: 1.0
       extra: 0.0
     modifiers:
-      - type: "TRANSFORM"
+      - type: "OSCILLATE"
         axis: "Y"
         x: 2.0      # Radius on X axis
         y: 1.5      # Fixed Y position
@@ -51,7 +51,7 @@ layers:
       scale: 1.0
       extra: 0.0
     modifiers:
-      - type: "TRANSFORM"
+      - type: "OSCILLATE"
         axis: "X"
         x: 0.0      # Fixed X position
         y: 1.5      # Radius on Y axis
@@ -72,7 +72,7 @@ layers:
       scale: 1.0
       extra: 0.0
     modifiers:
-      - type: "TRANSFORM"
+      - type: "OSCILLATE"
         axis: "Z"
         x: 1.5      # Radius on X axis
         y: 1.5      # Radius on Y axis
@@ -89,7 +89,7 @@ layers:
       speed: 0.05
       extra: 0.0
     modifiers:
-      - type: "TRANSFORM"
+      - type: "OSCILLATE"
         axis: "ALL"
         x: 1.0      # X orbital radius
         y: 2.0      # Y orbital radius
