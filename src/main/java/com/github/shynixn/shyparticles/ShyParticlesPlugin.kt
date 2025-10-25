@@ -9,6 +9,7 @@ import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.language.reloadTranslation
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderServiceImpl
+import com.github.shynixn.shyparticles.contract.ParticleEffectService
 import com.github.shynixn.shyparticles.entity.ShyParticlesSettings
 import com.github.shynixn.shyparticles.enumeration.PlaceHolder
 import com.github.shynixn.shyparticles.impl.commandexecutor.ShyParticlesCommandExecutor
@@ -128,6 +129,7 @@ class ShyParticlesPlugin : JavaPlugin(), CoroutinePlugin {
         // Register CommandExecutor
         module!!.getService<ShyParticlesCommandExecutor>()
         plugin.launch {
+            module!!.getService<ParticleEffectService>().reload()
             Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Enabled ShyParticles " + plugin.description.version + " by Shynixn")
         }
     }

@@ -23,6 +23,7 @@ class ShyParticlesSettings(private val reloadFun: (ShyParticlesSettings) -> Unit
         "effects/ash_fall.yml" to "ash_fall.yml",
         "effects/blue_circle.yml" to "blue_circle.yml",
         "effects/shower.yml" to "shower.yml",
+        "effects/blue_sphere.yml" to "blue_sphere.yml",
         "effects/celestial_dance.yml" to "celestial_dance.yml",
         "effects/electric_ring.yml" to "electric_ring.yml",
         "effects/enchant_table.yml" to "enchant_table.yml",

@@ -10,6 +10,7 @@ import com.github.shynixn.shyparticles.contract.ParticleEffect
 import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
 import com.github.shynixn.shyparticles.entity.ParticleLayer
 import com.github.shynixn.shyparticles.entity.ParticleModifier
+import com.github.shynixn.shyparticles.entity.ParticleOptions
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
 import com.github.shynixn.shyparticles.impl.modifier.*
@@ -21,6 +22,8 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.util.Vector
+import kotlin.math.cos
+import kotlin.math.sin
 
 class ParticleEffectImpl(
     override val id: String,
@@ -119,6 +122,7 @@ class ParticleEffectImpl(
 
     private fun renderLayer(layer: ParticleLayer, baseLocation: Location, tickCount: Long) {
         val options = layer.options
+        val location = locationRef()
 
         // Apply transform_absolute modifiers to the base location
         val effectiveBaseLocation = baseLocation.clone()
@@ -142,7 +146,7 @@ class ParticleEffectImpl(
             }
         }
 
-        val points = generateShapePoints(layer.shape, options, tickCount)
+        val points = generateShapePoints(layer.shape, options, tickCount, location)
 
         // Apply modifiers to each point (excluding transform_absolute)
         val modifiedPoints = points.map { point ->
@@ -172,14 +176,29 @@ class ParticleEffectImpl(
     private fun generateShapePoints(
         shapeType: ParticleShapeType,
         options: com.github.shynixn.shyparticles.entity.ParticleOptions,
-        tickCount: Long
+        tickCount: Long,
+        location: Location
     ): Sequence<Vector> {
         return sequence {
             val density = options.density.coerceIn(0.1, 1.0)
             val pointCount = (options.particleCount * density).toInt().coerceAtLeast(1)
             val shape = shapes[shapeType]!!
-            yieldAll(shape.apply(density, pointCount, tickCount, options))
+            yieldAll(shape.apply(density, pointCount, tickCount, options).map { vector -> applyDirectionalOffsets(vector, options, location) })
         }
+    }
+
+    private fun applyDirectionalOffsets(vector: Vector, options: ParticleOptions, location: Location): Vector {
+        if (options.forwardOffset == 0.0 && options.sidewardOffset == 0.0) {
+            return vector
+        }
+
+        val yaw = Math.toRadians(location.yaw.toDouble())
+        val forwardX = -sin(yaw) * options.forwardOffset
+        val forwardZ = cos(yaw) * options.forwardOffset
+        val sidewardX = cos(yaw) * options.sidewardOffset
+        val sidewardZ = sin(yaw) * options.sidewardOffset
+
+        return vector.clone().add(Vector(forwardX + sidewardX, 0.0, forwardZ + sidewardZ))
     }
 
     private fun spawnParticle(

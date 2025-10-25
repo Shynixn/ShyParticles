@@ -185,7 +185,7 @@ class ParticleOptions {
     var length: Double = 1.0
 
     /**
-     * Depth for 3D shapes.
+     * Depth for rectangular shapes.
      */
     var depth: Double = 1.0
 
@@ -203,6 +203,16 @@ class ParticleOptions {
      * Z offset from center.
      */
     var offsetZ: Double = 0.0
+
+    /**
+     * Forward offset.
+     */
+    var forwardOffset: Double = 0.0
+
+    /**
+     * Forward offset.
+     */
+    var sidewardOffset: Double = 0.0
 
     // endregion
 }
