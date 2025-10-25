@@ -40,7 +40,7 @@ class ParticleEffectImpl(
             ParticleModifierType.ROTATE to ParticleModifierRotationImpl(),
             ParticleModifierType.PULSE to ParticleModifierPulseImpl(),
             ParticleModifierType.RANDOM to ParticleModifierRandomImpl(),
-            ParticleModifierType.OFFSET to ParticleModifierOffsetImpl(),
+            ParticleModifierType.MOVE to ParticleMoveImpl(),
             ParticleModifierType.WAVE to ParticleModifierWaveImpl(),
             ParticleModifierType.OSCILLATE to ParticleModifierOscillateImpl(),
         )
@@ -160,63 +160,19 @@ class ParticleEffectImpl(
             val density = options.density.coerceIn(0.1, 1.0)
             val pointCount = (options.particleCount * density).toInt().coerceAtLeast(1)
             val shape = shapes[shapeType]!!
-            yieldAll(shape.apply(density, pointCount, tickCount, options).map { vector -> applyDirectionalOffsets(vector, options, location) })
+            yieldAll(shape.apply(density, pointCount, tickCount, options).map { vector ->
+                VectorUtil.applyDirectionalOffsets(
+                    vector,
+                    options.forward,
+                    options.sideward,
+                    options.upward,
+                    options.ignorePitch,
+                    location
+                )
+            })
         }
     }
 
-    private fun applyDirectionalOffsets(vector: Vector, options: ParticleOptions, location: Location): Vector {
-        if (options.forward == 0.0 && options.sideward == 0.0 && options.upward == 0.0) {
-            return vector
-        }
-
-        val yaw = Math.toRadians(location.yaw.toDouble())
-        val pitch = Math.toRadians(location.pitch.toDouble())
-
-        if (options.ignorePitch) {
-            // All offsets operate in horizontal plane when ignoring pitch
-            val forwardX = -sin(yaw) * options.forward
-            val forwardZ = cos(yaw) * options.forward
-
-            val sidewardX = cos(yaw) * options.sideward
-            val sidewardZ = sin(yaw) * options.sideward
-
-            val upwardY = options.upward
-
-            return vector.clone().add(Vector(
-                forwardX + sidewardX,
-                upwardY,
-                forwardZ + sidewardZ
-            ))
-        } else {
-            // All offsets use full 3D orientation when not ignoring pitch
-
-            // Forward direction: straight ahead in look direction
-            val forwardHorizontal = cos(pitch) * options.forward
-            val forwardX = -sin(yaw) * forwardHorizontal
-            val forwardY = -sin(pitch) * options.forward
-            val forwardZ = cos(yaw) * forwardHorizontal
-
-            // Sideward direction: perpendicular to look direction (right/left)
-            // This is the cross product of the forward direction and world up vector
-            val sidewardHorizontal = cos(pitch) * options.sideward
-            val sidewardX = cos(yaw) * sidewardHorizontal
-            val sidewardY = 0.0 // Sideward stays horizontal to the pitch plane
-            val sidewardZ = sin(yaw) * sidewardHorizontal
-
-            // Upward direction: perpendicular to look direction (up relative to view)
-            // This is essentially the pitch-rotated up vector
-            val upwardHorizontal = -sin(pitch) * options.upward
-            val upwardX = -sin(yaw) * upwardHorizontal
-            val upwardY = cos(pitch) * options.upward
-            val upwardZ = cos(yaw) * upwardHorizontal
-
-            return vector.clone().add(Vector(
-                forwardX + sidewardX + upwardX,
-                forwardY + sidewardY + upwardY,
-                forwardZ + sidewardZ + upwardZ
-            ))
-        }
-    }
 
     private fun spawnParticle(
         particleName: String,
@@ -272,7 +228,7 @@ class ParticleEffectImpl(
                 delay(sound.delayTicks.ticks)
                 val currentLocation = locationRef()
                 val world = currentLocation.world
-                if(world != null){
+                if (world != null) {
                     if (player != null) {
                         player.playSound(currentLocation, sound.sound, sound.volume, sound.pitch)
                     } else {

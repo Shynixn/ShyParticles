@@ -4,6 +4,7 @@ import com.github.shynixn.shyparticles.contract.ParticleModifier as ParticleModi
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.entity.ParticleOptions
 import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
+import com.github.shynixn.shyparticles.impl.VectorUtil
 import org.bukkit.Location
 import org.bukkit.util.Vector
 import kotlin.math.cos
@@ -17,7 +18,14 @@ class ParticleModifierOscillateImpl : ParticleModifierContract {
         baseLocation: Location
     ): Vector {
         val angle = tickCount * modifier.speed * 0.05
-        val coordinateModifier = applyDirectionalOffsets(Vector(modifier.x, modifier.y, modifier.z), modifier, baseLocation)
+        val coordinateModifier = VectorUtil.applyDirectionalOffsets(
+            Vector(modifier.x, modifier.y, modifier.z),
+            modifier.forward,
+            modifier.sideward,
+            modifier.upward,
+            modifier.ignorePitch,
+            baseLocation
+        )
 
         return when (modifier.axis) {
             ParticleAxisType.X -> {
@@ -50,64 +58,6 @@ class ParticleModifierOscillateImpl : ParticleModifierContract {
             }
 
             else -> point
-        }
-    }
-
-    private fun applyDirectionalOffsets(vector: Vector, options: ParticleModifier, location: Location): Vector {
-        if (options.forward == 0.0 && options.sideward == 0.0 && options.upward == 0.0) {
-            return vector
-        }
-
-        val yaw = Math.toRadians(location.yaw.toDouble())
-        val pitch = Math.toRadians(location.pitch.toDouble())
-
-        if (options.ignorePitch) {
-            // All offsets operate in horizontal plane when ignoring pitch
-            val forwardX = -sin(yaw) * options.forward
-            val forwardZ = cos(yaw) * options.forward
-
-            val sidewardX = cos(yaw) * options.sideward
-            val sidewardZ = sin(yaw) * options.sideward
-
-            val upwardY = options.upward
-
-            return vector.clone().add(
-                Vector(
-                    forwardX + sidewardX,
-                    upwardY,
-                    forwardZ + sidewardZ
-                )
-            )
-        } else {
-            // All offsets use full 3D orientation when not ignoring pitch
-
-            // Forward direction: straight ahead in look direction
-            val forwardHorizontal = cos(pitch) * options.forward
-            val forwardX = -sin(yaw) * forwardHorizontal
-            val forwardY = -sin(pitch) * options.forward
-            val forwardZ = cos(yaw) * forwardHorizontal
-
-            // Sideward direction: perpendicular to look direction (right/left)
-            // This is the cross product of the forward direction and world up vector
-            val sidewardHorizontal = cos(pitch) * options.sideward
-            val sidewardX = cos(yaw) * sidewardHorizontal
-            val sidewardY = 0.0 // Sideward stays horizontal to the pitch plane
-            val sidewardZ = sin(yaw) * sidewardHorizontal
-
-            // Upward direction: perpendicular to look direction (up relative to view)
-            // This is essentially the pitch-rotated up vector
-            val upwardHorizontal = -sin(pitch) * options.upward
-            val upwardX = -sin(yaw) * upwardHorizontal
-            val upwardY = cos(pitch) * options.upward
-            val upwardZ = cos(yaw) * upwardHorizontal
-
-            return vector.clone().add(
-                Vector(
-                    forwardX + sidewardX + upwardX,
-                    forwardY + sidewardY + upwardY,
-                    forwardZ + sidewardZ + upwardZ
-                )
-            )
         }
     }
 }
