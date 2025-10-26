@@ -1,6 +1,6 @@
 package com.github.shynixn.shyparticles.impl.modifier
 
-import com.github.shynixn.shyparticles.contract.ParticleModifier as ParticleModifierContract
+import com.github.shynixn.shyparticles.contract.ParticlePointModifier
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
 import com.github.shynixn.shyparticles.impl.VectorUtil
@@ -9,7 +9,7 @@ import org.bukkit.util.Vector
 import kotlin.math.cos
 import kotlin.math.sin
 
-class ParticleModifierOscillateImpl : ParticleModifierContract {
+class ParticlePointModifierOscillateImpl : ParticlePointModifier {
     override fun apply(
         point: Vector,
         modifier: ParticleModifier,

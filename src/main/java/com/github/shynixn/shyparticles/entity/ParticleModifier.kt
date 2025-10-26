@@ -85,7 +85,7 @@ class ParticleModifier {
     /**
      * When to start applying the modifier in ticks.
      */
-    var startTick: Int = 0
+    var start: Int = 0
 
     /**
      * Angle in degrees.
@@ -105,5 +105,10 @@ class ParticleModifier {
     /**
      * When to end applying the modifier in ticks.
      */
-    var endTick: Int = Int.MAX_VALUE
+    var end: Int = Int.MAX_VALUE
+
+    /**
+     * Options.
+     */
+    var options: ParticleOptions? = null
 }

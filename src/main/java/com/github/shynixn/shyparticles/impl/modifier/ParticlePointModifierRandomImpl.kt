@@ -1,11 +1,11 @@
 package com.github.shynixn.shyparticles.impl.modifier
 
-import com.github.shynixn.shyparticles.contract.ParticleModifier as ParticleModifierContract
+import com.github.shynixn.shyparticles.contract.ParticlePointModifier
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import org.bukkit.Location
 import org.bukkit.util.Vector
 
-class ParticleModifierRandomImpl : ParticleModifierContract {
+class ParticlePointModifierRandomImpl : ParticlePointModifier {
     override fun apply(
         point: Vector,
         modifier: ParticleModifier,

@@ -14,4 +14,6 @@ enum class ParticleModifierType {
     MOVE,
 
     RANDOM,
+
+    OPTIONS,
 }

@@ -4,7 +4,7 @@ import com.github.shynixn.shyparticles.entity.ParticleModifier
 import org.bukkit.Location
 import org.bukkit.util.Vector
 
-interface ParticleModifier {
+interface ParticlePointModifier {
     fun apply(
         point: Vector,
         modifier: ParticleModifier,

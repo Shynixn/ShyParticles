@@ -1,12 +1,12 @@
 package com.github.shynixn.shyparticles.impl.modifier
 
-import com.github.shynixn.shyparticles.contract.ParticleModifier as ParticleModifierContract
+import com.github.shynixn.shyparticles.contract.ParticlePointModifier
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import org.bukkit.Location
 import org.bukkit.util.Vector
 import kotlin.math.sin
 
-class ParticleModifierPulseImpl : ParticleModifierContract {
+class ParticlePointModifierPulseImpl : ParticlePointModifier {
     override fun apply(
         point: Vector,
         modifier: ParticleModifier,

@@ -17,8 +17,8 @@ class ParticleEffectMeta : Element {
     @Comment("Unique identifier of the particle effect")
     override var name: String = ""
     
-    @Comment("Duration of the effect in seconds (0 = infinite)")
-    var duration: Int = 0
+    @Comment("Duration of the effect in ticks (0 = infinite)")
+    var duration: Long = 0
     
     @Comment("Whether the effect should repeat after finishing")
     var repeat: Boolean = false

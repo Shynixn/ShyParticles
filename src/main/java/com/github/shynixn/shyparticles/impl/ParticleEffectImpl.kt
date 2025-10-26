@@ -7,13 +7,15 @@ import com.github.shynixn.mcutils.packet.api.MaterialService
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.mcutils.packet.api.packet.PacketOutParticle
 import com.github.shynixn.shyparticles.contract.ParticleEffect
+import com.github.shynixn.shyparticles.contract.ParticlePointModifier
 import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
 import com.github.shynixn.shyparticles.entity.ParticleLayer
 import com.github.shynixn.shyparticles.entity.ParticleModifier
+import com.github.shynixn.shyparticles.entity.ParticleOptions
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
 import com.github.shynixn.shyparticles.impl.modifier.*
-import com.github.shynixn.shyparticles.impl.modifier.ParticleModifierPulseImpl
+import com.github.shynixn.shyparticles.impl.modifier.ParticlePointModifierPulseImpl
 import com.github.shynixn.shyparticles.impl.shape.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -33,12 +35,12 @@ class ParticleEffectImpl(
     private val itemService: ItemService
 ) : ParticleEffect {
     private val stateLessModifiers = mapOf(
-        ParticleModifierType.PULSE to ParticleModifierPulseImpl(),
-        ParticleModifierType.RANDOM to ParticleModifierRandomImpl(),
-        ParticleModifierType.WAVE to ParticleModifierWaveImpl(),
-        ParticleModifierType.OSCILLATE to ParticleModifierOscillateImpl(),
+        ParticleModifierType.PULSE to ParticlePointModifierPulseImpl(),
+        ParticleModifierType.RANDOM to ParticlePointModifierRandomImpl(),
+        ParticleModifierType.WAVE to ParticlePointModifierWaveImpl(),
+        ParticleModifierType.OSCILLATE to ParticlePointModifierOscillateImpl(),
     )
-    private var stateFullModifiers: Map<ParticleModifierType, com.github.shynixn.shyparticles.contract.ParticleModifier> =
+    private var stateFullModifiers: Map<ParticleModifierType, ParticlePointModifier> =
         emptyMap()
     private val shapes = mapOf(
         ParticleShapeType.CIRCLE to ParticleCircleShapeImpl(),
@@ -55,7 +57,6 @@ class ParticleEffectImpl(
 
     private var job: Job? = null
     private var running = false
-    private var effectStartTime: Long = System.currentTimeMillis()
 
     /** Name of the effect template. */
     override val name: String
@@ -82,16 +83,21 @@ class ParticleEffectImpl(
     }
 
     private suspend fun playEffect() {
-        val durationMillis = if (effectMeta.duration > 0) effectMeta.duration * 1000L else Long.MAX_VALUE
+        val finishTicks = if (effectMeta.duration > 0) {
+            effectMeta.duration
+        } else {
+            Long.MAX_VALUE
+        }
         var tickCount = 0L
-        reset()
+        val layersAndOptions: MutableList<Pair<ParticleLayer, ParticleOptions>> = ArrayList()
+        reset(layersAndOptions)
 
-        while (running && (System.currentTimeMillis() - effectStartTime) < durationMillis) {
+        while (running) {
             val currentLocation = locationRef().clone()
 
             // Render each layer
-            for (layer in effectMeta.layers) {
-                renderLayer(layer, currentLocation, tickCount)
+            for (pair in layersAndOptions) {
+                renderLayer(pair.first, pair.second, currentLocation, tickCount)
             }
 
             playSounds(currentLocation, tickCount)
@@ -99,33 +105,33 @@ class ParticleEffectImpl(
             tickCount++
             delay(1.ticks) // 1 tick = 50ms (20 ticks per second)
             // Check if effect finished and should repeat
-            if (!effectMeta.repeat && (System.currentTimeMillis() - effectStartTime) >= durationMillis) {
+            if (!effectMeta.repeat && tickCount >= finishTicks) {
                 break
             }
 
             // Reset tick count if repeating
-            if (effectMeta.repeat && (System.currentTimeMillis() - effectStartTime) >= durationMillis) {
+            if (effectMeta.repeat && tickCount >= finishTicks) {
                 tickCount = 0
-                reset()
+                reset(layersAndOptions)
             }
         }
     }
 
-    private fun reset() {
+    private fun reset(layersAndOptions: MutableList<Pair<ParticleLayer, ParticleOptions>>) {
         stateFullModifiers = mapOf(
-            ParticleModifierType.MOVE to ParticleModifierMoveImpl(),
-            ParticleModifierType.ROTATE to ParticleModifierRotationImpl(),
+            ParticleModifierType.MOVE to ParticlePointModifierMoveImpl(),
+            ParticleModifierType.ROTATE to ParticlePointModifierRotationImpl(),
         )
-        effectStartTime = System.currentTimeMillis()
+        layersAndOptions.clear()
+        layersAndOptions.addAll(effectMeta.layers.map { Pair(it, it.options.copy()) })
     }
 
-    private fun renderLayer(layer: ParticleLayer, baseLocation: Location, tickCount: Long) {
-        val options = layer.options
+    private fun renderLayer(layer: ParticleLayer, options: ParticleOptions, baseLocation: Location, tickCount: Long) {
         val points = generateShapePoints(layer.shape, options)
 
         // Apply modifiers to each point (excluding transform_absolute)
         val modifiedPoints = points.map { point ->
-            applyPointModifiers(point, baseLocation, layer.modifiers, tickCount)
+            applyPointModifiers(point, baseLocation, options, layer.modifiers, tickCount)
         }
 
         for (point in modifiedPoints) {
@@ -137,16 +143,21 @@ class ParticleEffectImpl(
     private fun applyPointModifiers(
         point: Vector,
         baseLocation: Location,
+        options: ParticleOptions,
         modifierActions: List<ParticleModifier>,
         tickCount: Long,
     ): Vector {
         var modifiedPoint = point.clone()
         for (modifier in modifierActions) {
             // Only apply modifier if its delay has elapsed
-            if (tickCount >= modifier.startTick && tickCount <= modifier.endTick) {
+            if (tickCount >= modifier.start && tickCount <= modifier.end) {
                 val stateLessFun = stateLessModifiers[modifier.type]
                 if (stateLessFun != null) {
                     modifiedPoint = stateLessFun.apply(modifiedPoint, modifier, tickCount, baseLocation)
+                }
+
+                if (modifier.type == ParticleModifierType.OPTIONS) {
+                    modifier.options?.copy(options)
                 }
             }
 
@@ -161,7 +172,7 @@ class ParticleEffectImpl(
 
     private fun generateShapePoints(
         shapeType: ParticleShapeType,
-        options: com.github.shynixn.shyparticles.entity.ParticleOptions,
+        options: ParticleOptions,
     ): Sequence<Vector> {
         return sequence {
             val density = options.density.coerceIn(0.1, 1.0)
@@ -175,7 +186,7 @@ class ParticleEffectImpl(
     private fun spawnParticle(
         particleName: String,
         location: Location,
-        options: com.github.shynixn.shyparticles.entity.ParticleOptions,
+        options: ParticleOptions,
     ) {
         val packet = PacketOutParticle(
             name = particleName,

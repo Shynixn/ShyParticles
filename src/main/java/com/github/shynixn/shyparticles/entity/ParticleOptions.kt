@@ -186,5 +186,41 @@ class ParticleOptions {
 
     // endregion
 
+    fun copy(target: ParticleOptions? = null): ParticleOptions {
+        var result = ParticleOptions()
 
+        if (target != null) {
+            result = target
+        }
+
+        result.let {
+            it.spreadX = this.spreadX
+            it.spreadY = this.spreadY
+            it.spreadZ = this.spreadZ
+            it.speed = this.speed
+            it.count = this.count
+            it.fromRed = this.fromRed
+            it.fromGreen = this.fromGreen
+            it.fromBlue = this.fromBlue
+            it.fromAlpha = this.fromAlpha
+            it.toRed = this.toRed
+            it.toGreen = this.toGreen
+            it.toBlue = this.toBlue
+            it.toAlpha = this.toAlpha
+            it.item = this.item
+            it.scale = this.scale
+            it.roll = this.roll
+            it.delay = this.delay
+            it.vibrationTicks = this.vibrationTicks
+            it.density = this.density
+            it.particleCount = this.particleCount
+            it.radius = this.radius
+            it.turns = this.turns
+            it.width = this.width
+            it.length = this.length
+            it.height = this.height
+        }
+
+        return result
+    }
 }
