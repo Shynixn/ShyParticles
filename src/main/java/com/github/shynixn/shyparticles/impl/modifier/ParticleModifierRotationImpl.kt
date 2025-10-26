@@ -3,19 +3,22 @@ package com.github.shynixn.shyparticles.impl.modifier
 import com.github.shynixn.shyparticles.contract.ParticleModifier as ParticleModifierContract
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
+import com.github.shynixn.shyparticles.impl.VectorUtil
 import org.bukkit.Location
 import org.bukkit.util.Vector
 import kotlin.math.cos
 import kotlin.math.sin
 
 class ParticleModifierRotationImpl : ParticleModifierContract {
+    private var angle = 0.0
+
     override fun apply(
-        point: Vector,
-        modifier: ParticleModifier,
-        tickCount: Long,
-        baseLocation: Location
+        point: Vector, modifier: ParticleModifier, tickCount: Long, baseLocation: Location
     ): Vector {
-        val angle = tickCount * 0.05 * modifier.speed
+        // Only apply modifier if its delay has elapsed
+        if (tickCount >= modifier.startTick && tickCount <= modifier.endTick) {
+            angle = (tickCount - modifier.startTick) * 0.05 * modifier.speed
+        }
 
         return when (modifier.axis) {
             ParticleAxisType.X -> {

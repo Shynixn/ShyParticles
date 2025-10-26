@@ -11,37 +11,37 @@ class ParticleModifier {
      * Type of modifier (rotate, fade, pulse, wave, etc.).
      */
     var type: ParticleModifierType = ParticleModifierType.NONE
-    
+
     /**
      * Speed of the modifier effect.
      */
     var speed: Double = 1.0
-    
+
     /**
      * Axis for rotation (X, Y, or Z).
      */
     var axis: ParticleAxisType = ParticleAxisType.Y
-    
+
     /**
      * Minimum scale for pulse effects.
      */
     var minScale: Double = 0.8
-    
+
     /**
      * Maximum scale for pulse effects.
      */
     var maxScale: Double = 1.2
-    
+
     /**
      * Amplitude for wave effects.
      */
     var amplitude: Double = 1.0
-    
+
     /**
      * Frequency for wave effects.
      */
     var frequency: Double = 1.0
-    
+
     /**
      * Strength for random effects.
      */
@@ -80,15 +80,20 @@ class ParticleModifier {
     /**
      * Ignore pitch.
      */
-    var ignorePitch : Boolean = false
+    var ignorePitch: Boolean = false
 
     /**
      * When to start applying the modifier in ticks.
      */
-    var startTick : Int = 0
+    var startTick: Int = 0
+
+    /**
+     * Angle in degrees.
+     */
+    var angle: Double = 0.0
 
     /**
      * When to end applying the modifier in ticks.
      */
-    var endTick : Int = Int.MAX_VALUE
+    var endTick: Int = Int.MAX_VALUE
 }
