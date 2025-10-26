@@ -30,7 +30,7 @@ class ParticleOptions {
     /**
      * Amount of actually spawning particle with a single packet.
      */
-    var count: Int = 1
+    var count: Int = 0
 
     /**
      * Red component of particle color (0-255).
@@ -128,7 +128,7 @@ class ParticleOptions {
     /**
      * Scale/size for dust particles.
      */
-    var scale: Double = 1.0
+    var scale: Double = 0.0
 
     /**
      * Roll value for certain particles.
@@ -143,7 +143,7 @@ class ParticleOptions {
     /**
      * Vibration ticks for vibration particles.
      */
-    var vibrationTicks: Int = 20
+    var vibrationTicks: Int = 0
 
     // endregion
 
@@ -152,22 +152,22 @@ class ParticleOptions {
     /**
      * Density of particles (0.0 to 1.0).
      */
-    var density: Double = 1.0
+    var density: Double = 0.0
 
     /**
      * Number of particles to spawn per update.
      */
-    var particleCount: Int = 1
+    var particleCount: Int = 0
 
     /**
      * Radius for circular shapes.
      */
-    var radius: Double = 1.0
+    var radius: Double = 0.0
 
     /**
      * Number of turns for spiral shapes.
      */
-    var turns: Int = 1
+    var turns: Int = 0
 
     /**
      * Width for rectangular shapes.
@@ -219,6 +219,35 @@ class ParticleOptions {
             it.width = this.width
             it.length = this.length
             it.height = this.height
+        }
+
+        return result
+    }
+
+    fun copyAdd(target: ParticleOptions? = null): ParticleOptions {
+        var result = ParticleOptions()
+
+        if (target != null) {
+            result = target
+        }
+
+        result.let {
+            it.spreadX += this.spreadX
+            it.spreadY += this.spreadY
+            it.spreadZ += this.spreadZ
+            it.speed += this.speed
+            it.count += this.count
+            it.scale += this.scale
+            it.roll += this.roll
+            it.delay += this.delay
+            it.vibrationTicks += this.vibrationTicks
+            it.density += this.density
+            it.particleCount += this.particleCount
+            it.radius += this.radius
+            it.turns += this.turns
+            it.width += this.width
+            it.length += this.length
+            it.height += this.height
         }
 
         return result

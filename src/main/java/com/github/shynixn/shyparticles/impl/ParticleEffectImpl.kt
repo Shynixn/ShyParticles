@@ -156,8 +156,10 @@ class ParticleEffectImpl(
                     modifiedPoint = stateLessFun.apply(modifiedPoint, modifier, tickCount, baseLocation)
                 }
 
-                if (modifier.type == ParticleModifierType.OPTIONS) {
+                if (modifier.type == ParticleModifierType.OPTIONS_SET) {
                     modifier.options?.copy(options)
+                } else if (modifier.type == ParticleModifierType.OPTIONS_ADD) {
+                    modifier.options?.copyAdd(options)
                 }
             }
 

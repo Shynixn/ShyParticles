@@ -15,5 +15,7 @@ enum class ParticleModifierType {
 
     RANDOM,
 
-    OPTIONS,
+    OPTIONS_SET,
+
+    OPTIONS_ADD,
 }
