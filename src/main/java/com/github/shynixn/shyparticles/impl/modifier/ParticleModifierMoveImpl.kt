@@ -6,8 +6,9 @@ import com.github.shynixn.shyparticles.impl.VectorUtil
 import org.bukkit.Location
 import org.bukkit.util.Vector
 
-class ParticleMoveImpl(private val offset: Vector) : ParticleModifierContract {
+class ParticleModifierMoveImpl() : ParticleModifierContract {
     private var lastTickCount = -1L
+    private val offset = Vector()
 
     override fun apply(
         point: Vector,
@@ -15,7 +16,8 @@ class ParticleMoveImpl(private val offset: Vector) : ParticleModifierContract {
         tickCount: Long,
         baseLocation: Location
     ): Vector {
-        if (lastTickCount != tickCount) {
+        // Only apply modifier if its delay has elapsed
+        if (tickCount >= modifier.startTick && tickCount <= modifier.endTick && lastTickCount != tickCount) {
             // Apply basic x, y, z offsets multiplied by speed
             val deltaOffset = Vector(
                 modifier.x * modifier.speed,
@@ -39,6 +41,6 @@ class ParticleMoveImpl(private val offset: Vector) : ParticleModifierContract {
         }
 
         // The offset is added outside.
-        return point.clone()
+        return point.add(offset)
     }
 }

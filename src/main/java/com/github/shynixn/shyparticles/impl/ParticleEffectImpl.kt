@@ -27,20 +27,19 @@ class ParticleEffectImpl(
     private val effectMeta: ParticleEffectMeta,
     val locationRef: () -> Location,
     override val player: Player?,
-    private val plugin: Plugin,
+    plugin: Plugin,
     private val packetService: PacketService,
     private val materialService: MaterialService,
     private val itemService: ItemService
 ) : ParticleEffect {
-    private var offset: Vector = Vector(0.0, 0.0, 0.0)
-    private val modifiers = mapOf(
-        ParticleModifierType.ROTATE to ParticleModifierRotationImpl(),
+    private val stateLessModifiers = mapOf(
         ParticleModifierType.PULSE to ParticleModifierPulseImpl(),
         ParticleModifierType.RANDOM to ParticleModifierRandomImpl(),
-        ParticleModifierType.MOVE to ParticleMoveImpl(offset),
         ParticleModifierType.WAVE to ParticleModifierWaveImpl(),
         ParticleModifierType.OSCILLATE to ParticleModifierOscillateImpl(),
     )
+    private var stateFullModifiers: Map<ParticleModifierType, com.github.shynixn.shyparticles.contract.ParticleModifier> =
+        emptyMap()
     private val shapes = mapOf(
         ParticleShapeType.CIRCLE to ParticleCircleShapeImpl(),
         ParticleShapeType.CUBE to ParticleCubeShapeImpl(),
@@ -83,23 +82,22 @@ class ParticleEffectImpl(
     }
 
     private suspend fun playEffect() {
-        effectStartTime = System.currentTimeMillis()
         val durationMillis = if (effectMeta.duration > 0) effectMeta.duration * 1000L else Long.MAX_VALUE
-
-        playSounds()
-
         var tickCount = 0L
+        reset()
+
         while (running && (System.currentTimeMillis() - effectStartTime) < durationMillis) {
-            val currentLocation = locationRef()
+            val currentLocation = locationRef().clone()
 
             // Render each layer
             for (layer in effectMeta.layers) {
                 renderLayer(layer, currentLocation, tickCount)
             }
 
+            playSounds(currentLocation, tickCount)
+
             tickCount++
             delay(1.ticks) // 1 tick = 50ms (20 ticks per second)
-
             // Check if effect finished and should repeat
             if (!effectMeta.repeat && (System.currentTimeMillis() - effectStartTime) >= durationMillis) {
                 break
@@ -108,42 +106,53 @@ class ParticleEffectImpl(
             // Reset tick count if repeating
             if (effectMeta.repeat && (System.currentTimeMillis() - effectStartTime) >= durationMillis) {
                 tickCount = 0
-                playSounds()
-                effectStartTime = System.currentTimeMillis()
-                offset = Vector(0.0, 0.0, 0.0) // Reset offset for MOVE modifier
+                reset()
             }
         }
     }
 
+    private fun reset() {
+        stateFullModifiers = mapOf(
+            ParticleModifierType.MOVE to ParticleModifierMoveImpl(),
+            ParticleModifierType.ROTATE to ParticleModifierRotationImpl(),
+        )
+        effectStartTime = System.currentTimeMillis()
+    }
+
     private fun renderLayer(layer: ParticleLayer, baseLocation: Location, tickCount: Long) {
         val options = layer.options
-
-        // Apply transform_absolute modifiers to the base location
-        val effectiveBaseLocation = baseLocation.clone()
         val points = generateShapePoints(layer.shape, options)
 
         // Apply modifiers to each point (excluding transform_absolute)
         val modifiedPoints = points.map { point ->
-            applyModifiers(point, layer.modifiers, tickCount)
+            applyPointModifiers(point, baseLocation, layer.modifiers, tickCount)
         }
 
         for (point in modifiedPoints) {
-            val particleLocation = effectiveBaseLocation.clone().add(offset).add(point)
+            val particleLocation = baseLocation.clone().add(point)
             spawnParticle(layer.particle, particleLocation, options)
         }
     }
 
-    private fun applyModifiers(
+    private fun applyPointModifiers(
         point: Vector,
+        baseLocation: Location,
         modifierActions: List<ParticleModifier>,
         tickCount: Long,
     ): Vector {
         var modifiedPoint = point.clone()
-        val location = locationRef() // Only used for yaw and pitch.
         for (modifier in modifierActions) {
             // Only apply modifier if its delay has elapsed
             if (tickCount >= modifier.startTick && tickCount <= modifier.endTick) {
-                modifiedPoint = modifiers[modifier.type]!!.apply(modifiedPoint, modifier, tickCount, location)
+                val stateLessFun = stateLessModifiers[modifier.type]
+                if (stateLessFun != null) {
+                    modifiedPoint = stateLessFun.apply(modifiedPoint, modifier, tickCount, baseLocation)
+                }
+            }
+
+            val stateFullFun = stateFullModifiers[modifier.type]
+            if (stateFullFun != null) {
+                modifiedPoint = stateFullFun.apply(modifiedPoint, modifier, tickCount, baseLocation)
             }
         }
 
@@ -158,7 +167,7 @@ class ParticleEffectImpl(
             val density = options.density.coerceIn(0.1, 1.0)
             val pointCount = (options.particleCount * density).toInt().coerceAtLeast(1)
             val shape = shapes[shapeType]!!
-            yieldAll(shape.apply(density, pointCount,  options))
+            yieldAll(shape.apply(density, pointCount, options))
         }
     }
 
@@ -209,18 +218,18 @@ class ParticleEffectImpl(
         }
     }
 
-    private fun playSounds() {
+    private fun playSounds(baseLocation: Location, tickCount: Long) {
         for (sound in effectMeta.sounds) {
-            plugin.launch {
-                delay(sound.delayTicks.ticks)
-                val currentLocation = locationRef()
-                val world = currentLocation.world
-                if (world != null) {
-                    if (player != null) {
-                        player.playSound(currentLocation, sound.sound, sound.volume, sound.pitch)
-                    } else {
-                        world.playSound(currentLocation, sound.sound, sound.volume, sound.pitch)
-                    }
+            if (tickCount < sound.startTick || tickCount > sound.startTick) {
+                continue
+            }
+
+            val world = baseLocation.world
+            if (world != null) {
+                if (player != null) {
+                    player.playSound(baseLocation, sound.sound, sound.volume, sound.pitch)
+                } else {
+                    world.playSound(baseLocation, sound.sound, sound.volume, sound.pitch)
                 }
             }
         }

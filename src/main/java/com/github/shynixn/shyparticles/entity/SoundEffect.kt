@@ -18,14 +18,9 @@ class SoundEffect {
      * Pitch of the sound (0.5 to 2.0).
      */
     var pitch: Float = 1.0f
-    
+
     /**
-     * Delay before playing the sound in ticks.
+     * When to start applying the modifier in ticks.
      */
-    var delayTicks: Int = 0
-    
-    /**
-     * Whether the sound should repeat.
-     */
-    var repeat: Boolean = false
+    var startTick: Int = 0
 }

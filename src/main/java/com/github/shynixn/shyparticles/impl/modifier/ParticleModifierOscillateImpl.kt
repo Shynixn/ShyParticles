@@ -2,7 +2,6 @@ package com.github.shynixn.shyparticles.impl.modifier
 
 import com.github.shynixn.shyparticles.contract.ParticleModifier as ParticleModifierContract
 import com.github.shynixn.shyparticles.entity.ParticleModifier
-import com.github.shynixn.shyparticles.entity.ParticleOptions
 import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
 import com.github.shynixn.shyparticles.impl.VectorUtil
 import org.bukkit.Location
