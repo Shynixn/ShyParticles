@@ -42,7 +42,6 @@ class ParticleStarShapeImpl : ParticleShape {
 }
 
 /*TODO:
-    Make suire no shape depends on x, y, z, forward, sideward, upward. Remove these from options.
 
         They should only be modifiers to move it.
 
@@ -61,4 +60,4 @@ class ParticleStarShapeImpl : ParticleShape {
 
         ---> ROTATE CAN BE ALSO USED TO FLIp.
 
---> MAke sure x = widht, y height z = length*/
+*/

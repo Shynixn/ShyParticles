@@ -83,12 +83,12 @@ class ParticleModifier {
     var ignorePitch : Boolean = false
 
     /**
-     * Delay in milliseconds before applying the modifier.
+     * When to start applying the modifier in ticks.
      */
-    var startMs : Int = 0
+    var startTick : Int = 0
 
     /**
-     * Delay in milliseconds before applying the modifier.
+     * When to end applying the modifier in ticks.
      */
-    var endMs : Int = Int.MAX_VALUE
+    var endTick : Int = Int.MAX_VALUE
 }

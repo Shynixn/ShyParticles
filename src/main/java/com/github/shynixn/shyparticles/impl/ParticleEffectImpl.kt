@@ -98,7 +98,7 @@ class ParticleEffectImpl(
             }
 
             tickCount++
-            delay(50) // 1 tick = 50ms (20 ticks per second)
+            delay(1.ticks) // 1 tick = 50ms (20 ticks per second)
 
             // Check if effect finished and should repeat
             if (!effectMeta.repeat && (System.currentTimeMillis() - effectStartTime) >= durationMillis) {
@@ -141,9 +141,8 @@ class ParticleEffectImpl(
         var modifiedPoint = point.clone()
         val location = locationRef() // Only used for yaw and pitch.
         for (modifier in modifierActions) {
-            val elapsedTime = System.currentTimeMillis() - effectStartTime
             // Only apply modifier if its delay has elapsed
-            if (elapsedTime >= modifier.startMs && elapsedTime <= modifier.endMs) {
+            if (tickCount >= modifier.startTick && tickCount <= modifier.endTick) {
                 modifiedPoint = modifiers[modifier.type]!!.apply(modifiedPoint, modifier, tickCount, location)
             }
         }
