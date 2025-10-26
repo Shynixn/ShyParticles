@@ -22,7 +22,7 @@ class ParticlePointModifierOscillateImpl : ParticlePointModifier {
             modifier.forward,
             modifier.sideward,
             modifier.upward,
-            modifier.ignorePitch,
+            !modifier.usePitch,
             baseLocation
         )
 

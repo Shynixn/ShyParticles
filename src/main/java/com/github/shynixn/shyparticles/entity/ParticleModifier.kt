@@ -80,7 +80,7 @@ class ParticleModifier {
     /**
      * Ignore pitch.
      */
-    var ignorePitch: Boolean = false
+    var usePitch: Boolean = false
 
     /**
      * When to start applying the modifier in ticks.

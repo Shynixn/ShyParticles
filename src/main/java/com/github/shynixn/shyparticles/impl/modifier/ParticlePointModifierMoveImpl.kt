@@ -31,7 +31,7 @@ class ParticlePointModifierMoveImpl() : ParticlePointModifier {
                 modifier.forward * modifier.speed,
                 modifier.sideward * modifier.speed,
                 modifier.upward * modifier.speed,
-                modifier.ignorePitch,
+                !modifier.usePitch,
                 baseLocation
             )
 
