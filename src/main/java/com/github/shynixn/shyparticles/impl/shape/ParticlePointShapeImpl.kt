@@ -5,9 +5,9 @@ import com.github.shynixn.shyparticles.entity.ParticleOptions
 import org.bukkit.util.Vector
 
 class ParticlePointShapeImpl : ParticleShape {
-    override fun apply(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
+    override fun apply(density: Double, pointCount: Int, options: ParticleOptions): Sequence<Vector> {
         return sequence {
-            yield(Vector(options.x, options.y, options.z))
+            yield(Vector(0, 0, 0))
         }
     }
 }

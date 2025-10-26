@@ -117,11 +117,10 @@ class ParticleEffectImpl(
 
     private fun renderLayer(layer: ParticleLayer, baseLocation: Location, tickCount: Long) {
         val options = layer.options
-        val location = locationRef()
 
         // Apply transform_absolute modifiers to the base location
         val effectiveBaseLocation = baseLocation.clone()
-        val points = generateShapePoints(layer.shape, options, tickCount, location)
+        val points = generateShapePoints(layer.shape, options)
 
         // Apply modifiers to each point (excluding transform_absolute)
         val modifiedPoints = points.map { point ->
@@ -155,18 +154,12 @@ class ParticleEffectImpl(
     private fun generateShapePoints(
         shapeType: ParticleShapeType,
         options: com.github.shynixn.shyparticles.entity.ParticleOptions,
-        tickCount: Long,
-        location: Location
     ): Sequence<Vector> {
         return sequence {
             val density = options.density.coerceIn(0.1, 1.0)
             val pointCount = (options.particleCount * density).toInt().coerceAtLeast(1)
             val shape = shapes[shapeType]!!
-            yieldAll(shape.apply(density, pointCount, tickCount, options).map { vector ->
-                VectorUtil.applyDirectionalOffsets(
-                    vector, options.forward, options.sideward, options.upward, options.ignorePitch, location
-                )
-            })
+            yieldAll(shape.apply(density, pointCount,  options))
         }
     }
 

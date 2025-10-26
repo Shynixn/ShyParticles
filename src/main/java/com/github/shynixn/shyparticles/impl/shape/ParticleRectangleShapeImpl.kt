@@ -5,7 +5,7 @@ import com.github.shynixn.shyparticles.entity.ParticleOptions
 import org.bukkit.util.Vector
 
 class ParticleRectangleShapeImpl : ParticleShape {
-    override fun apply(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
+    override fun apply(density: Double, pointCount: Int,  options: ParticleOptions): Sequence<Vector> {
         return sequence {
             val perimeter = 2 * (options.width + options.length)
             val spacing = perimeter / pointCount
@@ -26,7 +26,7 @@ class ParticleRectangleShapeImpl : ParticleShape {
                         options.length / 2 - (distance - 2 * options.width - options.length)
                     )
                 }
-                yield(Vector(x + options.x, options.y, z + options.z))
+                yield(Vector(x, 0.0, z))
                 distance += spacing
             }
         }

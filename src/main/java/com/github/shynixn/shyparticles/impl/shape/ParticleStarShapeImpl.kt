@@ -8,7 +8,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 class ParticleStarShapeImpl : ParticleShape {
-    override fun apply(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
+    override fun apply(density: Double, pointCount: Int, options: ParticleOptions): Sequence<Vector> {
         return sequence {
             // Create a standard 5-pointed star
             val starPoints = 5  // Standard 5-pointed star
@@ -32,11 +32,33 @@ class ParticleStarShapeImpl : ParticleShape {
                 // Interpolate points along the line
                 for (j in 0..pointsPerEdge) {
                     val t = j.toDouble() / pointsPerEdge
-                    val x = x1 + (x2 - x1) * t + options.width
-                    val z = z1 + (z2 - z1) * t + options.length
-                    yield(Vector(x, options.height, z))
+                    val x = x1 + (x2 - x1) * t
+                    val z = z1 + (z2 - z1) * t
+                    yield(Vector(x, 0.0, z))
                 }
             }
         }
     }
 }
+
+/*TODO:
+    Make suire no shape depends on x, y, z, forward, sideward, upward. Remove these from options.
+
+        They should only be modifiers to move it.
+
+
+        speed value in modifers, should instant.
+
+        ROTATE SHOULD ROTATE IT RELATIVE TO THE PLAYER baased on forward, sideward, and upward.
+
+        startMs should be startTick and endTick.
+
+        --> rotate on tick 0 exactly.
+
+        --> rotate then slowly to between tick 0 2nad 20 to 90 degrees. Then move backwards.
+
+        --> ROPTATE_RELATIVE --> roate on tick exactl to relative positoin.
+
+        ---> ROTATE CAN BE ALSO USED TO FLIp.
+
+--> MAke sure x = widht, y height z = length*/

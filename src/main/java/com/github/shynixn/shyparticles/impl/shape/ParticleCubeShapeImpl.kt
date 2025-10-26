@@ -5,7 +5,7 @@ import com.github.shynixn.shyparticles.entity.ParticleOptions
 import org.bukkit.util.Vector
 
 class ParticleCubeShapeImpl : ParticleShape {
-    override fun apply(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
+    override fun apply(density: Double, pointCount: Int, options: ParticleOptions): Sequence<Vector> {
         return sequence {
             val halfWidth = options.width / 2
             val halfLength = options.length / 2
@@ -27,7 +27,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 if (distance < accumulated + edgeWidth) {
                     val t = (distance - accumulated) / edgeWidth
                     val x = -halfWidth + t * edgeWidth
-                    yield(Vector(x + options.x, -halfHeight + options.y, -halfLength + options.z))
+                    yield(Vector(x, -halfHeight, -halfLength))
                     continue
                 }
                 accumulated += edgeWidth
@@ -36,7 +36,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 if (distance < accumulated + edgeLength) {
                     val t = (distance - accumulated) / edgeLength
                     val z = -halfLength + t * edgeLength
-                    yield(Vector(halfWidth + options.x, -halfHeight + options.y, z + options.z))
+                    yield(Vector(halfWidth, -halfHeight, z))
                     continue
                 }
                 accumulated += edgeLength
@@ -45,7 +45,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 if (distance < accumulated + edgeWidth) {
                     val t = (distance - accumulated) / edgeWidth
                     val x = halfWidth - t * edgeWidth
-                    yield(Vector(x + options.x, -halfHeight + options.y, halfLength + options.z))
+                    yield(Vector(x, -halfHeight, halfLength))
                     continue
                 }
                 accumulated += edgeWidth
@@ -54,7 +54,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 if (distance < accumulated + edgeLength) {
                     val t = (distance - accumulated) / edgeLength
                     val z = halfLength - t * edgeLength
-                    yield(Vector(-halfWidth + options.x, -halfHeight + options.y, z + options.z))
+                    yield(Vector(-halfWidth, -halfHeight, z))
                     continue
                 }
                 accumulated += edgeLength
@@ -64,7 +64,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 if (distance < accumulated + edgeWidth) {
                     val t = (distance - accumulated) / edgeWidth
                     val x = -halfWidth + t * edgeWidth
-                    yield(Vector(x + options.x, halfHeight + options.y, -halfLength + options.z))
+                    yield(Vector(x, halfHeight, -halfLength))
                     continue
                 }
                 accumulated += edgeWidth
@@ -73,7 +73,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 if (distance < accumulated + edgeLength) {
                     val t = (distance - accumulated) / edgeLength
                     val z = -halfLength + t * edgeLength
-                    yield(Vector(halfWidth + options.x, halfHeight + options.y, z + options.z))
+                    yield(Vector(halfWidth, halfHeight, z))
                     continue
                 }
                 accumulated += edgeLength
@@ -82,7 +82,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 if (distance < accumulated + edgeWidth) {
                     val t = (distance - accumulated) / edgeWidth
                     val x = halfWidth - t * edgeWidth
-                    yield(Vector(x + options.x, halfHeight + options.y, halfLength + options.z))
+                    yield(Vector(x, halfHeight, halfLength))
                     continue
                 }
                 accumulated += edgeWidth
@@ -91,7 +91,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 if (distance < accumulated + edgeLength) {
                     val t = (distance - accumulated) / edgeLength
                     val z = halfLength - t * edgeLength
-                    yield(Vector(-halfWidth + options.x, halfHeight + options.y, z + options.z))
+                    yield(Vector(-halfWidth, halfHeight, z))
                     continue
                 }
                 accumulated += edgeLength
@@ -101,7 +101,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 if (distance < accumulated + edgeHeight) {
                     val t = (distance - accumulated) / edgeHeight
                     val y = -halfHeight + t * edgeHeight
-                    yield(Vector(-halfWidth + options.x, y + options.y, -halfLength + options.z))
+                    yield(Vector(-halfWidth, y, -halfLength))
                     continue
                 }
                 accumulated += edgeHeight
@@ -110,7 +110,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 if (distance < accumulated + edgeHeight) {
                     val t = (distance - accumulated) / edgeHeight
                     val y = -halfHeight + t * edgeHeight
-                    yield(Vector(halfWidth + options.x, y + options.y, -halfLength + options.z))
+                    yield(Vector(halfWidth, y, -halfLength))
                     continue
                 }
                 accumulated += edgeHeight
@@ -119,7 +119,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 if (distance < accumulated + edgeHeight) {
                     val t = (distance - accumulated) / edgeHeight
                     val y = -halfHeight + t * edgeHeight
-                    yield(Vector(halfWidth + options.x, y + options.y, halfLength + options.z))
+                    yield(Vector(halfWidth, y, halfLength))
                     continue
                 }
                 accumulated += edgeHeight
@@ -127,7 +127,7 @@ class ParticleCubeShapeImpl : ParticleShape {
                 // Back-left vertical edge (x = -halfWidth, z = halfLength)
                 val t = (distance - accumulated) / edgeHeight
                 val y = -halfHeight + t * edgeHeight
-                yield(Vector(-halfWidth + options.x, y + options.y, halfLength + options.z))
+                yield(Vector(-halfWidth, y, halfLength))
             }
         }
     }

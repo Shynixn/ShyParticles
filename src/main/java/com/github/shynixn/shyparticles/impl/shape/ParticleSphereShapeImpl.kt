@@ -10,7 +10,7 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 class ParticleSphereShapeImpl : ParticleShape {
-    override fun apply(density: Double, pointCount: Int, tickCount: Long, options: ParticleOptions): Sequence<Vector> {
+    override fun apply(density: Double, pointCount: Int,  options: ParticleOptions): Sequence<Vector> {
         return sequence {
             // Use Fibonacci sphere algorithm for uniform distribution
             val goldenRatio = (1 + sqrt(5.0)) / 2
@@ -26,9 +26,9 @@ class ParticleSphereShapeImpl : ParticleShape {
                 val phi = acos(t)
 
                 // Convert spherical coordinates to Cartesian
-                val x = options.radius * sin(phi) * cos(theta) + options.x
-                val y = options.radius * cos(phi) + options.y
-                val z = options.radius * sin(phi) * sin(theta) + options.z
+                val x = options.radius * sin(phi) * cos(theta)
+                val y = options.radius * cos(phi)
+                val z = options.radius * sin(phi) * sin(theta)
 
                 yield(Vector(x, y, z))
             }

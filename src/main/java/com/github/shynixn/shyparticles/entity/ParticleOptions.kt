@@ -184,40 +184,5 @@ class ParticleOptions {
      */
     var height: Double = 0.0
 
-    /**
-     * X offset from center.
-     */
-    var x: Double = 0.0
-
-    /**
-     * Y offset from center.
-     */
-    var y: Double = 0.0
-
-    /**
-     * Z offset from center.
-     */
-    var z: Double = 0.0
-
-    /**
-     * Forward offset.
-     */
-    var forward: Double = 0.0
-
-    /**
-     * Forward offset.
-     */
-    var sideward: Double = 0.0
-
-    /**
-     * Upwards offset.
-     */
-    var upward: Double = 0.0
-
-    /**
-     * Ignore pitch.
-     */
-    var ignorePitch : Boolean = false
-
     // endregion
 }
