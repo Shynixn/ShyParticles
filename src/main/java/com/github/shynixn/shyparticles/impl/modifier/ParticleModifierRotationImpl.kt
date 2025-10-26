@@ -3,10 +3,8 @@ package com.github.shynixn.shyparticles.impl.modifier
 import com.github.shynixn.shyparticles.contract.ParticleModifier as ParticleModifierContract
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
-import com.github.shynixn.shyparticles.impl.VectorUtil
 import org.bukkit.Location
 import org.bukkit.util.Vector
-import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -20,7 +18,13 @@ class ParticleModifierRotationImpl : ParticleModifierContract {
         if (tickCount >= modifier.startTick && tickCount <= modifier.endTick) {
             val elapsedTicks = (tickCount - modifier.startTick + 1).toDouble() // +1 to include current tick
             // modifier.angle is in degrees; compute accumulated degrees and convert to radians
-            angle = Math.toRadians(elapsedTicks * modifier.speed * modifier.angle)
+            if (modifier.yawOrigin) {
+                angle = Math.toRadians(baseLocation.yaw + modifier.angle)
+            } else if (modifier.pitchOrigin) {
+                angle = Math.toRadians(baseLocation.pitch + modifier.angle)
+            } else {
+                angle = Math.toRadians(elapsedTicks * modifier.speed * modifier.angle)
+            }
         }
 
         return when (modifier.axis) {

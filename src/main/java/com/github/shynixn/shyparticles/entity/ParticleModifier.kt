@@ -93,6 +93,16 @@ class ParticleModifier {
     var angle: Double = 0.0
 
     /**
+     * Aligns the rotation to yaw.
+     */
+    var yawOrigin: Boolean = false
+
+    /**
+     * Aligns the rotation to pitch.
+     */
+    var pitchOrigin: Boolean = false
+
+    /**
      * When to end applying the modifier in ticks.
      */
     var endTick: Int = Int.MAX_VALUE

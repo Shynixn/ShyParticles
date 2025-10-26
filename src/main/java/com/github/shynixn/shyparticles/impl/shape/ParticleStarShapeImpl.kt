@@ -40,24 +40,3 @@ class ParticleStarShapeImpl : ParticleShape {
         }
     }
 }
-
-/*TODO:
-
-        They should only be modifiers to move it.
-
-
-        speed value in modifers, should instant.
-
-        ROTATE SHOULD ROTATE IT RELATIVE TO THE PLAYER baased on forward, sideward, and upward.
-
-        startMs should be startTick and endTick.
-
-        --> rotate on tick 0 exactly.
-
-        --> rotate then slowly to between tick 0 2nad 20 to 90 degrees. Then move backwards.
-
-        --> ROPTATE_RELATIVE --> roate on tick exactl to relative positoin.
-
-        ---> ROTATE CAN BE ALSO USED TO FLIp.
-
-*/
