@@ -6,6 +6,7 @@ import com.github.shynixn.shyparticles.enumeration.ParticleAxisType
 import com.github.shynixn.shyparticles.impl.VectorUtil
 import org.bukkit.Location
 import org.bukkit.util.Vector
+import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -17,7 +18,9 @@ class ParticleModifierRotationImpl : ParticleModifierContract {
     ): Vector {
         // Only apply modifier if its delay has elapsed
         if (tickCount >= modifier.startTick && tickCount <= modifier.endTick) {
-            angle = (tickCount - modifier.startTick) * 0.05 * modifier.speed
+            val elapsedTicks = (tickCount - modifier.startTick + 1).toDouble() // +1 to include current tick
+            // modifier.angle is in degrees; compute accumulated degrees and convert to radians
+            angle = Math.toRadians(elapsedTicks * modifier.speed * modifier.angle)
         }
 
         return when (modifier.axis) {
