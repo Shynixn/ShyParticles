@@ -9,6 +9,7 @@ interface ParticleEffectService : AutoCloseable {
     /** Plays a particle effect at the given location. */
     fun startEffect(meta: ParticleEffectMeta, location: () -> Location, player: Player? = null): String
 
+    fun getSessionIds() : List<String>
     /**
      * Tries to get an effect meta data.
      */

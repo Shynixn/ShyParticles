@@ -37,6 +37,10 @@ class ParticleEffectServiceImpl(
         return effect.id
     }
 
+    override fun getSessionIds(): List<String> {
+        return activeParticleEffects.keys.toList().sortedDescending()
+    }
+
     /**
      * Tries to get an effect meta data.
      */

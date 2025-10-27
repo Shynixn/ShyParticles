@@ -39,6 +39,10 @@ class ShyParticlesCommandExecutor(
         repository.getCache()?.map { e -> e.name } ?: emptyList()
     }
 
+    private val sessionIdTabs: (CommandSender) -> List<String> = {
+        particleService.getSessionIds()
+    }
+
     private val effectMustExist = object : Validator<ParticleEffectMeta> {
         override suspend fun transform(
             sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>
@@ -136,6 +140,7 @@ class ShyParticlesCommandExecutor(
             permission(settings.commandPermission)
             permissionMessage(language.shyParticlesNoPermissionCommand.text)
             subCommand("play") {
+                permission(settings.playPermission)
                 toolTip { language.shyParticlesPlayCommandHint.text }
                 builder().argument("effect").validator(effectMustExist)
                     .tabs(effectTabs).executePlayer(senderHasToBePlayer) { player, effectMeta ->
@@ -164,25 +169,47 @@ class ShyParticlesCommandExecutor(
                             val location = Location(world, xRaw.toDouble(), yRaw.toDouble(), zRaw.toDouble())
                             playEffect(sender, effectMeta, location)
                         }
+                    }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
+                    .execute { sender, effectMeta, xRaw, yRaw, zRaw, world, player ->
+                        if (xRaw.toDoubleOrNull() != null && yRaw.toDoubleOrNull() != null && zRaw.toDoubleOrNull() != null) {
+                            val location = Location(world, xRaw.toDouble(), yRaw.toDouble(), zRaw.toDouble())
+                            playEffect(sender, effectMeta, location, player)
+                        }
                     }
             }
-            subCommand("playPlayer") {
+            subCommand("follow") {
+                permission(settings.followPermission)
                 toolTip { language.shyParticlesPlayCommandHint.text }
                 builder().argument("effect").validator(effectMustExist)
                     .tabs(effectTabs).executePlayer(senderHasToBePlayer) { player, effectMeta ->
-                        playPlayerEffect(player, effectMeta, player)
+                        playFollowEffect(player, effectMeta, player)
+                    }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
+                    .execute { sender, effect, player ->
+                        if (sender.hasPermission(settings.followOtherPermission)) {
+                            playFollowEffect(sender, effect, player)
+                        } else {
+                            sender.sendLanguageMessage(language.shyParticlesNoPermissionCommand)
+                        }
                     }
             }
             subCommand("stop") {
+                permission(settings.stopPermission)
                 toolTip { language.shyParticlesStopCommandHint.text }
-                builder().argument("sessionId").execute {sender, sessionId ->
+                builder().argument("sessionId").tabs(sessionIdTabs).execute { sender, sessionId ->
                     stopEffects(sender, sessionId)
                 }
             }
-            subCommand("stopPlayer") {
+            subCommand("stopFollow") {
+                permission(settings.stopFollowPermission)
                 toolTip { language.shyParticlesStopCommandHint.text }
-                builder().executePlayer(senderHasToBePlayer) { player->
-                    stopAllPlayerEffects(player, player)
+                builder().executePlayer(senderHasToBePlayer) { player ->
+                    stopFollowEffect(player, player)
+                }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs).execute { sender, player ->
+                    if (sender.hasPermission(settings.stopFollowOtherPermission)) {
+                        stopFollowEffect(sender, player)
+                    } else {
+                        sender.sendLanguageMessage(language.shyParticlesNoPermissionCommand)
+                    }
                 }
             }
             subCommand("list") {
@@ -206,29 +233,44 @@ class ShyParticlesCommandExecutor(
         }.build()
     }
 
-    private fun stopEffects(sender: CommandSender, sessionId : String){
-        particleService.stopEffect(sessionId)
-        sender.sendLanguageMessage(language.shyParticlesStopCommandHint)
-    }
+    private fun playFollowEffect(sender: CommandSender, effectMeta: ParticleEffectMeta, player: Player) {
+        if (!sender.hasPermission(settings.effectStartPermission + effectMeta.name.lowercase(Locale.ENGLISH))) {
+            sender.sendLanguageMessage(language.shyParticlesNoPermissionCommand)
+            return
+        }
 
-    private fun stopAllPlayerEffects(sender: CommandSender, player: Player){
-        particleService.stopPlayerEffects(player)
-        sender.sendLanguageMessage(language.shyParticlesEffectStopAllMessage)
-    }
-
-    private fun playPlayerEffect(sender: CommandSender, effectMeta: ParticleEffectMeta, player : Player) {
         val sessionId = particleService.startEffect(effectMeta, { player.location })
         sender.sendLanguageMessage(language.shyParticlesEffectPlayMessage, effectMeta.name, sessionId)
     }
 
-    private fun playEffect(sender: CommandSender, effectMeta: ParticleEffectMeta, location: Location) {
-        val sessionId = particleService.startEffect(effectMeta, { location })
+    private fun stopFollowEffect(sender: CommandSender, player: Player) {
+        particleService.stopPlayerEffects(player)
+        sender.sendLanguageMessage(language.shyParticlesEffectStopAllMessage)
+    }
+
+    private fun playEffect(
+        sender: CommandSender,
+        effectMeta: ParticleEffectMeta,
+        location: Location,
+        visible: Player? = null
+    ) {
+        if (!sender.hasPermission(settings.effectStartPermission + effectMeta.name.lowercase(Locale.ENGLISH))) {
+            sender.sendLanguageMessage(language.shyParticlesNoPermissionCommand)
+            return
+        }
+
+        val sessionId = particleService.startEffect(effectMeta, { location }, visible)
         sender.sendLanguageMessage(language.shyParticlesEffectPlayMessage, effectMeta.name, sessionId)
+    }
+
+    private fun stopEffects(sender: CommandSender, sessionId: String) {
+        particleService.stopEffect(sessionId)
+        sender.sendLanguageMessage(language.shyParticlesEffectStopMessage, sessionId)
     }
 
     private suspend fun listEffects(sender: CommandSender) {
         val effects = repository.getAll()
-        val effectList = effects.sortedBy { e -> e.name }.joinToString(", ") { e -> e.name }
+        val effectList = effects.sortedBy { e -> e.name.lowercase(Locale.ENGLISH) }.joinToString(", ") { e -> e.name }
         sender.sendLanguageMessage(language.shyParticlesEffectListMessage, effectList)
     }
 

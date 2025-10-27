@@ -12,6 +12,7 @@ import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
 import com.github.shynixn.shyparticles.entity.ParticleLayer
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.entity.ParticleOptions
+import com.github.shynixn.shyparticles.entity.ShyParticlesSettings
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
 import com.github.shynixn.shyparticles.impl.modifier.*
@@ -23,6 +24,7 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.util.Vector
+import java.util.Locale
 
 class ParticleEffectImpl(
     override val id: String,
@@ -32,7 +34,8 @@ class ParticleEffectImpl(
     plugin: Plugin,
     private val packetService: PacketService,
     private val materialService: MaterialService,
-    private val itemService: ItemService
+    private val itemService: ItemService,
+    settings: ShyParticlesSettings
 ) : ParticleEffect {
     private val stateLessModifiers = mapOf(
         ParticleModifierType.PULSE to ParticlePointModifierPulseImpl(),
@@ -54,7 +57,7 @@ class ParticleEffectImpl(
         ParticleShapeType.SPIRAL to ParticleSpiralShapeImpl(),
         ParticleShapeType.STAR to ParticleStarShapeImpl(),
     )
-
+    private val visiblePermission = settings.effectVisiblePermission + effectMeta.name.lowercase(Locale.ENGLISH)
     private var job: Job? = null
     private var running = false
 
@@ -94,13 +97,16 @@ class ParticleEffectImpl(
 
         while (running) {
             val currentLocation = locationRef().clone()
+            val players = getPlayersInRange(currentLocation)
 
-            // Render each layer
-            for (pair in layersAndOptions) {
-                renderLayer(pair.first, pair.second, currentLocation, tickCount)
+            if (players.isNotEmpty()) {
+                // Render each layer
+                for (pair in layersAndOptions) {
+                    renderLayer(pair.first, pair.second, currentLocation, tickCount, players)
+                }
+
+                playSounds(currentLocation, tickCount)
             }
-
-            playSounds(currentLocation, tickCount)
 
             tickCount++
             delay(1.ticks) // 1 tick = 50ms (20 ticks per second)
@@ -117,6 +123,32 @@ class ParticleEffectImpl(
         }
     }
 
+    private fun getPlayersInRange(baseLocation: Location): Set<Player> {
+        val selection = HashSet<Player>()
+
+        if (player != null) {
+            selection.add(player)
+        } else {
+            val world = baseLocation.world
+
+            if (world != null) {
+                selection.addAll(world.players)
+            }
+        }
+
+        val result = HashSet<Player>()
+
+        for (player in selection) {
+            if (player.location.distance(baseLocation) <= effectMeta.range) {
+                if (player.hasPermission(visiblePermission)) {
+                    result.add(player)
+                }
+            }
+        }
+
+        return result
+    }
+
     private fun reset(layersAndOptions: MutableList<Pair<ParticleLayer, ParticleOptions>>) {
         stateFullModifiers = mapOf(
             ParticleModifierType.MOVE to ParticlePointModifierMoveImpl(),
@@ -126,7 +158,13 @@ class ParticleEffectImpl(
         layersAndOptions.addAll(effectMeta.layers.map { Pair(it, it.options.copy()) })
     }
 
-    private fun renderLayer(layer: ParticleLayer, options: ParticleOptions, baseLocation: Location, tickCount: Long) {
+    private fun renderLayer(
+        layer: ParticleLayer,
+        options: ParticleOptions,
+        baseLocation: Location,
+        tickCount: Long,
+        players: Set<Player>
+    ) {
         val points = generateShapePoints(layer.shape, options)
 
         // Apply modifiers to each point (excluding transform_absolute)
@@ -136,7 +174,7 @@ class ParticleEffectImpl(
 
         for (point in modifiedPoints) {
             val particleLocation = baseLocation.clone().add(point)
-            spawnParticle(layer.particle, particleLocation, options)
+            spawnParticle(layer.particle, particleLocation, options, players)
         }
     }
 
@@ -184,11 +222,11 @@ class ParticleEffectImpl(
         }
     }
 
-
     private fun spawnParticle(
         particleName: String,
         location: Location,
         options: ParticleOptions,
+        players: Set<Player>
     ) {
         val packet = PacketOutParticle(
             name = particleName,
@@ -218,16 +256,8 @@ class ParticleEffectImpl(
             packet.item = itemService.toItemStack(options.item!!)
         }
 
-        if (player != null) {
+        for (player in players) {
             packetService.sendPacketOutParticle(player, packet)
-        } else {
-            // Send to all players in range
-            val world = location.world ?: return
-            for (p in world.players) {
-                if (p.location.distance(location) <= 64.0) {
-                    packetService.sendPacketOutParticle(p, packet)
-                }
-            }
         }
     }
 

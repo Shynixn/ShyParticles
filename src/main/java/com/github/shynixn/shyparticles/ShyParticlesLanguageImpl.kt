@@ -8,7 +8,7 @@ class ShyParticlesLanguageImpl : ShyParticlesLanguage {
   get() = listOf("en_us")
  override var shyParticlesPlayerNotFoundMessage = LanguageItem("[&9ShyParticles&f] &cPlayer %shyparticles_param_1% not found.")
 
- override var shyParticlesNoPermissionCommand = LanguageItem("[&9ShyParticles&f] &cYou do not have permission to execute this command.")
+ override var shyParticlesNoPermissionCommand = LanguageItem("[&9ShyParticles&f] &cYou do not have permission to perform this action.")
 
  override var shyParticlesReloadCommandHint = LanguageItem("Reloads all particle effects and configuration.")
 

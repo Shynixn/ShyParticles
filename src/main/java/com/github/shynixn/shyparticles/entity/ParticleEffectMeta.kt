@@ -19,6 +19,9 @@ class ParticleEffectMeta : Element {
     
     @Comment("Duration of the effect in ticks (0 = infinite)")
     var duration: Long = 0
+
+    @Comment("Range in block which players can see the effect")
+    var range : Int = 64
     
     @Comment("Whether the effect should repeat after finishing")
     var repeat: Boolean = false

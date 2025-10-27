@@ -6,6 +6,7 @@ import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.shyparticles.contract.ParticleEffect
 import com.github.shynixn.shyparticles.contract.ParticleEffectFactory
 import com.github.shynixn.shyparticles.entity.ParticleEffectMeta
+import com.github.shynixn.shyparticles.entity.ShyParticlesSettings
 import com.github.shynixn.shyparticles.impl.ParticleEffectImpl
 import org.bukkit.Location
 import org.bukkit.entity.Player
@@ -15,7 +16,8 @@ class ParticleEffectFactoryImpl(
     private val plugin: Plugin,
     private val packetService: PacketService,
     private val itemService: ItemService,
-    private val materialService: MaterialService
+    private val materialService: MaterialService,
+    private val settings: ShyParticlesSettings
 ) : ParticleEffectFactory {
     private var counter = 1
 
@@ -27,8 +29,18 @@ class ParticleEffectFactoryImpl(
         location: () -> Location,
         player: Player?
     ): ParticleEffect {
-        val particleId = "particle_${counter}"
+        val particleId = String.format("%010d-", counter) + meta.name
         counter++
-        return ParticleEffectImpl(particleId,  meta, location, player, plugin, packetService, materialService, itemService)
+        return ParticleEffectImpl(
+            particleId,
+            meta,
+            location,
+            player,
+            plugin,
+            packetService,
+            materialService,
+            itemService,
+            settings
+        )
     }
 }

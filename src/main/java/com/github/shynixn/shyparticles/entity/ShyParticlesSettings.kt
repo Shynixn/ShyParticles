@@ -19,6 +19,22 @@ class ShyParticlesSettings(private val reloadFun: (ShyParticlesSettings) -> Unit
 
     var reloadPermission: String = Permission.RELOAD.text
 
+    var playPermission: String = Permission.PLAY.text
+
+    var stopPermission: String = Permission.STOP.text
+
+    var followPermission: String = Permission.FOLLOW.text
+
+    var followOtherPermission: String = Permission.FOLLOW_OTHER.text
+
+    var stopFollowPermission: String = Permission.STOP_FOLLOW.text
+
+    var stopFollowOtherPermission: String = Permission.STOP_FOLLOW_OTHER.text
+
+    var effectStartPermission: String = Permission.EFFECT_START.text
+
+    var effectVisiblePermission: String = Permission.EFFECT_VISIBLE.text
+
     var defaultParticles: List<Pair<String, String>> = listOf(
         "effects/ash_fall.yml" to "ash_fall.yml",
         "effects/blue_circle.yml" to "blue_circle.yml",

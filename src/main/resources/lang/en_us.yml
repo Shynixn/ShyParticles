@@ -15,7 +15,7 @@ shyParticlesPlayerNotFoundMessage:
   fadeOutTicks: 20
 shyParticlesNoPermissionCommand:
   type: "CHAT"
-  text: "[&9ShyParticles&f] &cYou do not have permission to execute this command."
+  text: "[&9ShyParticles&f] &cYou do not have permission to perform this action."
 shyParticlesReloadCommandHint:
   type: "CHAT"
   text: "Reloads all particle effects and configuration."
