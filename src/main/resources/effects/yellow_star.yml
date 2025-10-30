@@ -1,0 +1,20 @@
+name: "yellow_star"
+duration: 100 # Duration in Ticks, 1 second = 20 ticks
+repeat: true # Should the effect repeat indefinitely once started.
+
+# You can add multiple particle layers which appear at different times during the effect.
+layers:
+  - particle: "DUST,REDSTONE" # For version compatibility, comma separated particle names for different Minecraft versions. You only need to specify the type of the version you are using.
+    shape: "STAR" # Shapes: CIRCLE, SPHERE, SPIRAL, LINE, RECTANGLE, CUBE, RANDOM, POINT, HEART, STAR
+    options:
+      skip: 2 # How many ticks to skip until this packet is sent again. Most particles do not need to be sent every single tick. This greatly improves packet through put.
+      radius: 2.0 # For Star: This is the radius of the star
+      particleCount: 150 # For Star: The amount of dots building the star. Is together used with density.
+      density: 1.0 # For Star: The amount of dots building the star. Is together used with particleCount.
+      red: 255 # RGB code for dust particles.
+      green: 255 # RGB code for dust particles.
+      blue: 0 # RGB code for dust particles.
+      scale: 1.0 # A dust particle requires a scale.
+    modifiers:
+      - type: "ROTATE" # Modifiers: OSCILLATE, ROTATE, WAVE, PULSE, MOVE, RANDOM, OPTIONS_SET, OPTIONS_ADD
+        angle: 2 # Angle in degrees to continuously rotate.
