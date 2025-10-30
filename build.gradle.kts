@@ -27,8 +27,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.45")
-    implementation("com.github.shynixn.mcutils:packet:2025.37")
+    implementation("com.github.shynixn.mcutils:common:2025.47")
+    implementation("com.github.shynixn.mcutils:packet:2025.44")
 
     // Test
     testImplementation(kotlin("test"))
@@ -193,7 +193,7 @@ tasks.register("pluginJarLegacy", com.github.jengelman.gradle.plugins.shadow.tas
     dependsOn("relocateLegacyPluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocateLegacyPluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-legacy.${archiveExtension.get()}")
-    // destinationDirectory.set(File("C:\\temp\\plugins"))
+    destinationDirectory.set(File("C:\\git\\mc\\plugins"))
     exclude("com/github/shynixn/shyparticles/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
     exclude("com/github/shynixn/mcutils/**")
     exclude("com/github/shynixn/mccoroutine/**")

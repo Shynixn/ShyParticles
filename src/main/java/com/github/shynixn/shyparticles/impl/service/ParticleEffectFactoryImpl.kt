@@ -29,7 +29,7 @@ class ParticleEffectFactoryImpl(
         location: () -> Location,
         player: Player?
     ): ParticleEffect {
-        val particleId = String.format("%010d-", counter) + meta.name
+        val particleId = meta.name + String.format("-%010d", counter)
         counter++
         return ParticleEffectImpl(
             particleId,

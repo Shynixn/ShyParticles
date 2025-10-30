@@ -33,6 +33,11 @@ class ParticleOptions {
     var count: Int = 0
 
     /**
+     * Amount of ticks to skip between sends.
+     */
+    var skip: Int = 0
+
+    /**
      * Red component of particle color (0-255).
      */
     @Suppress("unused") // Use for de-serialization.
@@ -219,6 +224,7 @@ class ParticleOptions {
             it.width = this.width
             it.length = this.length
             it.height = this.height
+            it.skip = this.skip
         }
 
         return result
@@ -248,6 +254,7 @@ class ParticleOptions {
             it.width += this.width
             it.length += this.length
             it.height += this.height
+            it.skip += this.skip
         }
 
         return result

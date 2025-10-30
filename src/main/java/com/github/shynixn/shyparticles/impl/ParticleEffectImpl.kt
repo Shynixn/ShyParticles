@@ -102,7 +102,9 @@ class ParticleEffectImpl(
             if (players.isNotEmpty()) {
                 // Render each layer
                 for (pair in layersAndOptions) {
-                    renderLayer(pair.first, pair.second, currentLocation, tickCount, players)
+                    if (pair.second.skip == 0 || tickCount % pair.second.skip == 0L) {
+                        renderLayer(pair.first, pair.second, currentLocation, tickCount, players)
+                    }
                 }
 
                 playSounds(currentLocation, tickCount)

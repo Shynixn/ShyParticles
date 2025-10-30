@@ -1,15 +1,17 @@
 name: "blue_sphere"
-duration: 10
-repeat: true
+duration: 100 # Duration in Ticks, 1 second = 20 ticks
+repeat: true # Should the effect repeat indefinitely once started.
 
+# You can add multiple particle layers which appear at different times during the effect.
 layers:
-  - particle: "DUST"
-    shape: "SPHERE"
+  - particle: "DUST,REDSTONE" # For version compatibility, comma separated particle names for different Minecraft versions. You only need to specify the type of the version you are using.
+    shape: "SPHERE" # Shapes: CIRCLE, SPHERE, SPIRAL, LINE, RECTANGLE, CUBE, RANDOM, POINT, HEART, STAR
     options:
-      radius: 2.0
-      particleCount: 100
-      density: 1.0
-      speed: 0.0
-      red: 0
-      green: 100
-      blue: 255
+      skip: 2 # How many ticks to skip until this packet is sent again. Most particles do not need to be sent every single tick. This greatly improves packet through put.
+      radius: 2.0 # For Sphere: This is the radius of the sphere
+      particleCount: 100 # For Sphere: The amount of dots building the sphere. Is together used with density.
+      density: 1.0 # For Sphere: The amount of dots building the sphere. Is together used with particleCount.
+      red: 0 # RGB code for dust particles.
+      green: 0 # RGB code for dust particles.
+      blue: 255 # RGB code for dust particles.
+      scale: 1.0 # A dust particle requires a scale.
