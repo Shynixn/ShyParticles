@@ -1,0 +1,125 @@
+name: "box_tower"
+duration: 200 # Duration in Ticks, 1 second = 20 ticks
+repeat: true # Should the effect repeat indefinitely once started.
+
+# You can add multiple particle layers which appear at different times during the effect.
+layers:
+  - particle: "DUST,REDSTONE" # For version compatibility, comma separated particle names for different Minecraft versions. You only need to specify the type of the version you are using.
+    shape: "CUBE" # Shapes: CIRCLE, SPHERE, SPIRAL, LINE, RECTANGLE, CUBE, RANDOM, POINT, HEART, STAR
+    options:
+      skip: 2 # How many ticks to skip until this packet is sent again. Most particles do not need to be sent every single tick. This greatly improves packet through put.
+      particleCount: 150 # For Star: The amount of dots building the star. Is together used with density.
+      density: 1.0 # For Star: The amount of dots building the star. Is together used with particleCount.
+      red: 255 # RGB code for dust particles.
+      green: 255 # RGB code for dust particles.
+      blue: 0 # RGB code for dust particles.
+      scale: 1.0 # A dust particle requires a scale.
+      width: 3
+      length: 3
+      height: 1.5
+    modifiers:
+      - type: "MOVE" # This move is used to put the layer to the starting position.
+        forward: 2.1
+        y: 1.0
+        start: 0 # Start 0 means, that the particle is moved at tick 0.
+        end: 0 # End 0 means, that the particle stops moving after the 0 tick.
+      - type: "MOVE"
+        x: 1.0
+        speed: 0.1
+        start: 0
+        end: 50
+      - type: "MOVE" # This move is used to put the layer to the starting position.
+        z: 1.0
+        speed: 0.1
+        start: 50
+        end: 100
+      - type: "MOVE" # This move is used to put the layer to the starting position.
+        x: -1.0
+        speed: 0.1
+        start: 100
+        end: 150
+      - type: "MOVE" # This move is used to put the layer to the starting position.
+        z: -1.0
+        speed: 0.1
+        start: 150
+        end: 200
+
+  - particle: "DUST,REDSTONE" # For version compatibility, comma separated particle names for different Minecraft versions. You only need to specify the type of the version you are using.
+    shape: "CUBE" # Shapes: CIRCLE, SPHERE, SPIRAL, LINE, RECTANGLE, CUBE, RANDOM, POINT, HEART, STAR
+    options:
+      skip: 2 # How many ticks to skip until this packet is sent again. Most particles do not need to be sent every single tick. This greatly improves packet through put.
+      particleCount: 150 # For Star: The amount of dots building the star. Is together used with density.
+      density: 1.0 # For Star: The amount of dots building the star. Is together used with particleCount.
+      red: 0 # RGB code for dust particles.
+      green: 255 # RGB code for dust particles.
+      blue: 0 # RGB code for dust particles.
+      scale: 1.0 # A dust particle requires a scale.
+      width: 2
+      length: 1.5
+      height: 1
+    modifiers:
+      - type: "MOVE" # Modifiers: OSCILLATE, ROTATE, WAVE, PULSE, MOVE, RANDOM, OPTIONS_SET, OPTIONS_ADD
+        forward: 2.0 # Forward means in front of the origin of the playing position.
+        y: 2.5
+        start: 0 # Start 0 means, that the particle is moved at tick 0.
+        end: 0 # End 0 means, that the particle stops moving after the 0 tick.
+      - type: "MOVE"
+        x: 1.0
+        speed: 0.1
+        start: 0
+        end: 50
+      - type: "MOVE" # This move is used to put the layer to the starting position.
+        z: 1.0
+        speed: 0.1
+        start: 50
+        end: 100
+      - type: "MOVE" # This move is used to put the layer to the starting position.
+        x: -1.0
+        speed: 0.1
+        start: 100
+        end: 150
+      - type: "MOVE" # This move is used to put the layer to the starting position.
+        z: -1.0
+        speed: 0.1
+        start: 150
+        end: 200
+
+  - particle: "DUST,REDSTONE" # For version compatibility, comma separated particle names for different Minecraft versions. You only need to specify the type of the version you are using.
+    shape: "CUBE" # Shapes: CIRCLE, SPHERE, SPIRAL, LINE, RECTANGLE, CUBE, RANDOM, POINT, HEART, STAR
+    options:
+      skip: 2 # How many ticks to skip until this packet is sent again. Most particles do not need to be sent every single tick. This greatly improves packet through put.
+      particleCount: 150 # For Star: The amount of dots building the star. Is together used with density.
+      density: 1.0 # For Star: The amount of dots building the star. Is together used with particleCount.
+      red: 255 # RGB code for dust particles.
+      green: 0 # RGB code for dust particles.
+      blue: 0 # RGB code for dust particles.
+      scale: 1.0 # A dust particle requires a scale.
+      width: 3
+      length: 2
+      height: 1
+    modifiers:
+      - type: "MOVE" # Modifiers: OSCILLATE, ROTATE, WAVE, PULSE, MOVE, RANDOM, OPTIONS_SET, OPTIONS_ADD
+        forward: 2.0 # Forward means in front of the origin of the playing position.
+        y: 3.5
+        start: 0 # Start 0 means, that the particle is moved at tick 0.
+        end: 0 # End 0 means, that the particle stops moving after the 0 tick.
+      - type: "MOVE"
+        x: 1.0
+        speed: 0.1
+        start: 0
+        end: 50
+      - type: "MOVE" # This move is used to put the layer to the starting position.
+        z: 1.0
+        speed: 0.1
+        start: 50
+        end: 100
+      - type: "MOVE" # This move is used to put the layer to the starting position.
+        x: -1.0
+        speed: 0.1
+        start: 100
+        end: 150
+      - type: "MOVE" # This move is used to put the layer to the starting position.
+        z: -1.0
+        speed: 0.1
+        start: 150
+        end: 200

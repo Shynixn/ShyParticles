@@ -38,7 +38,8 @@ class ShyParticlesSettings(private val reloadFun: (ShyParticlesSettings) -> Unit
     var defaultParticles: List<Pair<String, String>> = listOf(
         "effects/blue_sphere.yml" to "blue_sphere.yml",
         "effects/yellow_star.yml" to "yellow_star.yml",
-    )
+        "effects/box_tower.yml" to "box_tower.yml",
+        )
 
     /**
      * Reloads the config.

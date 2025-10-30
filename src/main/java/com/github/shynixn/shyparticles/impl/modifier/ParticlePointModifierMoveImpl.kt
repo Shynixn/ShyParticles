@@ -8,7 +8,7 @@ import org.bukkit.util.Vector
 
 class ParticlePointModifierMoveImpl() : ParticlePointModifier {
     private var lastTickCount = -1L
-    private val offset = Vector()
+    private val offsetMap = HashMap<ParticleModifier, Vector>()
 
     override fun apply(
         point: Vector,
@@ -16,6 +16,13 @@ class ParticlePointModifierMoveImpl() : ParticlePointModifier {
         tickCount: Long,
         baseLocation: Location
     ): Vector {
+        var offset = offsetMap[modifier]
+
+        if (offset == null) {
+            offset = Vector()
+            offsetMap[modifier] = offset
+        }
+
         // Only apply modifier if its delay has elapsed
         if (tickCount >= modifier.start && tickCount <= modifier.end && lastTickCount != tickCount) {
             // Apply basic x, y, z offsets multiplied by speed

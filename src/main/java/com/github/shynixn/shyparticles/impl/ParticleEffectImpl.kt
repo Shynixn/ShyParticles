@@ -43,8 +43,7 @@ class ParticleEffectImpl(
         ParticleModifierType.WAVE to ParticlePointModifierWaveImpl(),
         ParticleModifierType.OSCILLATE to ParticlePointModifierOscillateImpl(),
     )
-    private var stateFullModifiers: Map<ParticleModifierType, ParticlePointModifier> =
-        emptyMap()
+    private var stateFullModifiers: Array<Map<ParticleModifierType, ParticlePointModifier>> = emptyArray()
     private val shapes = mapOf(
         ParticleShapeType.CIRCLE to ParticleCircleShapeImpl(),
         ParticleShapeType.CUBE to ParticleCubeShapeImpl(),
@@ -101,9 +100,10 @@ class ParticleEffectImpl(
 
             if (players.isNotEmpty()) {
                 // Render each layer
-                for (pair in layersAndOptions) {
+                for(i in 0 until layersAndOptions.size){
+                    val pair = layersAndOptions[i]
                     if (pair.second.skip == 0 || tickCount % pair.second.skip == 0L) {
-                        renderLayer(pair.first, pair.second, currentLocation, tickCount, players)
+                        renderLayer(pair.first, pair.second, currentLocation.clone(), tickCount, players, i)
                     }
                 }
 
@@ -152,10 +152,13 @@ class ParticleEffectImpl(
     }
 
     private fun reset(layersAndOptions: MutableList<Pair<ParticleLayer, ParticleOptions>>) {
-        stateFullModifiers = mapOf(
-            ParticleModifierType.MOVE to ParticlePointModifierMoveImpl(),
-            ParticleModifierType.ROTATE to ParticlePointModifierRotationImpl(),
-        )
+        this.stateFullModifiers =  Array(effectMeta.layers.size
+        ) { _ ->
+            mapOf(
+                ParticleModifierType.MOVE to ParticlePointModifierMoveImpl(),
+                ParticleModifierType.ROTATE to ParticlePointModifierRotationImpl(),
+            )
+        }
         layersAndOptions.clear()
         layersAndOptions.addAll(effectMeta.layers.map { Pair(it, it.options.copy()) })
     }
@@ -165,13 +168,14 @@ class ParticleEffectImpl(
         options: ParticleOptions,
         baseLocation: Location,
         tickCount: Long,
-        players: Set<Player>
+        players: Set<Player>,
+        layerIndex : Int
     ) {
         val points = generateShapePoints(layer.shape, options)
 
         // Apply modifiers to each point (excluding transform_absolute)
         val modifiedPoints = points.map { point ->
-            applyPointModifiers(point, baseLocation, options, layer.modifiers, tickCount)
+            applyPointModifiers(point, baseLocation, options, layer.modifiers, tickCount, layerIndex)
         }
 
         for (point in modifiedPoints) {
@@ -186,6 +190,7 @@ class ParticleEffectImpl(
         options: ParticleOptions,
         modifierActions: List<ParticleModifier>,
         tickCount: Long,
+        layerIndex : Int
     ): Vector {
         var modifiedPoint = point.clone()
         for (modifier in modifierActions) {
@@ -203,7 +208,7 @@ class ParticleEffectImpl(
                 }
             }
 
-            val stateFullFun = stateFullModifiers[modifier.type]
+            val stateFullFun = stateFullModifiers[layerIndex][modifier.type]
             if (stateFullFun != null) {
                 modifiedPoint = stateFullFun.apply(modifiedPoint, modifier, tickCount, baseLocation)
             }
