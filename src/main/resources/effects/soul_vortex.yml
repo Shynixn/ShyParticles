@@ -1,0 +1,71 @@
+name: "soul_vortex"
+duration: 180 # Duration in Ticks, 1 second = 20 ticks
+repeat: true # Should the effect repeat indefinitely once started.
+
+# A dark vortex of souls with soul and soul fire flame particles
+layers:
+  - particle: "SOUL"
+    shape: "SPIRAL"
+    options:
+      skip: 1
+      particleCount: 200
+      density: 1.0
+      radius: 2.5
+      height: 4.0
+      turns: 4
+      speed: 0.05
+      count: 1
+    modifiers:
+      - type: "ROTATE"
+        angle: 3
+        speed: 1.0
+        axis: Y
+        start: 0
+        end: 180
+      - type: "PULSE"
+        minScale: 0.7
+        maxScale: 1.3
+        speed: 0.6
+        start: 0
+        end: 180
+
+  - particle: "SOUL_FIRE_FLAME"
+    shape: "CIRCLE"
+    options:
+      skip: 2
+      particleCount: 60
+      density: 1.0
+      radius: 2.0
+      speed: 0.02
+      count: 1
+    modifiers:
+      - type: "MOVE"
+        y: 2.0
+        speed: 1.0
+        start: 0
+        end: 0
+      - type: "ROTATE"
+        angle: -4
+        speed: 1.0
+        axis: Y
+        start: 0
+        end: 180
+
+  - particle: "SCULK_SOUL"
+    shape: "RANDOM"
+    options:
+      skip: 3
+      particleCount: 40
+      density: 1.0
+      radius: 3.0
+      height: 4.0
+      speed: 0.1
+      count: 1
+    modifiers:
+      - type: "ROTATE"
+        angle: 2
+        speed: 1.0
+        axis: Y
+        start: 0
+        end: 180
+

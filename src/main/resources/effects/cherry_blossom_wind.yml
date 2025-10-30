@@ -1,0 +1,42 @@
+name: "cherry_blossom_wind"
+duration: 200 # Duration in Ticks, 1 second = 20 ticks
+repeat: true # Should the effect repeat indefinitely once started.
+
+# A peaceful cherry blossom effect with wind and falling petals
+layers:
+  - particle: "CHERRY_LEAVES"
+    shape: "SPIRAL"
+    options:
+      skip: 2
+      particleCount: 100
+      density: 1.0
+      radius: 2.0
+      height: 4.0
+      turns: 2
+      speed: 0.08
+      count: 1
+    modifiers:
+      - type: "ROTATE"
+        angle: 2
+        speed: 1.0
+        axis: Y
+
+  - particle: "FALLING_SPORE_BLOSSOM"
+    shape: "CIRCLE"
+    options:
+      skip: 3
+      particleCount: 60
+      density: 1.0
+      radius: 1.5
+      speed: 0.01
+      count: 1
+    modifiers:
+      - type: "MOVE"
+        y: 3.5
+        speed: 1.0
+        start: 0
+        end: 0
+      - type: "ROTATE"
+        angle: -2
+        speed: 1.0
+        axis: Y

@@ -1,0 +1,69 @@
+name: "electric_storm"
+duration: 140 # Duration in Ticks, 1 second = 20 ticks
+repeat: true # Should the effect repeat indefinitely once started.
+
+# An electric storm with electric sparks and glow effects
+layers:
+  - particle: "ELECTRIC_SPARK"
+    shape: "SPHERE"
+    options:
+      skip: 1
+      particleCount: 150
+      density: 1.0
+      radius: 2.5
+      speed: 0.2
+      count: 3
+    modifiers:
+      - type: "PULSE"
+        minScale: 0.6
+        maxScale: 1.6
+        speed: 1.5
+        start: 0
+        end: 140
+
+  - particle: "GLOW"
+    shape: "CIRCLE"
+    options:
+      skip: 2
+      particleCount: 80
+      density: 1.0
+      radius: 2.0
+      speed: 0.1
+      count: 2
+    modifiers:
+      - type: "ROTATE"
+        angle: 5
+        speed: 1.0
+        axis: Y
+        start: 0
+        end: 140
+      - type: "OSCILLATE"
+        y: 1.0
+        speed: 1.2
+        axis: Y
+        start: 0
+        end: 140
+
+  - particle: "END_ROD"
+    shape: "STAR"
+    options:
+      skip: 2
+      particleCount: 100
+      density: 1.0
+      radius: 2.2
+      speed: 0.05
+      count: 1
+    modifiers:
+      - type: "ROTATE"
+        angle: 3
+        speed: 1.0
+        axis: Y
+        start: 0
+        end: 140
+      - type: "PULSE"
+        minScale: 0.8
+        maxScale: 1.3
+        speed: 1.0
+        start: 0
+        end: 140
+
