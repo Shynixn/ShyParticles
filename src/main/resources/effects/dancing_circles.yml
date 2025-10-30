@@ -1,0 +1,93 @@
+name: "dancing_circles"
+duration: 500 # Duration in Ticks, 1 second = 20 ticks
+repeat: true # Should the effect repeat indefinitely once started.
+
+# Multiple circles that oscillate and create a wave pattern
+layers:
+  - particle: "DUST,REDSTONE"
+    shape: "CIRCLE"
+    options:
+      skip: 2
+      particleCount: 80
+      density: 1.0
+      radius: 2
+      red: 255
+      green: 0
+      blue: 150
+      scale: 1.0
+    modifiers:
+      - type: "MOVE"
+        y: 1.0
+        start: 0
+        end: 0
+      - type: "OSCILLATE"
+        axis: "Y"
+        x: 3.0
+        z: 3.0
+
+  - particle: "DUST,REDSTONE"
+    shape: "CIRCLE"
+    options:
+      skip: 2
+      particleCount: 80
+      density: 1.0
+      radius: 1.0
+      red: 150
+      green: 0
+      blue: 255
+      scale: 1.0
+    modifiers:
+      - type: "MOVE"
+        x: 3.0
+        y: 2.0
+        start: 0
+        end: 0
+      - type: "OSCILLATE"
+        axis: "Y"
+        x: 3.0
+        z: 3.0
+
+  - particle: "DUST,REDSTONE"
+    shape: "CIRCLE"
+    options:
+      skip: 2
+      particleCount: 80
+      density: 1.0
+      radius: 1.5
+      red: 0
+      green: 150
+      blue: 255
+      scale: 1.0
+    modifiers:
+      - type: "MOVE"
+        x: 3.0
+        y: 3.0
+        start: 0
+        end: 0
+      - type: "OSCILLATE"
+        axis: "Y"
+        x: 3.0
+        z: 3.0
+
+  - particle: "DUST,REDSTONE"
+    shape: "CIRCLE"
+    options:
+      skip: 2
+      particleCount: 80
+      density: 1.0
+      radius: 1.5
+      red: 0
+      green: 255
+      blue: 150
+      scale: 1.0
+    modifiers:
+      - type: "MOVE"
+        x: -3.0
+        y: 4.0
+        start: 0
+        end: 0
+      - type: "OSCILLATE"
+        axis: "Y"
+        x: 3.0
+        z: 3.0
+

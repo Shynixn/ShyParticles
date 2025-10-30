@@ -1,0 +1,57 @@
+name: "rainbow_spiral"
+duration: 200 # Duration in Ticks, 1 second = 20 ticks
+repeat: true # Should the effect repeat indefinitely once started.
+
+# A colorful spiral that rotates with multiple color layers
+layers:
+  - particle: "DUST,REDSTONE"
+    shape: "SPIRAL"
+    options:
+      skip: 2
+      particleCount: 200
+      density: 1.0
+      radius: 2.0
+      height: 4.0
+      red: 255
+      green: 0
+      blue: 0
+      scale: 1.0
+      turns: 5
+    modifiers:
+      - type: "ROTATE"
+        angle: 3
+
+  - particle: "DUST,REDSTONE"
+    shape: "SPIRAL"
+    options:
+      skip: 2
+      particleCount: 200
+      density: 1.0
+      radius: 1.5
+      height: 4.0
+      red: 0
+      green: 255
+      blue: 0
+      scale: 1.0
+      turns: 5
+    modifiers:
+      - type: "ROTATE"
+        angle: -3
+
+  - particle: "DUST,REDSTONE"
+    shape: "SPIRAL"
+    options:
+      skip: 2
+      particleCount: 200
+      density: 1.0
+      radius: 1.0
+      height: 4.0
+      red: 0
+      green: 0
+      blue: 255
+      scale: 1.0
+      turns: 5
+    modifiers:
+      - type: "ROTATE"
+        angle: 4
+

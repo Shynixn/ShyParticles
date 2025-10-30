@@ -1,0 +1,87 @@
+name: "orbital_rings"
+duration: 200 # Duration in Ticks, 1 second = 20 ticks
+repeat: true # Should the effect repeat indefinitely once started.
+
+# Multiple rotating rings creating an orbital effect
+layers:
+  - particle: "FIREWORK"
+    shape: "SPHERE"
+    options:
+      skip: 2
+      particleCount: 100
+      density: 1.0
+      radius: 2.5
+      red: 255
+      green: 50
+      blue: 50
+      scale: 1.0
+    modifiers:
+      - type: "MOVE"
+        y: 1.7
+        start: 0
+        end: 0
+      - type: "ROTATE"
+        angle: 4
+
+  - particle: "DUST,REDSTONE"
+    shape: "CIRCLE"
+    options:
+      skip: 2
+      particleCount: 100
+      density: 1.0
+      radius: 2.5
+      red: 50
+      green: 50
+      blue: 255
+      scale: 1.0
+    modifiers:
+      - type: "MOVE"
+        y: 4
+        start: 0
+        end: 0
+      - type: "ROTATE"
+        angle: 4
+
+  - particle: "DUST,REDSTONE"
+    shape: "CIRCLE"
+    options:
+      skip: 2
+      particleCount: 80
+      density: 1.0
+      radius: 2.0
+      red: 255
+      green: 255
+      blue: 50
+      scale: 0.8
+    modifiers:
+      - type: "MOVE"
+        y: 4
+        start: 0
+        end: 0
+      - type: "ROTATE"
+        angle: -5
+      - type: "ROTATE"
+        angle: 3
+
+  - particle: "DUST,REDSTONE"
+    shape: "RECTANGLE"
+    options:
+      skip: 2
+      particleCount: 60
+      density: 1.0
+      width: 2
+      length: 2
+      red: 255
+      green: 50
+      blue: 255
+      scale: 0.8
+    modifiers:
+      - type: "MOVE"
+        y: 4
+        start: 0
+        end: 0
+      - type: "ROTATE"
+        angle: 6
+      - type: "ROTATE"
+        angle: -3
+

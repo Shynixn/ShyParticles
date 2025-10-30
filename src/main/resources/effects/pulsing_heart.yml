@@ -1,0 +1,24 @@
+name: "pulsing_heart"
+duration: 500 # Duration in Ticks, 1 second = 20 ticks
+repeat: true # Should the effect repeat indefinitely once started.
+
+# A heart shape that pulses and transitions from red to pink
+layers:
+  - particle: "DUST,REDSTONE"
+    shape: "HEART"
+    options:
+      skip: 2
+      particleCount: 250
+      density: 1.0
+      radius: 2.0
+      red: 255
+      green: 0
+      blue: 100
+      scale: 1.2
+    modifiers:
+      - type: "PULSE"
+        minScale: 1.5
+        maxScale: 2.5
+        speed: 1.0
+      - type: "ROTATE"
+        angle: 1

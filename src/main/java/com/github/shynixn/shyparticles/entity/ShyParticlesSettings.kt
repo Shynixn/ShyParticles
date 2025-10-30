@@ -39,6 +39,10 @@ class ShyParticlesSettings(private val reloadFun: (ShyParticlesSettings) -> Unit
         "effects/blue_sphere.yml" to "blue_sphere.yml",
         "effects/yellow_star.yml" to "yellow_star.yml",
         "effects/box_tower.yml" to "box_tower.yml",
+        "effects/rainbow_spiral.yml" to "rainbow_spiral.yml",
+        "effects/pulsing_heart.yml" to "pulsing_heart.yml",
+        "effects/orbital_rings.yml" to "orbital_rings.yml",
+        "effects/dancing_circles.yml" to "dancing_circles.yml",
         )
 
     /**
