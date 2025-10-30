@@ -43,10 +43,9 @@ class ShyParticlesSettings(private val reloadFun: (ShyParticlesSettings) -> Unit
         "effects/pulsing_heart.yml" to "pulsing_heart.yml",
         "effects/orbital_rings.yml" to "orbital_rings.yml",
         "effects/dancing_circles.yml" to "dancing_circles.yml",
-        "effects/color_burst.yml" to "color_burst.yml",
         "effects/enchanting_portal.yml" to "enchanting_portal.yml",
         "effects/soul_vortex.yml" to "soul_vortex.yml",
-        "effects/flame_dragon.yml" to "flame_dragon.yml",
+        "effects/flame_tornado.yml" to "flame_tornado.yml",
         "effects/electric_storm.yml" to "electric_storm.yml",
         "effects/cherry_blossom_wind.yml" to "cherry_blossom_wind.yml",
         )
