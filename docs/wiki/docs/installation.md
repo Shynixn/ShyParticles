@@ -11,11 +11,13 @@ ShyParticles uses YAML configuration files to define particle effects. Each effe
 Every particle effect has these key components:
 
 **Basic Properties:**
+
 - **Name:** Unique identifier for the effect
 - **Duration:** How long the effect runs (in ticks, 20 ticks = 1 second)
 - **Repeat:** Whether the effect loops indefinitely
 
 **Layers:**
+
 - **Particle:** The Minecraft particle type to use
 - **Shape:** Geometric pattern (CIRCLE, SPHERE, SPIRAL, etc.)
 - **Options:** Size, density, color, and behavior settings
@@ -26,46 +28,57 @@ Every particle effect has these key components:
 ShyParticles supports various geometric shapes, each with specific required properties:
 
 **CIRCLE** - Flat circular patterns
+
 - **Required:** `radius`, `particleCount`, `density`
 - **Optional:** `skip` (performance)
 
 **SPHERE** - 3D spherical displays  
+
 - **Required:** `radius`, `particleCount`, `density`
 - **Optional:** `skip` (performance)
 
 **SPIRAL** - Twisting spiral patterns
+
 - **Required:** `radius`, `height`, `turns`, `particleCount`, `density`
 - **Optional:** `skip` (performance)
 
 **LINE** - Straight particle lines
+
 - **Required:** `width`, `particleCount`
 - **Optional:** `skip` (performance)
 
 **RECTANGLE** - Rectangular outlines
+
 - **Required:** `width`, `length`, `particleCount`
 - **Optional:** `skip` (performance)
 
 **CUBE** - 3D cube structures
+
 - **Required:** `width`, `length`, `height`, `particleCount`
 - **Optional:** `skip` (performance)
 
 **RANDOM** - Randomly distributed particles
+
 - **Required:** `radius`, `height`, `particleCount`
 - **Optional:** `skip` (performance)
 
 **POINT** - Single particle location
+
 - **Required:** `particleCount` (usually 1)
 - **Optional:** `skip` (performance)
 
 **HEART** - Heart-shaped patterns
+
 - **Required:** `radius`, `particleCount`, `density`
 - **Optional:** `skip` (performance)
 
 **STAR** - Star-shaped displays
+
 - **Required:** `radius`, `particleCount`, `density`
 - **Optional:** `skip` (performance)
 
 **💡 Property Descriptions:**
+
 - `radius` - Size of circular/spherical shapes
 - `width` - X-axis dimension for rectangular shapes
 - `length` - Z-axis dimension for rectangular shapes  
@@ -191,26 +204,31 @@ Before players can use effects, they need the appropriate permissions:
 ### Testing and Using Effects
 
 **Play at your location:**
+
 ```
 /shyparticles play my_custom_sphere
 ```
 
 **Play at specific coordinates:**
+
 ```
 /shyparticles play flame_tornado 100 65 -200
 ```
 
 **Start a follow effect:**
+
 ```
 /shyparticles follow rainbow_spiral
 ```
 
 **List all available effects:**
+
 ```
 /shyparticles list
 ```
 
 **Stop follow effects:**
+
 ```
 /shyparticles stopfollow
 ```
@@ -297,11 +315,13 @@ blue: 0
 ### Performance Optimization
 
 **Skip Values:**
+
 - Higher skip = better performance, less smooth animation
 - Lower skip = smoother animation, more server load
 - Start with skip: 2 and adjust based on your needs
 
 **Particle Count:**
+
 - More particles = better visual quality, more resource usage
 - Balance visual appeal with server performance
 - Test with multiple effects running simultaneously
@@ -309,6 +329,7 @@ blue: 0
 ### Animation Timing
 
 **Duration and Repeat:**
+
 ```yaml
 duration: 100    # 5 seconds
 repeat: false    # Play once then stop
@@ -318,6 +339,7 @@ repeat: true     # Loop forever
 ```
 
 **Modifier Examples:**
+
 ```yaml
 modifiers:
   # Rotation around Y axis
@@ -385,6 +407,7 @@ modifiers:
 **OPTIONS_SET and OPTIONS_ADD** modifiers allow you to change particle properties over time:
 
 **OPTIONS_SET** - Replaces current option values:
+
 ```yaml
 modifiers:
   - type: "OPTIONS_SET"
@@ -400,6 +423,7 @@ modifiers:
 ```
 
 **OPTIONS_ADD** - Adds to existing option values each tick:
+
 ```yaml
 modifiers:
   - type: "OPTIONS_ADD"
@@ -413,6 +437,7 @@ modifiers:
 ```
 
 **Available Options** for modification:
+
 - **Color**: `red`, `green`, `blue`, `alpha`, `fromRed`, `toRed`, etc.
 - **Size/Shape**: `radius`, `scale`, `width`, `height`, `length`
 - **Behavior**: `speed`, `count`, `density`, `particleCount`

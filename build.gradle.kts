@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.2.0"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -83,7 +83,7 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     dependsOn("relocatePluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocatePluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-latest.${archiveExtension.get()}")
-    destinationDirectory.set(File("C:\\git\\mc\\plugins"))
+    // destinationDirectory.set(File("C:\\git\\mc\\plugins"))
 
     exclude("com/github/shynixn/shyparticles/lib/com/github/shynixn/mcutils/packet/nms/v1_8_R3/**")
     exclude("com/github/shynixn/shyparticles/lib/com/github/shynixn/mcutils/packet/nms/v1_9_R2/**")
@@ -121,7 +121,7 @@ tasks.register("pluginJarPremium", com.github.jengelman.gradle.plugins.shadow.ta
     dependsOn("relocatePluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocatePluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-premium.${archiveExtension.get()}")
-    destinationDirectory.set(File("C:\\git\\mc\\plugins"))
+    // destinationDirectory.set(File("C:\\git\\mc\\plugins"))
 
     exclude("com/github/shynixn/shyparticles/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
     exclude("com/github/shynixn/mcutils/**")
@@ -193,7 +193,7 @@ tasks.register("pluginJarLegacy", com.github.jengelman.gradle.plugins.shadow.tas
     dependsOn("relocateLegacyPluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocateLegacyPluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-legacy.${archiveExtension.get()}")
-    destinationDirectory.set(File("C:\\git\\mc\\plugins"))
+    // destinationDirectory.set(File("C:\\git\\mc\\plugins"))
     exclude("com/github/shynixn/shyparticles/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
     exclude("com/github/shynixn/mcutils/**")
     exclude("com/github/shynixn/mccoroutine/**")
