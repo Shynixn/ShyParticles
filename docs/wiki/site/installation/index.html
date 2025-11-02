@@ -1,0 +1,1365 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Shynixn">
+      
+      
+      
+        <link rel="prev" href="../permission/">
+      
+      
+        <link rel="next" href="../commands/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>How to create a particle effect - ShyParticles</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configuration-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ShyParticles" class="md-header__button md-logo" aria-label="ShyParticles" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ShyParticles
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How to create a particle effect
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Shynixn/ShyParticles" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href=".." class="md-tabs__link">
+          
+  
+  
+  ShyParticles Wiki
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ShyParticles" class="md-nav__button md-logo" aria-label="ShyParticles" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ShyParticles
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Shynixn/ShyParticles" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    ShyParticles Wiki
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            ShyParticles Wiki
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../permission/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Permission
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    How to create a particle effect
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to create a particle effect
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-effect-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      📁 Understanding Effect Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📁 Understanding Effect Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effect-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎆 Effect Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌟 Available Shapes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation-modifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚡ Animation Modifiers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-your-first-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Creating Your First Effect
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 Creating Your First Effect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-explore-existing-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Explore Existing Effects
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-basic-effect-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Basic Effect Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-apply-your-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Apply Your Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-your-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎮 Using Your Effects
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎮 Using Your Effects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-and-using-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing and Using Effects
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-customization" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 Advanced Customization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎨 Advanced Customization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-layer-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Layer Effects
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#color-customization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Color Customization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Optimization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Animation Timing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-option-modification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Option Modification
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      ❓ Common Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Quick Start Checklist
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-effect-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      📁 Understanding Effect Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📁 Understanding Effect Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effect-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎆 Effect Components
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#available-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      🌟 Available Shapes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation-modifiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      ⚡ Animation Modifiers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-your-first-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔧 Creating Your First Effect
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 Creating Your First Effect">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-explore-existing-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Explore Existing Effects
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-basic-effect-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Basic Effect Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-apply-your-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Apply Your Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-your-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎮 Using Your Effects
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎮 Using Your Effects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up Permissions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-and-using-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Testing and Using Effects
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-customization" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎨 Advanced Customization
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎨 Advanced Customization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-layer-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multi-Layer Effects
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#color-customization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Color Customization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Performance Optimization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Animation Timing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dynamic-option-modification" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dynamic Option Modification
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      ❓ Common Issues
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      🚀 Quick Start Checklist
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="configuration-guide">Configuration Guide</h1>
+<p>This guide will walk you through creating and configuring particle effects in ShyParticles. By the end, you'll understand how to customize existing effects and create your own stunning particle displays.</p>
+<h2 id="understanding-effect-structure">📁 Understanding Effect Structure</h2>
+<p>ShyParticles uses YAML configuration files to define particle effects. Each effect is stored in the <code>/plugins/ShyParticles/effects/</code> folder and consists of multiple layers that create complex visual displays.</p>
+<h3 id="effect-components">🎆 Effect Components</h3>
+<p>Every particle effect has these key components:</p>
+<p><strong>Basic Properties:</strong>
+- <strong>Name:</strong> Unique identifier for the effect
+- <strong>Duration:</strong> How long the effect runs (in ticks, 20 ticks = 1 second)
+- <strong>Repeat:</strong> Whether the effect loops indefinitely</p>
+<p><strong>Layers:</strong>
+- <strong>Particle:</strong> The Minecraft particle type to use
+- <strong>Shape:</strong> Geometric pattern (CIRCLE, SPHERE, SPIRAL, etc.)
+- <strong>Options:</strong> Size, density, color, and behavior settings
+- <strong>Modifiers:</strong> Animations like rotation, movement, and scaling</p>
+<h3 id="available-shapes">🌟 Available Shapes</h3>
+<p>ShyParticles supports various geometric shapes, each with specific required properties:</p>
+<p><strong>CIRCLE</strong> - Flat circular patterns
+- <strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code>
+- <strong>Optional:</strong> <code>skip</code> (performance)</p>
+<p><strong>SPHERE</strong> - 3D spherical displays<br />
+- <strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code>
+- <strong>Optional:</strong> <code>skip</code> (performance)</p>
+<p><strong>SPIRAL</strong> - Twisting spiral patterns
+- <strong>Required:</strong> <code>radius</code>, <code>height</code>, <code>turns</code>, <code>particleCount</code>, <code>density</code>
+- <strong>Optional:</strong> <code>skip</code> (performance)</p>
+<p><strong>LINE</strong> - Straight particle lines
+- <strong>Required:</strong> <code>width</code>, <code>particleCount</code>
+- <strong>Optional:</strong> <code>skip</code> (performance)</p>
+<p><strong>RECTANGLE</strong> - Rectangular outlines
+- <strong>Required:</strong> <code>width</code>, <code>length</code>, <code>particleCount</code>
+- <strong>Optional:</strong> <code>skip</code> (performance)</p>
+<p><strong>CUBE</strong> - 3D cube structures
+- <strong>Required:</strong> <code>width</code>, <code>length</code>, <code>height</code>, <code>particleCount</code>
+- <strong>Optional:</strong> <code>skip</code> (performance)</p>
+<p><strong>RANDOM</strong> - Randomly distributed particles
+- <strong>Required:</strong> <code>radius</code>, <code>height</code>, <code>particleCount</code>
+- <strong>Optional:</strong> <code>skip</code> (performance)</p>
+<p><strong>POINT</strong> - Single particle location
+- <strong>Required:</strong> <code>particleCount</code> (usually 1)
+- <strong>Optional:</strong> <code>skip</code> (performance)</p>
+<p><strong>HEART</strong> - Heart-shaped patterns
+- <strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code>
+- <strong>Optional:</strong> <code>skip</code> (performance)</p>
+<p><strong>STAR</strong> - Star-shaped displays
+- <strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code>
+- <strong>Optional:</strong> <code>skip</code> (performance)</p>
+<p><strong>💡 Property Descriptions:</strong>
+- <code>radius</code> - Size of circular/spherical shapes
+- <code>width</code> - X-axis dimension for rectangular shapes
+- <code>length</code> - Z-axis dimension for rectangular shapes<br />
+- <code>height</code> - Y-axis dimension for vertical shapes
+- <code>turns</code> - Number of spiral rotations
+- <code>particleCount</code> - Number of particles to generate
+- <code>density</code> - Particle density multiplier (0.0-1.0)
+- <code>skip</code> - Ticks to skip between updates (higher = better performance)</p>
+<h3 id="animation-modifiers">⚡ Animation Modifiers</h3>
+<p>Bring your effects to life with modifiers:</p>
+<ul>
+<li><strong>ROTATE</strong> - Spin effects around X, Y, or Z axes</li>
+<li><strong>MOVE</strong> - Translate particles over time in any direction</li>
+<li><strong>PULSE</strong> - Scale effects between min and max values</li>
+<li><strong>WAVE</strong> - Add wave-like vertical motion with amplitude and frequency</li>
+<li><strong>OSCILLATE</strong> - Create orbital motion around specified axes</li>
+<li><strong>RANDOM</strong> - Add random movement with configurable strength</li>
+<li><strong>OPTIONS_SET</strong> - Override particle options at specific times</li>
+<li><strong>OPTIONS_ADD</strong> - Add values to existing particle options over time</li>
+</ul>
+<hr />
+<h2 id="creating-your-first-effect">🔧 Creating Your First Effect</h2>
+<h3 id="step-1-explore-existing-effects">Step 1: Explore Existing Effects</h3>
+<ol>
+<li>
+<p><strong>Navigate to the effects folder:</strong>
+   <div class="highlight"><pre><span></span><code>/plugins/ShyParticles/effects/
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Examine the pre-built effects:</strong></p>
+</li>
+<li><code>blue_sphere.yml</code> - Simple rotating blue sphere</li>
+<li><code>flame_tornado.yml</code> - Complex multi-layer tornado</li>
+<li><code>rainbow_spiral.yml</code> - Colorful spiral animation</li>
+<li>
+<p>And 9 other stunning effects!</p>
+</li>
+<li>
+<p><strong>Choose a base effect to customize:</strong></p>
+</li>
+<li>Copy an existing effect file</li>
+<li>Rename it to match your desired effect name</li>
+</ol>
+<h3 id="step-2-basic-effect-configuration">Step 2: Basic Effect Configuration</h3>
+<p>Let's create a simple custom effect by modifying <code>blue_sphere.yml</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_custom_sphere&quot;</span>
+<span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120</span><span class="w">  </span><span class="c1"># 6 seconds (120 ticks ÷ 20 = 6 seconds)</span>
+<span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">   </span><span class="c1"># Loop indefinitely</span>
+
+<span class="nt">layers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;DUST,REDSTONE&quot;</span>
+<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SPHERE&quot;</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">skip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w">          </span><span class="c1"># Update every 2 ticks for performance</span>
+<span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span><span class="w">      </span><span class="c1"># Make it larger than the original</span>
+<span class="w">      </span><span class="nt">particleCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">150</span><span class="w"> </span><span class="c1"># More particles for density</span>
+<span class="w">      </span><span class="nt">density</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.2</span><span class="w">     </span><span class="c1"># Increase particle density</span>
+<span class="w">      </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span><span class="w">         </span><span class="c1"># RGB color values</span>
+<span class="w">      </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">       </span><span class="c1"># Orange-ish color</span>
+<span class="w">      </span><span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">      </span><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span><span class="w">       </span><span class="c1"># Larger particle size</span>
+</code></pre></div>
+<h3 id="step-3-apply-your-configuration">Step 3: Apply Your Configuration</h3>
+<ol>
+<li>
+<p><strong>Save your effect file</strong> in <code>/plugins/ShyParticles/effects/</code></p>
+</li>
+<li>
+<p><strong>Reload the plugin:</strong>
+   <div class="highlight"><pre><span></span><code>/shyparticles reload
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Test your effect:</strong>
+   <div class="highlight"><pre><span></span><code>/shyparticles play my_custom_sphere
+</code></pre></div></p>
+</li>
+</ol>
+<hr />
+<h2 id="using-your-effects">🎮 Using Your Effects</h2>
+<h3 id="setting-up-permissions">Setting Up Permissions</h3>
+<p>Before players can use effects, they need the appropriate permissions:</p>
+<ol>
+<li>
+<p><strong>Grant basic command access:</strong>
+   <div class="highlight"><pre><span></span><code>shyparticles.command
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Allow specific effects:</strong>
+   <div class="highlight"><pre><span></span><code>shyparticles.effect.start.my_custom_sphere
+</code></pre></div></p>
+</li>
+</ol>
+<p>Or grant access to all effects:
+   <div class="highlight"><pre><span></span><code>shyparticles.effect.start.*
+</code></pre></div></p>
+<ol>
+<li><strong>Grant visibility permissions</strong> (required to see particle effects):
+   <div class="highlight"><pre><span></span><code>shyparticles.effect.visible.my_custom_sphere
+</code></pre></div></li>
+</ol>
+<p>Or grant visibility to all effects:
+   <div class="highlight"><pre><span></span><code>shyparticles.effect.visible.*
+</code></pre></div></p>
+<ol>
+<li><strong>Grant play permissions for different command types:</strong>
+   <div class="highlight"><pre><span></span><code>shyparticles.play        # Location-based effects
+shyparticles.follow      # Follow effects
+shyparticles.list        # View available effects
+</code></pre></div></li>
+</ol>
+<p><strong>⚠️ Important:</strong> Players need <strong>both</strong> the <code>start</code> and <code>visible</code> permissions to use effects. The <code>start</code> permission allows them to trigger effects, while the <code>visible</code> permission allows them to see the particle displays.</p>
+<h3 id="testing-and-using-effects">Testing and Using Effects</h3>
+<p><strong>Play at your location:</strong>
+<div class="highlight"><pre><span></span><code>/shyparticles play my_custom_sphere
+</code></pre></div></p>
+<p><strong>Play at specific coordinates:</strong>
+<div class="highlight"><pre><span></span><code>/shyparticles play flame_tornado 100 65 -200
+</code></pre></div></p>
+<p><strong>Start a follow effect:</strong>
+<div class="highlight"><pre><span></span><code>/shyparticles follow rainbow_spiral
+</code></pre></div></p>
+<p><strong>List all available effects:</strong>
+<div class="highlight"><pre><span></span><code>/shyparticles list
+</code></pre></div></p>
+<p><strong>Stop follow effects:</strong>
+<div class="highlight"><pre><span></span><code>/shyparticles stopfollow
+</code></pre></div></p>
+<hr />
+<h2 id="advanced-customization">🎨 Advanced Customization</h2>
+<h3 id="multi-layer-effects">Multi-Layer Effects</h3>
+<p>Create complex effects by combining multiple particle layers:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;epic_tornado&quot;</span>
+<span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span>
+<span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+<span class="nt">layers</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Base fire layer</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;FLAME&quot;</span>
+<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SPIRAL&quot;</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">skip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
+<span class="w">      </span><span class="nt">height</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span>
+<span class="w">      </span><span class="nt">turns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">      </span><span class="nt">particleCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
+<span class="w">    </span><span class="nt">modifiers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ROTATE&quot;</span>
+<span class="w">        </span><span class="nt">angle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">        </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">        </span><span class="nt">axis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Y</span>
+
+<span class="w">  </span><span class="c1"># Smoke layer</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;LARGE_SMOKE&quot;</span>
+<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SPIRAL&quot;</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">skip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.5</span>
+<span class="w">      </span><span class="nt">height</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.0</span>
+<span class="w">      </span><span class="nt">turns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">      </span><span class="nt">particleCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">    </span><span class="nt">modifiers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ROTATE&quot;</span>
+<span class="w">        </span><span class="nt">angle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">        </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">        </span><span class="nt">axis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Y</span>
+
+<span class="w">  </span><span class="c1"># Ember particles with upward movement</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;LAVA&quot;</span>
+<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;RANDOM&quot;</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">skip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
+<span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
+<span class="w">      </span><span class="nt">height</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.0</span>
+<span class="w">      </span><span class="nt">particleCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
+<span class="w">    </span><span class="nt">modifiers</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;MOVE&quot;</span>
+<span class="w">        </span><span class="nt">y</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
+<span class="w">        </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+</code></pre></div>
+<h3 id="color-customization">Color Customization</h3>
+<p>For DUST particles, you can create any color:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Pure red</span>
+<span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span>
+<span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+
+<span class="c1"># Purple</span>
+<span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128</span>
+<span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span>
+
+<span class="c1"># Custom orange</span>
+<span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span>
+<span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">165</span>
+<span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+</code></pre></div>
+<h3 id="performance-optimization">Performance Optimization</h3>
+<p><strong>Skip Values:</strong>
+- Higher skip = better performance, less smooth animation
+- Lower skip = smoother animation, more server load
+- Start with skip: 2 and adjust based on your needs</p>
+<p><strong>Particle Count:</strong>
+- More particles = better visual quality, more resource usage
+- Balance visual appeal with server performance
+- Test with multiple effects running simultaneously</p>
+<h3 id="animation-timing">Animation Timing</h3>
+<p><strong>Duration and Repeat:</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">    </span><span class="c1"># 5 seconds</span>
+<span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">    </span><span class="c1"># Play once then stop</span>
+
+<span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span><span class="w">     </span><span class="c1"># 2 seconds  </span>
+<span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">     </span><span class="c1"># Loop forever</span>
+</code></pre></div></p>
+<p><strong>Modifier Examples:</strong>
+<div class="highlight"><pre><span></span><code><span class="nt">modifiers</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Rotation around Y axis</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ROTATE&quot;</span>
+<span class="w">    </span><span class="nt">angle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">         </span><span class="c1"># Degrees per tick</span>
+<span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">       </span><span class="c1"># Speed multiplier</span>
+<span class="w">    </span><span class="nt">axis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Y</span><span class="w">          </span><span class="c1"># X, Y, Z, or ALL</span>
+<span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">         </span><span class="c1"># Start immediately</span>
+<span class="w">    </span><span class="nt">end</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span><span class="w">         </span><span class="c1"># Stop after 200 ticks</span>
+
+<span class="w">  </span><span class="c1"># Movement with directional offsets</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;MOVE&quot;</span>
+<span class="w">    </span><span class="nt">x</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">           </span><span class="c1"># X offset per tick</span>
+<span class="w">    </span><span class="nt">y</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">           </span><span class="c1"># Y offset per tick</span>
+<span class="w">    </span><span class="nt">z</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">           </span><span class="c1"># Z offset per tick</span>
+<span class="w">    </span><span class="nt">forward</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">     </span><span class="c1"># Forward direction offset</span>
+<span class="w">    </span><span class="nt">sideward</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">    </span><span class="c1"># Sideward direction offset</span>
+<span class="w">    </span><span class="nt">upward</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">      </span><span class="c1"># Upward direction offset</span>
+<span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">       </span><span class="c1"># Speed multiplier</span>
+<span class="w">    </span><span class="nt">usePitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Whether to use pitch in directional calculations</span>
+
+<span class="w">  </span><span class="c1"># Pulsing effect</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PULSE&quot;</span>
+<span class="w">    </span><span class="nt">minScale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">    </span><span class="c1"># Minimum scale factor</span>
+<span class="w">    </span><span class="nt">maxScale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span><span class="w">    </span><span class="c1"># Maximum scale factor</span>
+<span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">       </span><span class="c1"># Pulse speed</span>
+
+<span class="w">  </span><span class="c1"># Wave motion</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;WAVE&quot;</span>
+<span class="w">    </span><span class="nt">amplitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">   </span><span class="c1"># Wave height</span>
+<span class="w">    </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">   </span><span class="c1"># Wave frequency</span>
+<span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">       </span><span class="c1"># Wave speed</span>
+
+<span class="w">  </span><span class="c1"># Oscillating orbital motion</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OSCILLATE&quot;</span>
+<span class="w">    </span><span class="nt">x</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">           </span><span class="c1"># X orbit radius</span>
+<span class="w">    </span><span class="nt">y</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">           </span><span class="c1"># Y orbit radius</span>
+<span class="w">    </span><span class="nt">z</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">           </span><span class="c1"># Z orbit radius</span>
+<span class="w">    </span><span class="nt">axis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Y</span><span class="w">          </span><span class="c1"># Orbit around Y axis</span>
+<span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">       </span><span class="c1"># Orbital speed</span>
+
+<span class="w">  </span><span class="c1"># Options modification - Set specific values at certain times</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OPTIONS_SET&quot;</span>
+<span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">       </span><span class="c1"># Start after 100 ticks</span>
+<span class="w">    </span><span class="nt">end</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span><span class="w">         </span><span class="c1"># End after 200 ticks</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5.0</span><span class="w">    </span><span class="c1"># Override radius to 5.0</span>
+<span class="w">      </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span><span class="w">       </span><span class="c1"># Change color to red</span>
+<span class="w">      </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">      </span><span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">      </span><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">     </span><span class="c1"># Make particles larger</span>
+
+<span class="w">  </span><span class="c1"># Options modification - Add to existing values over time</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OPTIONS_ADD&quot;</span>
+<span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">         </span><span class="c1"># Start immediately</span>
+<span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">       </span><span class="c1"># Rate of change</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span><span class="w">   </span><span class="c1"># Gradually increase radius</span>
+<span class="w">      </span><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.005</span><span class="w">   </span><span class="c1"># Gradually increase particle size</span>
+<span class="w">      </span><span class="nt">particleCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"> </span><span class="c1"># Gradually add more particles</span>
+</code></pre></div></p>
+<h3 id="dynamic-option-modification">Dynamic Option Modification</h3>
+<p><strong>OPTIONS_SET and OPTIONS_ADD</strong> modifiers allow you to change particle properties over time:</p>
+<p><strong>OPTIONS_SET</strong> - Replaces current option values:
+<div class="highlight"><pre><span></span><code><span class="nt">modifiers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OPTIONS_SET&quot;</span>
+<span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span><span class="w">        </span><span class="c1"># Apply changes after 50 ticks</span>
+<span class="w">    </span><span class="nt">end</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">         </span><span class="c1"># Stop changes after 100 ticks</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span><span class="w">       </span><span class="c1"># Set color to bright red</span>
+<span class="w">      </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">      </span><span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">      </span><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span><span class="w">     </span><span class="c1"># Make particles 3x larger</span>
+<span class="w">      </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">     </span><span class="c1"># Slow down particle movement</span>
+<span class="w">      </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w">      </span><span class="c1"># Spawn 10 particles per packet</span>
+</code></pre></div></p>
+<p><strong>OPTIONS_ADD</strong> - Adds to existing option values each tick:
+<div class="highlight"><pre><span></span><code><span class="nt">modifiers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OPTIONS_ADD&quot;</span>
+<span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">         </span><span class="c1"># Start immediately</span>
+<span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">       </span><span class="c1"># Rate multiplier</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.02</span><span class="w">   </span><span class="c1"># Grow radius by 0.02 each tick</span>
+<span class="w">      </span><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span><span class="w">    </span><span class="c1"># Increase particle size each tick</span>
+<span class="w">      </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1</span><span class="w">        </span><span class="c1"># Fade red color over time</span>
+<span class="w">      </span><span class="nt">spreadX</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.005</span><span class="w"> </span><span class="c1"># Gradually increase spread</span>
+</code></pre></div></p>
+<p><strong>Available Options</strong> for modification:
+- <strong>Color</strong>: <code>red</code>, <code>green</code>, <code>blue</code>, <code>alpha</code>, <code>fromRed</code>, <code>toRed</code>, etc.
+- <strong>Size/Shape</strong>: <code>radius</code>, <code>scale</code>, <code>width</code>, <code>height</code>, <code>length</code>
+- <strong>Behavior</strong>: <code>speed</code>, <code>count</code>, <code>density</code>, <code>particleCount</code>
+- <strong>Effects</strong>: <code>spreadX</code>, <code>spreadY</code>, <code>spreadZ</code>, <code>roll</code>, <code>delay</code></p>
+<hr />
+<h2 id="common-issues">❓ Common Issues</h2>
+<p><strong>Q: My effect isn't showing</strong></p>
+<ul>
+<li>Check that you have the required permissions</li>
+<li>Verify the effect name matches the YAML filename (without .yml)</li>
+<li>Ensure you ran <code>/shyparticles reload</code> after creating/editing effects</li>
+<li>Test with <code>/shyparticles list</code> to confirm the effect is loaded</li>
+</ul>
+<p><strong>Q: Effect looks different than expected</strong></p>
+<ul>
+<li>Check particle count and density settings</li>
+<li>Verify RGB color values are between 0-255</li>
+<li>Test skip values (lower = smoother, higher = choppier)</li>
+<li>Make sure scale values are appropriate (typically 0.5-2.0)</li>
+</ul>
+<p><strong>Q: Server performance issues</strong></p>
+<ul>
+<li>Increase skip values to reduce particle frequency</li>
+<li>Lower particle counts in busy effects</li>
+<li>Limit the number of simultaneous effects</li>
+<li>Use <code>/shyparticles stop &lt;sessionId&gt;</code> to clean up location effects</li>
+</ul>
+<p><strong>Q: Particles not following player</strong></p>
+<ul>
+<li>Ensure you're using <code>/shyparticles follow</code> instead of <code>/shyparticles play</code></li>
+<li>Check that the player has the required follow permissions</li>
+<li>Verify the effect configuration supports follow mode</li>
+</ul>
+<p><strong>Q: How to create custom particles</strong></p>
+<ul>
+<li>Start by copying and modifying existing effects</li>
+<li>Use different particle types (FLAME, HEART, NOTE, etc.)</li>
+<li>Experiment with shapes and modifiers</li>
+<li>Test frequently with <code>/shyparticles reload</code> and <code>/shyparticles play</code></li>
+</ul>
+<hr />
+<h2 id="quick-start-checklist">🚀 Quick Start Checklist</h2>
+<ol>
+<li>✅ Install ShyParticles in <code>/plugins/</code> folder</li>
+<li>✅ Restart server to generate default effect files</li>
+<li>✅ Grant permissions: <code>shyparticles.command</code> and <code>shyparticles.effect.start.*</code></li>
+<li>✅ Test with <code>/shyparticles list</code> and <code>/shyparticles play blue_sphere</code></li>
+<li>✅ Customize effects by editing YAML files in <code>/plugins/ShyParticles/effects/</code></li>
+<li>✅ Use <code>/shyparticles reload</code> after making changes</li>
+<li>✅ Experiment with different shapes, colors, and modifiers!</li>
+</ol>
+<p><strong>💡 Pro Tip:</strong> Start with simple modifications to existing effects before creating completely new ones. The pre-built effects provide excellent examples of different techniques and configurations.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../permission/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Permission">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Permission
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../commands/" class="md-footer__link md-footer__link--next" aria-label="Next: Commands">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Commands
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.tabs", "content.tabs.link", "content.code.copy", "navigation.footer"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
