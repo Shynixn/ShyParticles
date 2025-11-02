@@ -1,43 +1,56 @@
-# ShyScoreboard
+# ShyParticles
 
-![ShyScoreboard](assets/title.png)
+![ShyParticles](assets/title.png)
 
-ShyScoreboard is a modern, high-performance scoreboard plugin for Bukkit and Folia based Minecraft servers. It provides smooth, non-flickering scoreboards with extensive customization options and multiple display modes.
+ShyParticles is a modern, high-performance particle effects plugin for Bukkit and Folia based Minecraft servers. It provides stunning visual effects with extensive customization options and easy-to-use commands for creating immersive particle displays.
 
 ## ✨ Key Features
 
 ### Core Features
-* **🚀 Performance Optimized**: Fully asynchronous processing with zero server lag
-* **📱 Non-Flickering Display**: Smooth scoreboard updates without visual glitches
-* **🎨 Rich Customization**: Support for color codes and PlaceholderAPI integration
-* **📏 Extended Lines**: Support for 32-character lines (double vanilla length)
+* **🚀 Performance Optimized**: Fully asynchronous processing
+* **🎆 Stunning Visual Effects**: Beautiful particle displays with smooth animations
+* **🎨 Rich Customization**: Extensive configuration options for each effect
+* **📏 Multiple Effect Types**: Various pre-built effects and custom configuration support
 
-### Display Modes
-* **🌍 Global Scoreboards**: Always visible with proper permissions
-* **⚡ Command-Based**: Show/hide scoreboards dynamically via commands
-* **🛡️ WorldGuard Integration**: Automatic display based on region entry/exit
+### Effect Types
+* **🌀 Follow Effects**: Particles that follow players around
+* **📍 Location Effects**: Static particle effects at specific locations
+
+### Pre-built Effects
+* **🔵 Blue Sphere**: Elegant spinning blue particle sphere
+* **📦 Box Tower**: Towering particle structure effect
+* **🌸 Cherry Blossom Wind**: Gentle falling cherry blossom particles
+* **💃 Dancing Circles**: Animated circular particle patterns
+* **⚡ Electric Storm**: Dynamic electrical particle effects
+* **🌟 Enchanting Portal**: Mystical portal-like particle effect
+* **🔥 Flame Tornado**: Spiraling fire particle tornado
+* **🪐 Orbital Rings**: Planetary ring particle system
+* **❤️ Pulsing Heart**: Romantic heart-shaped particle effect
+* **🌈 Rainbow Spiral**: Colorful spiraling particle display
+* **👻 Soul Vortex**: Mysterious swirling soul particles
+* **⭐ Yellow Star**: Bright star-shaped particle effect
 
 ### Compatibility
 * **📦 Server Support**: Bukkit and Folia compatible
-* **🔌 Plugin Integration**: PlaceholderAPI and WorldGuard support
-* **🎯 Version Range**: Supports Minecraft 1.8.R1 through 1.21.R6
+* **🔌 Plugin Integration**: PlaceholderAPI support for dynamic content
+* **🎯 Version Range**: Supports Minecraft 1.8.R3 through 1.21.R6
 
 ## 🚀 Quick Start
 
 ### 1. Installation
-1. Download the latest ShyScoreboard plugin JAR
+1. Download the latest ShyParticles plugin JAR
 2. Place it in your server's `plugins/` folder
 3. Restart your server
 
 ### 2. Basic Setup
-1. Navigate to `/plugins/ShyScoreboard/scoreboard/`
-2. Edit `sample_scoreboard.yml` to configure your first scoreboard
-3. Run `/shyscoreboard reload` to apply changes
+1. Navigate to `/plugins/ShyParticles/effects/`
+2. Edit existing effect files or create new ones to customize particle effects
+3. Run `/shyparticles reload` to apply changes
 
-### 3. Choose Your Display Mode
-* **For servers with permission groups**: Use `GLOBAL` type
-* **For servers with OP players**: Use `COMMAND` type  
-* **For servers with WorldGuard**: Use `WORLDGUARD` type
+### 3. Using Effects
+* **Start a follow effect**: `/shyparticles follow <effect_name>`
+* **Play an effect at location**: `/shyparticles play <effect_name>`
+* **Stop effects**: `/shyparticles stop` or `/shyparticles stopfollow`
 
 ## 📚 Documentation
 
@@ -47,11 +60,13 @@ ShyScoreboard is a modern, high-performance scoreboard plugin for Bukkit and Fol
 
 ## 💡 Example Use Cases
 
-* **Server Hubs**: Display server info, player count, and announcements
-* **Minigames**: Show game stats, time remaining, and player rankings
-* **Survival Servers**: Display player stats, economy info, and server events
-* **Faction Servers**: Show faction info, territory details, and war status
+* **Server Hubs**: Create welcoming particle effects and visual displays
+* **Events & Celebrations**: Add festive particle effects for special occasions
+* **RPG Servers**: Enhance magical spells and abilities with particle effects
+* **Adventure Maps**: Create atmospheric effects and visual storytelling elements
+* **PvP Arenas**: Add dynamic visual effects to enhance combat areas
+* **Building Contests**: Provide decorative particle effects for showcase builds
 
 ## 🤝 Need Help?
 
-If you need assistance setting up ShyScoreboard, check out our detailed configuration guide or review the sample configuration file included with the plugin.
+If you need assistance setting up ShyParticles, check out our detailed configuration guide or review the sample effect files included with the plugin.

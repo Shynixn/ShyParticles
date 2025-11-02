@@ -1,200 +1,471 @@
 # Configuration Guide
 
-This guide will walk you through creating and configuring scoreboards in ShyScoreboard. By the end, you'll understand the different scoreboard types and how to set them up for your server.
+This guide will walk you through creating and configuring particle effects in ShyParticles. By the end, you'll understand how to customize existing effects and create your own stunning particle displays.
 
-## 📋 Understanding Scoreboard Types
+## 📁 Understanding Effect Structure
 
-ShyScoreboard offers three display modes, each designed for different server setups:
+ShyParticles uses YAML configuration files to define particle effects. Each effect is stored in the `/plugins/ShyParticles/effects/` folder and consists of multiple layers that create complex visual displays.
 
-### 🌍 GLOBAL Scoreboards
-**Best for: Servers with organized permission groups**
+### 🎆 Effect Components
 
-Global scoreboards are **always visible** to players who have the required permission. They automatically appear when a player joins and update when permissions change.
+Every particle effect has these key components:
 
-**✅ Use GLOBAL when:**
+**Basic Properties:**
+- **Name:** Unique identifier for the effect
+- **Duration:** How long the effect runs (in ticks, 20 ticks = 1 second)
+- **Repeat:** Whether the effect loops indefinitely
 
-* You have well-defined permission groups (Admin, VIP, Member, etc.)
-* You use permission plugins like LuckPerms
-* You want scoreboards to automatically show based on player roles
+**Layers:**
+- **Particle:** The Minecraft particle type to use
+- **Shape:** Geometric pattern (CIRCLE, SPHERE, SPIRAL, etc.)
+- **Options:** Size, density, color, and behavior settings
+- **Modifiers:** Animations like rotation, movement, and scaling
 
-**Example Permission:** `shyscoreboard.scoreboard.sample_scoreboard`
+### 🌟 Available Shapes
 
-### ⚡ COMMAND Scoreboards  
-**Best for: Servers with OP players or dynamic regions**
+ShyParticles supports various geometric shapes, each with specific required properties:
 
-Command scoreboards only appear after being manually added via commands. This gives you full control over when and where scoreboards are displayed.
+**CIRCLE** - Flat circular patterns
+- **Required:** `radius`, `particleCount`, `density`
+- **Optional:** `skip` (performance)
 
-**✅ Use COMMAND when:**
+**SPHERE** - 3D spherical displays  
+- **Required:** `radius`, `particleCount`, `density`
+- **Optional:** `skip` (performance)
 
-* You have OP players who need flexible scoreboard control
-* You want to show different scoreboards in different worlds/regions
-* You're integrating with world management or minigame plugins
+**SPIRAL** - Twisting spiral patterns
+- **Required:** `radius`, `height`, `turns`, `particleCount`, `density`
+- **Optional:** `skip` (performance)
 
-**Required:** Permission + `/shyscoreboard add <scoreboard>` command
+**LINE** - Straight particle lines
+- **Required:** `width`, `particleCount`
+- **Optional:** `skip` (performance)
 
-### 🛡️ WORLDGUARD Scoreboards
-**Best for: Servers already using WorldGuard**
+**RECTANGLE** - Rectangular outlines
+- **Required:** `width`, `length`, `particleCount`
+- **Optional:** `skip` (performance)
 
-WorldGuard scoreboards automatically appear when players enter regions with the appropriate flag. This integrates seamlessly with your existing region setup.
+**CUBE** - 3D cube structures
+- **Required:** `width`, `length`, `height`, `particleCount`
+- **Optional:** `skip` (performance)
 
-**✅ Use WORLDGUARD when:**
+**RANDOM** - Randomly distributed particles
+- **Required:** `radius`, `height`, `particleCount`
+- **Optional:** `skip` (performance)
 
-* You're already using WorldGuard for region management
-* You want scoreboards tied to specific areas
-* You need support for overlapping regions
+**POINT** - Single particle location
+- **Required:** `particleCount` (usually 1)
+- **Optional:** `skip` (performance)
 
-**Required:** Permission + WorldGuard region flag
+**HEART** - Heart-shaped patterns
+- **Required:** `radius`, `particleCount`, `density`
+- **Optional:** `skip` (performance)
+
+**STAR** - Star-shaped displays
+- **Required:** `radius`, `particleCount`, `density`
+- **Optional:** `skip` (performance)
+
+**💡 Property Descriptions:**
+- `radius` - Size of circular/spherical shapes
+- `width` - X-axis dimension for rectangular shapes
+- `length` - Z-axis dimension for rectangular shapes  
+- `height` - Y-axis dimension for vertical shapes
+- `turns` - Number of spiral rotations
+- `particleCount` - Number of particles to generate
+- `density` - Particle density multiplier (0.0-1.0)
+- `skip` - Ticks to skip between updates (higher = better performance)
+
+### ⚡ Animation Modifiers
+
+Bring your effects to life with modifiers:
+
+- **ROTATE** - Spin effects around X, Y, or Z axes
+- **MOVE** - Translate particles over time in any direction
+- **PULSE** - Scale effects between min and max values
+- **WAVE** - Add wave-like vertical motion with amplitude and frequency
+- **OSCILLATE** - Create orbital motion around specified axes
+- **RANDOM** - Add random movement with configurable strength
+- **OPTIONS_SET** - Override particle options at specific times
+- **OPTIONS_ADD** - Add values to existing particle options over time
 
 ---
 
-## 🔧 Creating Your First Scoreboard
+## 🔧 Creating Your First Effect
 
-### Step 1: Prepare the Configuration
+### Step 1: Explore Existing Effects
 
-1. **Navigate to the scoreboard folder:**
+1. **Navigate to the effects folder:**
    ```
-   /plugins/ShyScoreboard/scoreboard/
+   /plugins/ShyParticles/effects/
    ```
 
-2. **Disable the sample scoreboard:**
-   - Open `sample_scoreboard.yml`
-   - Change `type: "GLOBAL"` to `type: "COMMAND"`
-   - This prevents the sample from interfering with your setup
+2. **Examine the pre-built effects:**
+   - `blue_sphere.yml` - Simple rotating blue sphere
+   - `flame_tornado.yml` - Complex multi-layer tornado
+   - `rainbow_spiral.yml` - Colorful spiral animation
+   - And 9 other stunning effects!
 
-3. **Create your scoreboard file:**
-   - Copy `sample_scoreboard.yml` and rename it (e.g., `lobby_scoreboard.yml`)
-   - The filename should match your scoreboard's purpose
+3. **Choose a base effect to customize:**
+   - Copy an existing effect file
+   - Rename it to match your desired effect name
 
-### Step 2: Configure Your Scoreboard
+### Step 2: Basic Effect Configuration
 
-Open your new scoreboard file and configure these key settings:
+Let's create a simple custom effect by modifying `blue_sphere.yml`:
 
 ```yaml
-# Must match your filename (without .yml)
-name: "lobby_scoreboard"
+name: "my_custom_sphere"
+duration: 120  # 6 seconds (120 ticks ÷ 20 = 6 seconds)
+repeat: true   # Loop indefinitely
 
-# Choose your display type
-type: "GLOBAL"  # or "COMMAND" or "WORLDGUARD"
-
-# Lower numbers = higher priority
-priority: 1
-
-# How often to update (60 ticks = 3 seconds)
-refreshTicks: 60
-
-# Display title (max 16 characters)
-title: "&b&lMy Server"
-
-# Scoreboard lines (max 32 characters each)
-lines:
-  - "&7Welcome, %player_name%!"
-  - "&eOnline: %server_online%"
-  - "&6Rank: %vault_rank%"
-  - ""
-  - "&awww.myserver.com"
+layers:
+  - particle: "DUST,REDSTONE"
+    shape: "SPHERE"
+    options:
+      skip: 2          # Update every 2 ticks for performance
+      radius: 3.0      # Make it larger than the original
+      particleCount: 150 # More particles for density
+      density: 1.2     # Increase particle density
+      red: 255         # RGB color values
+      green: 100       # Orange-ish color
+      blue: 0
+      scale: 1.5       # Larger particle size
 ```
 
 ### Step 3: Apply Your Configuration
 
-Run the reload command in-game:
+1. **Save your effect file** in `/plugins/ShyParticles/effects/`
+
+2. **Reload the plugin:**
+   ```
+   /shyparticles reload
+   ```
+
+3. **Test your effect:**
+   ```
+   /shyparticles play my_custom_sphere
+   ```
+
+---
+
+## 🎮 Using Your Effects
+
+### Setting Up Permissions
+
+Before players can use effects, they need the appropriate permissions:
+
+1. **Grant basic command access:**
+   ```
+   shyparticles.command
+   ```
+
+2. **Allow specific effects:**
+   ```
+   shyparticles.effect.start.my_custom_sphere
+   ```
+   
+   Or grant access to all effects:
+   ```
+   shyparticles.effect.start.*
+   ```
+
+3. **Grant visibility permissions** (required to see particle effects):
+   ```
+   shyparticles.effect.visible.my_custom_sphere
+   ```
+   
+   Or grant visibility to all effects:
+   ```
+   shyparticles.effect.visible.*
+   ```
+
+4. **Grant play permissions for different command types:**
+   ```
+   shyparticles.play        # Location-based effects
+   shyparticles.follow      # Follow effects
+   shyparticles.list        # View available effects
+   ```
+
+**⚠️ Important:** Players need **both** the `start` and `visible` permissions to use effects. The `start` permission allows them to trigger effects, while the `visible` permission allows them to see the particle displays.
+
+### Testing and Using Effects
+
+**Play at your location:**
 ```
-/shyscoreboard reload
+/shyparticles play my_custom_sphere
+```
+
+**Play at specific coordinates:**
+```
+/shyparticles play flame_tornado 100 65 -200
+```
+
+**Start a follow effect:**
+```
+/shyparticles follow rainbow_spiral
+```
+
+**List all available effects:**
+```
+/shyparticles list
+```
+
+**Stop follow effects:**
+```
+/shyparticles stopfollow
 ```
 
 ---
 
-## 🎮 Activating Your Scoreboard
+## 🎨 Advanced Customization
 
-The activation method depends on your chosen scoreboard type:
+### Multi-Layer Effects
 
-### For GLOBAL Scoreboards
+Create complex effects by combining multiple particle layers:
 
-1. **Grant the permission:**
-   ```
-   shyscoreboard.scoreboard.lobby_scoreboard
-   ```
+```yaml
+name: "epic_tornado"
+duration: 300
+repeat: true
 
-2. **That's it!** The scoreboard will automatically appear for players with this permission.
+layers:
+  # Base fire layer
+  - particle: "FLAME"
+    shape: "SPIRAL"
+    options:
+      skip: 1
+      radius: 2.0
+      height: 5.0
+      turns: 4
+      particleCount: 200
+    modifiers:
+      - type: "ROTATE"
+        angle: 5
+        speed: 1.0
+        axis: Y
 
-### For COMMAND Scoreboards
+  # Smoke layer
+  - particle: "LARGE_SMOKE"
+    shape: "SPIRAL"
+    options:
+      skip: 2
+      radius: 2.5
+      height: 6.0
+      turns: 2
+      particleCount: 100
+    modifiers:
+      - type: "ROTATE"
+        angle: 3
+        speed: 1.0
+        axis: Y
 
-1. **Grant the permission:**
-   ```
-   shyscoreboard.scoreboard.lobby_scoreboard
-   ```
+  # Ember particles with upward movement
+  - particle: "LAVA"
+    shape: "RANDOM"
+    options:
+      skip: 4
+      radius: 3.0
+      height: 6.0
+      particleCount: 50
+    modifiers:
+      - type: "MOVE"
+        y: 0.05
+        speed: 1.0
+```
 
-2. **Add the scoreboard to players:**
-   ```
-   /shyscoreboard add lobby_scoreboard
-   ```
+### Color Customization
 
-3. **Remove when needed:**
-   ```
-   /shyscoreboard remove lobby_scoreboard
-   ```
+For DUST particles, you can create any color:
 
-**💡 Pro Tip:** Add these commands to your world management or minigame plugins for automatic region-based display.
+```yaml
+# Pure red
+red: 255
+green: 0
+blue: 0
 
-### For WORLDGUARD Scoreboards
+# Purple
+red: 128
+green: 0
+blue: 255
 
-1. **Grant the permission:**
-   ```
-   shyscoreboard.scoreboard.lobby_scoreboard
-   ```
+# Custom orange
+red: 255
+green: 165
+blue: 0
+```
 
-2. **Set the region flag:**
-   ```
-   /region flag spawn shyscoreboard lobby_scoreboard
-   ```
+### Performance Optimization
 
-3. **Players will see the scoreboard when entering the region!**
+**Skip Values:**
+- Higher skip = better performance, less smooth animation
+- Lower skip = smoother animation, more server load
+- Start with skip: 2 and adjust based on your needs
 
----
+**Particle Count:**
+- More particles = better visual quality, more resource usage
+- Balance visual appeal with server performance
+- Test with multiple effects running simultaneously
 
-## 🎨 Customization Tips
+### Animation Timing
 
-### Color Codes
+**Duration and Repeat:**
+```yaml
+duration: 100    # 5 seconds
+repeat: false    # Play once then stop
 
-* Use `&` for traditional color codes (`&a` = green, `&c` = red)
-* Use `&#RRGGBB` for hex colors (1.16+)
-* Mix colors within lines for creative effects
+duration: 40     # 2 seconds  
+repeat: true     # Loop forever
+```
 
-### PlaceholderAPI Integration
+**Modifier Examples:**
+```yaml
+modifiers:
+  # Rotation around Y axis
+  - type: "ROTATE"
+    angle: 5         # Degrees per tick
+    speed: 1.0       # Speed multiplier
+    axis: Y          # X, Y, Z, or ALL
+    start: 0         # Start immediately
+    end: 200         # Stop after 200 ticks
 
-* Install PlaceholderAPI for dynamic content
-* Use placeholders like `%player_name%`, `%server_online%`
-* Browse available placeholders with `/papi list`
+  # Movement with directional offsets
+  - type: "MOVE"
+    x: 0.0           # X offset per tick
+    y: 0.1           # Y offset per tick
+    z: 0.0           # Z offset per tick
+    forward: 0.0     # Forward direction offset
+    sideward: 0.0    # Sideward direction offset
+    upward: 0.0      # Upward direction offset
+    speed: 1.0       # Speed multiplier
+    usePitch: false  # Whether to use pitch in directional calculations
 
-### Line Length Optimization
+  # Pulsing effect
+  - type: "PULSE"
+    minScale: 0.5    # Minimum scale factor
+    maxScale: 1.5    # Maximum scale factor
+    speed: 2.0       # Pulse speed
 
-* Maximum 32 characters per line (including color codes)
-* Color codes count toward the limit
-* Test your lines in-game to ensure they display correctly
+  # Wave motion
+  - type: "WAVE"
+    amplitude: 1.0   # Wave height
+    frequency: 1.0   # Wave frequency
+    speed: 1.0       # Wave speed
 
-### Performance Tuning
+  # Oscillating orbital motion
+  - type: "OSCILLATE"
+    x: 2.0           # X orbit radius
+    y: 1.0           # Y orbit radius
+    z: 2.0           # Z orbit radius
+    axis: Y          # Orbit around Y axis
+    speed: 1.0       # Orbital speed
 
-* Higher `refreshTicks` = better performance
-* Lower `refreshTicks` = more responsive updates
-* Start with 60 ticks (3 seconds) and adjust as needed
+  # Options modification - Set specific values at certain times
+  - type: "OPTIONS_SET"
+    start: 100       # Start after 100 ticks
+    end: 200         # End after 200 ticks
+    options:
+      radius: 5.0    # Override radius to 5.0
+      red: 255       # Change color to red
+      green: 0
+      blue: 0
+      scale: 2.0     # Make particles larger
+
+  # Options modification - Add to existing values over time
+  - type: "OPTIONS_ADD"
+    start: 0         # Start immediately
+    speed: 1.0       # Rate of change
+    options:
+      radius: 0.01   # Gradually increase radius
+      scale: 0.005   # Gradually increase particle size
+      particleCount: 1 # Gradually add more particles
+```
+
+### Dynamic Option Modification
+
+**OPTIONS_SET and OPTIONS_ADD** modifiers allow you to change particle properties over time:
+
+**OPTIONS_SET** - Replaces current option values:
+```yaml
+modifiers:
+  - type: "OPTIONS_SET"
+    start: 50        # Apply changes after 50 ticks
+    end: 100         # Stop changes after 100 ticks
+    options:
+      red: 255       # Set color to bright red
+      green: 0
+      blue: 0
+      scale: 3.0     # Make particles 3x larger
+      speed: 0.5     # Slow down particle movement
+      count: 10      # Spawn 10 particles per packet
+```
+
+**OPTIONS_ADD** - Adds to existing option values each tick:
+```yaml
+modifiers:
+  - type: "OPTIONS_ADD"
+    start: 0         # Start immediately
+    speed: 1.0       # Rate multiplier
+    options:
+      radius: 0.02   # Grow radius by 0.02 each tick
+      scale: 0.01    # Increase particle size each tick
+      red: -1        # Fade red color over time
+      spreadX: 0.005 # Gradually increase spread
+```
+
+**Available Options** for modification:
+- **Color**: `red`, `green`, `blue`, `alpha`, `fromRed`, `toRed`, etc.
+- **Size/Shape**: `radius`, `scale`, `width`, `height`, `length`
+- **Behavior**: `speed`, `count`, `density`, `particleCount`
+- **Effects**: `spreadX`, `spreadY`, `spreadZ`, `roll`, `delay`
 
 ---
 
 ## ❓ Common Issues
 
-**Q: My scoreboard isn't showing**
+**Q: My effect isn't showing**
 
-* Check that the player has the required permission
-* Verify the scoreboard type matches your setup method
-* Ensure you ran `/shyscoreboard reload` after changes
+* Check that you have the required permissions
+* Verify the effect name matches the YAML filename (without .yml)
+* Ensure you ran `/shyparticles reload` after creating/editing effects
+* Test with `/shyparticles list` to confirm the effect is loaded
 
-**Q: Colors aren't working**
+**Q: Effect looks different than expected**
 
-* Make sure you're using `&` for color codes
-* Check that your line length doesn't exceed 32 characters
-* Verify PlaceholderAPI is installed for placeholder support
+* Check particle count and density settings
+* Verify RGB color values are between 0-255
+* Test skip values (lower = smoother, higher = choppier)
+* Make sure scale values are appropriate (typically 0.5-2.0)
 
-**Q: Multiple scoreboards are conflicting**
+**Q: Server performance issues**
 
-* Check the `priority` values (lower numbers = higher priority)
-* Ensure different scoreboards have different names
-* Use `/shyscoreboard update` to refresh player scoreboards
+* Increase skip values to reduce particle frequency
+* Lower particle counts in busy effects
+* Limit the number of simultaneous effects
+* Use `/shyparticles stop <sessionId>` to clean up location effects
+
+**Q: Particles not following player**
+
+* Ensure you're using `/shyparticles follow` instead of `/shyparticles play`
+* Check that the player has the required follow permissions
+* Verify the effect configuration supports follow mode
+
+**Q: How to create custom particles**
+
+* Start by copying and modifying existing effects
+* Use different particle types (FLAME, HEART, NOTE, etc.)
+* Experiment with shapes and modifiers
+* Test frequently with `/shyparticles reload` and `/shyparticles play`
+
+---
+
+## 🚀 Quick Start Checklist
+
+1. ✅ Install ShyParticles in `/plugins/` folder
+2. ✅ Restart server to generate default effect files
+3. ✅ Grant permissions: `shyparticles.command` and `shyparticles.effect.start.*`
+4. ✅ Test with `/shyparticles list` and `/shyparticles play blue_sphere`
+5. ✅ Customize effects by editing YAML files in `/plugins/ShyParticles/effects/`
+6. ✅ Use `/shyparticles reload` after making changes
+7. ✅ Experiment with different shapes, colors, and modifiers!
+
+**💡 Pro Tip:** Start with simple modifications to existing effects before creating completely new ones. The pre-built effects provide excellent examples of different techniques and configurations.

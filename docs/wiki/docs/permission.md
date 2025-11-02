@@ -1,10 +1,10 @@
 # Permissions Guide
 
-This guide explains all permission nodes available in ShyScoreboard and how to properly configure them for your server. Understanding permissions is crucial for controlling who can see which scoreboards and who can manage them.
+This guide explains all permission nodes available in ShyParticles and how to properly configure them for your server. Understanding permissions is crucial for controlling who can manage particle effects and which effects players can access.
 
 ## 🔐 Permission Levels
 
-ShyScoreboard uses two permission levels:
+ShyParticles uses two permission levels:
 
 * **👤 User Level**: Permissions that regular players can have
 * **🛡️ Admin Level**: Permissions that should only be given to trusted staff
@@ -15,12 +15,17 @@ ShyScoreboard uses two permission levels:
 
 | Permission | Level | Description | Required For |
 |------------|-------|-------------|--------------|
-| `shyscoreboard.scoreboard.*` | 👤 User | Access to **all** scoreboards | Seeing any scoreboard |
-| `shyscoreboard.scoreboard.<name>` | 👤 User | Access to a **specific** scoreboard | Seeing named scoreboard |
-| `shyscoreboard.command` | 🛡️ Admin | Use the base `/shyscoreboard` command | Running any command |
-| `shyscoreboard.reload` | 🛡️ Admin | Reload plugin configurations | `/shyscoreboard reload` |
-| `shyscoreboard.add` | 🛡️ Admin | Add scoreboards to players | `/shyscoreboard add` |
-| `shyscoreboard.set` | 🛡️ Admin | Set specific scoreboard for players | `/shyscoreboard set` |
-| `shyscoreboard.remove` | 🛡️ Admin | Remove scoreboards from players | `/shyscoreboard remove` |
-| `shyscoreboard.update` | 🛡️ Admin | Refresh player scoreboards | `/shyscoreboard update` |
+| `shyparticles.command` | 🛡️ Admin | Use the base `/shyparticles` command | Running any command |
+| `shyparticles.reload` | 🛡️ Admin | Reload particle effect configurations | `/shyparticles reload` |
+| `shyparticles.list` | 🛡️ Admin | List available particle effects | `/shyparticles list` |
+| `shyparticles.play` | 🛡️ Admin | Play particle effects at any location | `/shyparticles play` |
+| `shyparticles.stop` | 🛡️ Admin | Stop particle effects at any location | `/shyparticles stop` |
+| `shyparticles.follow` | 👤 User | Play follow particle effects on yourself | `/shyparticles follow` |
+| `shyparticles.followother` | 🛡️ Admin | Play follow particle effects on other players | `/shyparticles follow <player>` |
+| `shyparticles.stopfollow` | 👤 User | Stop follow particle effects on yourself | `/shyparticles stopfollow` |
+| `shyparticles.stopfollowother` | 🛡️ Admin | Stop follow particle effects on other players | `/shyparticles stopfollow <player>` |
+| `shyparticles.effect.start.*` | 👤 User | Access to **all** particle effects | Starting any particle effect |
+| `shyparticles.effect.start.<name>` | 👤 User | Access to a **specific** particle effect | Starting named particle effect |
+| `shyparticles.effect.visible.*` | 👤 User | View **all** particle effects | Seeing any particle effect |
+| `shyparticles.effect.visible.<name>` | 👤 User | View a **specific** particle effect | Seeing named particle effect |
 
