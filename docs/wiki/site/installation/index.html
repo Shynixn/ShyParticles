@@ -872,56 +872,82 @@
 <p>ShyParticles uses YAML configuration files to define particle effects. Each effect is stored in the <code>/plugins/ShyParticles/effects/</code> folder and consists of multiple layers that create complex visual displays.</p>
 <h3 id="effect-components">🎆 Effect Components</h3>
 <p>Every particle effect has these key components:</p>
-<p><strong>Basic Properties:</strong>
-- <strong>Name:</strong> Unique identifier for the effect
-- <strong>Duration:</strong> How long the effect runs (in ticks, 20 ticks = 1 second)
-- <strong>Repeat:</strong> Whether the effect loops indefinitely</p>
-<p><strong>Layers:</strong>
-- <strong>Particle:</strong> The Minecraft particle type to use
-- <strong>Shape:</strong> Geometric pattern (CIRCLE, SPHERE, SPIRAL, etc.)
-- <strong>Options:</strong> Size, density, color, and behavior settings
-- <strong>Modifiers:</strong> Animations like rotation, movement, and scaling</p>
+<p><strong>Basic Properties:</strong></p>
+<ul>
+<li><strong>Name:</strong> Unique identifier for the effect</li>
+<li><strong>Duration:</strong> How long the effect runs (in ticks, 20 ticks = 1 second)</li>
+<li><strong>Repeat:</strong> Whether the effect loops indefinitely</li>
+</ul>
+<p><strong>Layers:</strong></p>
+<ul>
+<li><strong>Particle:</strong> The Minecraft particle type to use</li>
+<li><strong>Shape:</strong> Geometric pattern (CIRCLE, SPHERE, SPIRAL, etc.)</li>
+<li><strong>Options:</strong> Size, density, color, and behavior settings</li>
+<li><strong>Modifiers:</strong> Animations like rotation, movement, and scaling</li>
+</ul>
 <h3 id="available-shapes">🌟 Available Shapes</h3>
 <p>ShyParticles supports various geometric shapes, each with specific required properties:</p>
-<p><strong>CIRCLE</strong> - Flat circular patterns
-- <strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code>
-- <strong>Optional:</strong> <code>skip</code> (performance)</p>
-<p><strong>SPHERE</strong> - 3D spherical displays<br />
-- <strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code>
-- <strong>Optional:</strong> <code>skip</code> (performance)</p>
-<p><strong>SPIRAL</strong> - Twisting spiral patterns
-- <strong>Required:</strong> <code>radius</code>, <code>height</code>, <code>turns</code>, <code>particleCount</code>, <code>density</code>
-- <strong>Optional:</strong> <code>skip</code> (performance)</p>
-<p><strong>LINE</strong> - Straight particle lines
-- <strong>Required:</strong> <code>width</code>, <code>particleCount</code>
-- <strong>Optional:</strong> <code>skip</code> (performance)</p>
-<p><strong>RECTANGLE</strong> - Rectangular outlines
-- <strong>Required:</strong> <code>width</code>, <code>length</code>, <code>particleCount</code>
-- <strong>Optional:</strong> <code>skip</code> (performance)</p>
-<p><strong>CUBE</strong> - 3D cube structures
-- <strong>Required:</strong> <code>width</code>, <code>length</code>, <code>height</code>, <code>particleCount</code>
-- <strong>Optional:</strong> <code>skip</code> (performance)</p>
-<p><strong>RANDOM</strong> - Randomly distributed particles
-- <strong>Required:</strong> <code>radius</code>, <code>height</code>, <code>particleCount</code>
-- <strong>Optional:</strong> <code>skip</code> (performance)</p>
-<p><strong>POINT</strong> - Single particle location
-- <strong>Required:</strong> <code>particleCount</code> (usually 1)
-- <strong>Optional:</strong> <code>skip</code> (performance)</p>
-<p><strong>HEART</strong> - Heart-shaped patterns
-- <strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code>
-- <strong>Optional:</strong> <code>skip</code> (performance)</p>
-<p><strong>STAR</strong> - Star-shaped displays
-- <strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code>
-- <strong>Optional:</strong> <code>skip</code> (performance)</p>
-<p><strong>💡 Property Descriptions:</strong>
-- <code>radius</code> - Size of circular/spherical shapes
-- <code>width</code> - X-axis dimension for rectangular shapes
-- <code>length</code> - Z-axis dimension for rectangular shapes<br />
-- <code>height</code> - Y-axis dimension for vertical shapes
-- <code>turns</code> - Number of spiral rotations
-- <code>particleCount</code> - Number of particles to generate
-- <code>density</code> - Particle density multiplier (0.0-1.0)
-- <code>skip</code> - Ticks to skip between updates (higher = better performance)</p>
+<p><strong>CIRCLE</strong> - Flat circular patterns</p>
+<ul>
+<li><strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code></li>
+<li><strong>Optional:</strong> <code>skip</code> (performance)</li>
+</ul>
+<p><strong>SPHERE</strong> - 3D spherical displays  </p>
+<ul>
+<li><strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code></li>
+<li><strong>Optional:</strong> <code>skip</code> (performance)</li>
+</ul>
+<p><strong>SPIRAL</strong> - Twisting spiral patterns</p>
+<ul>
+<li><strong>Required:</strong> <code>radius</code>, <code>height</code>, <code>turns</code>, <code>particleCount</code>, <code>density</code></li>
+<li><strong>Optional:</strong> <code>skip</code> (performance)</li>
+</ul>
+<p><strong>LINE</strong> - Straight particle lines</p>
+<ul>
+<li><strong>Required:</strong> <code>width</code>, <code>particleCount</code></li>
+<li><strong>Optional:</strong> <code>skip</code> (performance)</li>
+</ul>
+<p><strong>RECTANGLE</strong> - Rectangular outlines</p>
+<ul>
+<li><strong>Required:</strong> <code>width</code>, <code>length</code>, <code>particleCount</code></li>
+<li><strong>Optional:</strong> <code>skip</code> (performance)</li>
+</ul>
+<p><strong>CUBE</strong> - 3D cube structures</p>
+<ul>
+<li><strong>Required:</strong> <code>width</code>, <code>length</code>, <code>height</code>, <code>particleCount</code></li>
+<li><strong>Optional:</strong> <code>skip</code> (performance)</li>
+</ul>
+<p><strong>RANDOM</strong> - Randomly distributed particles</p>
+<ul>
+<li><strong>Required:</strong> <code>radius</code>, <code>height</code>, <code>particleCount</code></li>
+<li><strong>Optional:</strong> <code>skip</code> (performance)</li>
+</ul>
+<p><strong>POINT</strong> - Single particle location</p>
+<ul>
+<li><strong>Required:</strong> <code>particleCount</code> (usually 1)</li>
+<li><strong>Optional:</strong> <code>skip</code> (performance)</li>
+</ul>
+<p><strong>HEART</strong> - Heart-shaped patterns</p>
+<ul>
+<li><strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code></li>
+<li><strong>Optional:</strong> <code>skip</code> (performance)</li>
+</ul>
+<p><strong>STAR</strong> - Star-shaped displays</p>
+<ul>
+<li><strong>Required:</strong> <code>radius</code>, <code>particleCount</code>, <code>density</code></li>
+<li><strong>Optional:</strong> <code>skip</code> (performance)</li>
+</ul>
+<p><strong>💡 Property Descriptions:</strong></p>
+<ul>
+<li><code>radius</code> - Size of circular/spherical shapes</li>
+<li><code>width</code> - X-axis dimension for rectangular shapes</li>
+<li><code>length</code> - Z-axis dimension for rectangular shapes  </li>
+<li><code>height</code> - Y-axis dimension for vertical shapes</li>
+<li><code>turns</code> - Number of spiral rotations</li>
+<li><code>particleCount</code> - Number of particles to generate</li>
+<li><code>density</code> - Particle density multiplier (0.0-1.0)</li>
+<li><code>skip</code> - Ticks to skip between updates (higher = better performance)</li>
+</ul>
 <h3 id="animation-modifiers">⚡ Animation Modifiers</h3>
 <p>Bring your effects to life with modifiers:</p>
 <ul>
@@ -1029,21 +1055,21 @@ shyparticles.list        # View available effects
 </ol>
 <p><strong>⚠️ Important:</strong> Players need <strong>both</strong> the <code>start</code> and <code>visible</code> permissions to use effects. The <code>start</code> permission allows them to trigger effects, while the <code>visible</code> permission allows them to see the particle displays.</p>
 <h3 id="testing-and-using-effects">Testing and Using Effects</h3>
-<p><strong>Play at your location:</strong>
+<p><strong>Play at your location:</strong></p>
 <div class="highlight"><pre><span></span><code>/shyparticles play my_custom_sphere
-</code></pre></div></p>
-<p><strong>Play at specific coordinates:</strong>
+</code></pre></div>
+<p><strong>Play at specific coordinates:</strong></p>
 <div class="highlight"><pre><span></span><code>/shyparticles play flame_tornado 100 65 -200
-</code></pre></div></p>
-<p><strong>Start a follow effect:</strong>
+</code></pre></div>
+<p><strong>Start a follow effect:</strong></p>
 <div class="highlight"><pre><span></span><code>/shyparticles follow rainbow_spiral
-</code></pre></div></p>
-<p><strong>List all available effects:</strong>
+</code></pre></div>
+<p><strong>List all available effects:</strong></p>
 <div class="highlight"><pre><span></span><code>/shyparticles list
-</code></pre></div></p>
-<p><strong>Stop follow effects:</strong>
+</code></pre></div>
+<p><strong>Stop follow effects:</strong></p>
 <div class="highlight"><pre><span></span><code>/shyparticles stopfollow
-</code></pre></div></p>
+</code></pre></div>
 <hr />
 <h2 id="advanced-customization">🎨 Advanced Customization</h2>
 <h3 id="multi-layer-effects">Multi-Layer Effects</h3>
@@ -1114,23 +1140,27 @@ shyparticles.list        # View available effects
 <span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 </code></pre></div>
 <h3 id="performance-optimization">Performance Optimization</h3>
-<p><strong>Skip Values:</strong>
-- Higher skip = better performance, less smooth animation
-- Lower skip = smoother animation, more server load
-- Start with skip: 2 and adjust based on your needs</p>
-<p><strong>Particle Count:</strong>
-- More particles = better visual quality, more resource usage
-- Balance visual appeal with server performance
-- Test with multiple effects running simultaneously</p>
+<p><strong>Skip Values:</strong></p>
+<ul>
+<li>Higher skip = better performance, less smooth animation</li>
+<li>Lower skip = smoother animation, more server load</li>
+<li>Start with skip: 2 and adjust based on your needs</li>
+</ul>
+<p><strong>Particle Count:</strong></p>
+<ul>
+<li>More particles = better visual quality, more resource usage</li>
+<li>Balance visual appeal with server performance</li>
+<li>Test with multiple effects running simultaneously</li>
+</ul>
 <h3 id="animation-timing">Animation Timing</h3>
-<p><strong>Duration and Repeat:</strong>
+<p><strong>Duration and Repeat:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">    </span><span class="c1"># 5 seconds</span>
 <span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">    </span><span class="c1"># Play once then stop</span>
 
 <span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span><span class="w">     </span><span class="c1"># 2 seconds  </span>
 <span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">     </span><span class="c1"># Loop forever</span>
-</code></pre></div></p>
-<p><strong>Modifier Examples:</strong>
+</code></pre></div>
+<p><strong>Modifier Examples:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">modifiers</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># Rotation around Y axis</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ROTATE&quot;</span>
@@ -1190,10 +1220,10 @@ shyparticles.list        # View available effects
 <span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span><span class="w">   </span><span class="c1"># Gradually increase radius</span>
 <span class="w">      </span><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.005</span><span class="w">   </span><span class="c1"># Gradually increase particle size</span>
 <span class="w">      </span><span class="nt">particleCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"> </span><span class="c1"># Gradually add more particles</span>
-</code></pre></div></p>
+</code></pre></div>
 <h3 id="dynamic-option-modification">Dynamic Option Modification</h3>
 <p><strong>OPTIONS_SET and OPTIONS_ADD</strong> modifiers allow you to change particle properties over time:</p>
-<p><strong>OPTIONS_SET</strong> - Replaces current option values:
+<p><strong>OPTIONS_SET</strong> - Replaces current option values:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">modifiers</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OPTIONS_SET&quot;</span>
 <span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span><span class="w">        </span><span class="c1"># Apply changes after 50 ticks</span>
@@ -1205,8 +1235,8 @@ shyparticles.list        # View available effects
 <span class="w">      </span><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span><span class="w">     </span><span class="c1"># Make particles 3x larger</span>
 <span class="w">      </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">     </span><span class="c1"># Slow down particle movement</span>
 <span class="w">      </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w">      </span><span class="c1"># Spawn 10 particles per packet</span>
-</code></pre></div></p>
-<p><strong>OPTIONS_ADD</strong> - Adds to existing option values each tick:
+</code></pre></div>
+<p><strong>OPTIONS_ADD</strong> - Adds to existing option values each tick:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">modifiers</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OPTIONS_ADD&quot;</span>
 <span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">         </span><span class="c1"># Start immediately</span>
@@ -1216,12 +1246,14 @@ shyparticles.list        # View available effects
 <span class="w">      </span><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.01</span><span class="w">    </span><span class="c1"># Increase particle size each tick</span>
 <span class="w">      </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-1</span><span class="w">        </span><span class="c1"># Fade red color over time</span>
 <span class="w">      </span><span class="nt">spreadX</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.005</span><span class="w"> </span><span class="c1"># Gradually increase spread</span>
-</code></pre></div></p>
-<p><strong>Available Options</strong> for modification:
-- <strong>Color</strong>: <code>red</code>, <code>green</code>, <code>blue</code>, <code>alpha</code>, <code>fromRed</code>, <code>toRed</code>, etc.
-- <strong>Size/Shape</strong>: <code>radius</code>, <code>scale</code>, <code>width</code>, <code>height</code>, <code>length</code>
-- <strong>Behavior</strong>: <code>speed</code>, <code>count</code>, <code>density</code>, <code>particleCount</code>
-- <strong>Effects</strong>: <code>spreadX</code>, <code>spreadY</code>, <code>spreadZ</code>, <code>roll</code>, <code>delay</code></p>
+</code></pre></div>
+<p><strong>Available Options</strong> for modification:</p>
+<ul>
+<li><strong>Color</strong>: <code>red</code>, <code>green</code>, <code>blue</code>, <code>alpha</code>, <code>fromRed</code>, <code>toRed</code>, etc.</li>
+<li><strong>Size/Shape</strong>: <code>radius</code>, <code>scale</code>, <code>width</code>, <code>height</code>, <code>length</code></li>
+<li><strong>Behavior</strong>: <code>speed</code>, <code>count</code>, <code>density</code>, <code>particleCount</code></li>
+<li><strong>Effects</strong>: <code>spreadX</code>, <code>spreadY</code>, <code>spreadZ</code>, <code>roll</code>, <code>delay</code></li>
+</ul>
 <hr />
 <h2 id="common-issues">❓ Common Issues</h2>
 <p><strong>Q: My effect isn't showing</strong></p>
