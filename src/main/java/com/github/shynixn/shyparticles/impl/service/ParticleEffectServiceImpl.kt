@@ -16,7 +16,7 @@ class ParticleEffectServiceImpl(
     private val activeParticleEffects = HashMap<String, ParticleEffect>()
 
     // All player particle effects
-    private val playerParticleEffects = HashMap<Player, ParticleEffect>()
+    private val ownedParticleEffects = HashMap<Player, ParticleEffect>()
 
     private val effectMetaDataCache = HashMap<String, ParticleEffectMeta>()
 
@@ -24,13 +24,14 @@ class ParticleEffectServiceImpl(
     override fun startEffect(
         meta: ParticleEffectMeta,
         location: () -> Location,
-        player: Player?
+        owner: Player?,
+        visible: Player?
     ): String {
-        val effect = factory.createEffect(meta, location, player)
+        val effect = factory.createEffect(meta, location, owner, visible)
 
-        if (player != null) {
-            stopPlayerEffects(player)
-            playerParticleEffects[player] = effect
+        if (owner != null) {
+            stopPlayerEffects(owner)
+            ownedParticleEffects[owner] = effect
         }
 
         activeParticleEffects[effect.id] = effect
@@ -51,18 +52,17 @@ class ParticleEffectServiceImpl(
     /** Stops a running particle effect. */
     override fun stopEffect(effectId: String) {
         val globalEffect = activeParticleEffects.remove(effectId) ?: return
-        val player = globalEffect.player
+        val player = globalEffect.ownerPlayer
         if (player != null) {
             stopPlayerEffects(player)
-        } else {
-            globalEffect.close()
         }
     }
 
     /** Stops all running effects for a player. */
     override fun stopPlayerEffects(player: Player) {
-        val playerEffect = playerParticleEffects.remove(player) ?: return
+        val playerEffect = ownedParticleEffects.remove(player) ?: return
         playerEffect.close()
+        activeParticleEffects.remove(playerEffect.id)
     }
 
     /** Reloads all effects from disk. */
@@ -75,24 +75,24 @@ class ParticleEffectServiceImpl(
         for (globalParticleEffect in activeParticleEffects.values) {
             globalParticleEffect.close()
         }
-        for (playerParticleEffect in playerParticleEffects.values) {
+        for (playerParticleEffect in ownedParticleEffects.values) {
             playerParticleEffect.close()
         }
 
         activeParticleEffects.clear()
-        playerParticleEffects.clear()
+        ownedParticleEffects.clear()
     }
 
     override fun close() {
         for (globalParticleEffect in activeParticleEffects.values) {
             globalParticleEffect.close()
         }
-        for (playerParticleEffect in playerParticleEffects.values) {
+        for (playerParticleEffect in ownedParticleEffects.values) {
             playerParticleEffect.close()
         }
 
         effectMetaDataCache.clear()
         activeParticleEffects.clear()
-        playerParticleEffects.clear()
+        ownedParticleEffects.clear()
     }
 }

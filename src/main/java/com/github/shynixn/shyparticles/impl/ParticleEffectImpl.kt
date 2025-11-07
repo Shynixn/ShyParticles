@@ -15,28 +15,37 @@ import com.github.shynixn.shyparticles.entity.ParticleOptions
 import com.github.shynixn.shyparticles.entity.ShyParticlesSettings
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
+import com.github.shynixn.shyparticles.event.ParticleStopEvent
 import com.github.shynixn.shyparticles.impl.modifier.*
 import com.github.shynixn.shyparticles.impl.modifier.ParticlePointModifierPulseImpl
 import com.github.shynixn.shyparticles.impl.shape.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.util.Vector
 import java.util.Locale
+import kotlin.collections.set
 
 class ParticleEffectImpl(
     override val id: String,
     private val effectMeta: ParticleEffectMeta,
     val locationRef: () -> Location,
-    override val player: Player?,
+    override val visiblePlayer: Player?,
+    override val ownerPlayer: Player?,
     plugin: Plugin,
     private val packetService: PacketService,
     private val materialService: MaterialService,
     private val itemService: ItemService,
-    settings: ShyParticlesSettings
+    settings: ShyParticlesSettings,
 ) : ParticleEffect {
+    companion object {
+        private val soundCache = HashMap<String, Any>()
+    }
+
     private val stateLessModifiers = mapOf(
         ParticleModifierType.PULSE to ParticlePointModifierPulseImpl(),
         ParticleModifierType.RANDOM to ParticlePointModifierRandomImpl(),
@@ -100,7 +109,7 @@ class ParticleEffectImpl(
 
             if (players.isNotEmpty()) {
                 // Render each layer
-                for(i in 0 until layersAndOptions.size){
+                for (i in 0 until layersAndOptions.size) {
                     val pair = layersAndOptions[i]
                     if (pair.second.skip == 0 || tickCount % pair.second.skip == 0L) {
                         renderLayer(pair.first, pair.second, currentLocation.clone(), tickCount, players, i)
@@ -123,13 +132,15 @@ class ParticleEffectImpl(
                 reset(layersAndOptions)
             }
         }
+
+        Bukkit.getPluginManager().callEvent(ParticleStopEvent(this))
     }
 
     private fun getPlayersInRange(baseLocation: Location): Set<Player> {
         val selection = HashSet<Player>()
 
-        if (player != null) {
-            selection.add(player)
+        if (visiblePlayer != null) {
+            selection.add(visiblePlayer)
         } else {
             val world = baseLocation.world
 
@@ -152,7 +163,8 @@ class ParticleEffectImpl(
     }
 
     private fun reset(layersAndOptions: MutableList<Pair<ParticleLayer, ParticleOptions>>) {
-        this.stateFullModifiers =  Array(effectMeta.layers.size
+        this.stateFullModifiers = Array(
+            effectMeta.layers.size
         ) { _ ->
             mapOf(
                 ParticleModifierType.MOVE to ParticlePointModifierMoveImpl(),
@@ -169,7 +181,7 @@ class ParticleEffectImpl(
         baseLocation: Location,
         tickCount: Long,
         players: Set<Player>,
-        layerIndex : Int
+        layerIndex: Int
     ) {
         val points = generateShapePoints(layer.shape, options)
 
@@ -190,7 +202,7 @@ class ParticleEffectImpl(
         options: ParticleOptions,
         modifierActions: List<ParticleModifier>,
         tickCount: Long,
-        layerIndex : Int
+        layerIndex: Int
     ): Vector {
         var modifiedPoint = point.clone()
         for (modifier in modifierActions) {
@@ -270,16 +282,46 @@ class ParticleEffectImpl(
 
     private fun playSounds(baseLocation: Location, tickCount: Long) {
         for (sound in effectMeta.sounds) {
-            if (tickCount < sound.startTick || tickCount > sound.startTick) {
+            if (tickCount < sound.start || tickCount > sound.end) {
                 continue
+            }
+
+            if (sound.interval != -1 && tickCount % sound.interval != 0L) {
+                continue
+            }
+
+            var cachedSound = soundCache[sound.name]
+
+            if (cachedSound == null) {
+                for (part in sound.name.split(",")) {
+                    try {
+                        cachedSound = Sound.valueOf(part.uppercase(Locale.ENGLISH))
+                    } catch (_: Exception) {
+                        // Ignored
+                    }
+                }
+
+                if (cachedSound == null) {
+                    cachedSound = sound.name
+                }
+
+                soundCache[sound.name] = cachedSound
             }
 
             val world = baseLocation.world
             if (world != null) {
-                if (player != null) {
-                    player.playSound(baseLocation, sound.sound, sound.volume, sound.pitch)
+                if (visiblePlayer != null) {
+                    if (cachedSound is Sound) {
+                        visiblePlayer.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
+                    } else if (cachedSound is String) {
+                        visiblePlayer.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
+                    }
                 } else {
-                    world.playSound(baseLocation, sound.sound, sound.volume, sound.pitch)
+                    if (cachedSound is Sound) {
+                        world.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
+                    } else if (cachedSound is String) {
+                        world.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
+                    }
                 }
             }
         }

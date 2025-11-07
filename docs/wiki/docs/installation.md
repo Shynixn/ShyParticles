@@ -101,8 +101,6 @@ Bring your effects to life with modifiers:
 - **OPTIONS_SET** - Override particle options at specific times
 - **OPTIONS_ADD** - Add values to existing particle options over time
 
----
-
 ## 🔧 Creating Your First Effect
 
 ### Step 1: Explore Existing Effects
@@ -293,23 +291,23 @@ layers:
 
 ### Color Customization
 
-For DUST particles, you can create any color:
+For DUST particles, you can create any color. Example named presets:
 
 ```yaml
-# Pure red
-red: 255
-green: 0
-blue: 0
+pure_red:
+  red: 255
+  green: 0
+  blue: 0
 
-# Purple
-red: 128
-green: 0
-blue: 255
+purple:
+  red: 128
+  green: 0
+  blue: 255
 
-# Custom orange
-red: 255
-green: 165
-blue: 0
+custom_orange:
+  red: 255
+  green: 165
+  blue: 0
 ```
 
 ### Performance Optimization
@@ -328,14 +326,16 @@ blue: 0
 
 ### Animation Timing
 
-**Duration and Repeat:**
+**Duration and Repeat:** Example effect presets:
 
 ```yaml
-duration: 100    # 5 seconds
-repeat: false    # Play once then stop
+example_one:
+  duration: 100    # 5 seconds
+  repeat: false    # Play once then stop
 
-duration: 40     # 2 seconds  
-repeat: true     # Loop forever
+example_two:
+  duration: 40     # 2 seconds
+  repeat: true     # Loop forever
 ```
 
 **Modifier Examples:**
@@ -442,6 +442,65 @@ modifiers:
 - **Size/Shape**: `radius`, `scale`, `width`, `height`, `length`
 - **Behavior**: `speed`, `count`, `density`, `particleCount`
 - **Effects**: `spreadX`, `spreadY`, `spreadZ`, `roll`, `delay`
+
+---
+
+## 🔊 Sounds
+
+ShyParticles supports simple sound definitions that are played while an effect runs. Sounds are defined per-effect using the `sounds:` list in the effect YAML. The implementation uses a small SoundEffect class with the following fields:
+
+- `name` (string) — Sound identifier. Can be a Bukkit Sound enum name (e.g. `ENTITY_EXPERIENCE_ORB_PICKUP`) or any custom sound string from a resource pack. Multiple candidates may be provided comma-separated; the plugin will try to resolve to a Bukkit Sound and fall back to the raw string.
+- `volume` (float) — Volume passed to Bukkit's playSound (0.0 to 1.0 is typical).
+- `pitch` (float) — Pitch passed to Bukkit's playSound (typical range 0.5 to 2.0).
+- `start` (int) — First tick at which the sound is eligible to play (inclusive).
+- `end` (int) — Last tick at which the sound is eligible to play (inclusive).
+
+Behavior notes (implementation details):
+
+- Sounds are evaluated every tick while the effect runs. For each configured sound, the effect checks whether the current tick is between `start` and `end` (inclusive). If it is, the sound is played. You can also use the `interval` property to define the played interval in ticks.
+- Playback is location-based using the effect origin. If the effect was started for a specific player (follow/play targeting a player), the plugin will call `player.playSound(...)`, so only that player hears it. If the effect is played at a world/location (no single player target), the plugin calls `world.playSound(...)` and normal server visibility applies.
+- The audible range of a played sound is determined by Bukkit/server behavior and the `volume` value — there is no separate per-sound `range` setting.
+
+Examples
+
+1) One-shot sound at effect start:
+
+```yaml
+sounds:
+  - name: "ENTITY_EXPERIENCE_ORB_PICKUP"
+    volume: 1.0
+    pitch: 1.0
+    start: 0
+    end: 0
+    interval: 1
+```
+
+2) Play a custom resource-pack sound every tick from tick 10 to 100:
+
+```yaml
+sounds:
+  - name: "my.custom.sound"
+    volume: 0.8
+    pitch: 1.0
+    start: 10
+    end: 100
+```
+
+3) Provide multiple candidates for resolution (tries enum names first):
+
+```yaml
+sounds:
+  - name: "ENTITY_BLAZE_SHOOT,block.note_block.pling"
+    volume: 0.6
+    pitch: 0.9
+    start: 0
+    end: 0
+```
+
+Tips
+
+- To avoid loud sounds every tick, keep `end` close to `start` or only set both to the same tick for a single play.
+- Use per-effect `range` and permissions to control which players can see and hear the effect; however sound audible radius itself is controlled by Bukkit and the `volume` parameter.
 
 ---
 

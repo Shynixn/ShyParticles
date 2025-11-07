@@ -27,7 +27,8 @@ class ParticleEffectFactoryImpl(
     override fun createEffect(
         meta: ParticleEffectMeta,
         location: () -> Location,
-        player: Player?
+        owner: Player?,
+        visible: Player?
     ): ParticleEffect {
         val particleId = meta.name + String.format("-%010d", counter)
         counter++
@@ -35,7 +36,8 @@ class ParticleEffectFactoryImpl(
             particleId,
             meta,
             location,
-            player,
+            visible,
+            owner,
             plugin,
             packetService,
             materialService,

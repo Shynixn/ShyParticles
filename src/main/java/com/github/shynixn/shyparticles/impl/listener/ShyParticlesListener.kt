@@ -2,6 +2,7 @@ package com.github.shynixn.shyparticles.impl.listener
 
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.shyparticles.contract.ParticleEffectService
+import com.github.shynixn.shyparticles.event.ParticleStopEvent
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerQuitEvent
@@ -11,11 +12,16 @@ class ShyParticlesListener(
     private val plugin: Plugin,
     private val particleService: ParticleEffectService
 ) : Listener {
-    
+
     @EventHandler
     fun onPlayerQuit(event: PlayerQuitEvent) {
         plugin.launch {
             particleService.stopPlayerEffects(event.player)
         }
+    }
+
+    @EventHandler
+    fun onParticleStop(event: ParticleStopEvent) {
+        particleService.stopEffect(event.particle.id)
     }
 }
