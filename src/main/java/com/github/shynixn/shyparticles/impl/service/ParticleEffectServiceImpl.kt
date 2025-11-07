@@ -23,7 +23,7 @@ class ParticleEffectServiceImpl(
     /** Plays a particle effect at the given location. */
     override fun startEffect(
         meta: ParticleEffectMeta,
-        location: () -> Location,
+        location:  () -> Location,
         player: Player?
     ): String {
         val effect = factory.createEffect(meta, location, player)
