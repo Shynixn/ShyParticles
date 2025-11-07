@@ -570,6 +570,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔊 Sounds
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#common-issues" class="md-nav__link">
     <span class="md-ellipsis">
       ❓ Common Issues
@@ -830,6 +839,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔊 Sounds
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#common-issues" class="md-nav__link">
     <span class="md-ellipsis">
       ❓ Common Issues
@@ -960,7 +978,6 @@
 <li><strong>OPTIONS_SET</strong> - Override particle options at specific times</li>
 <li><strong>OPTIONS_ADD</strong> - Add values to existing particle options over time</li>
 </ul>
-<hr />
 <h2 id="creating-your-first-effect">🔧 Creating Your First Effect</h2>
 <h3 id="step-1-explore-existing-effects">Step 1: Explore Existing Effects</h3>
 <ol>
@@ -1123,21 +1140,21 @@ shyparticles.list        # View available effects
 <span class="w">        </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
 </code></pre></div>
 <h3 id="color-customization">Color Customization</h3>
-<p>For DUST particles, you can create any color:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Pure red</span>
-<span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span>
-<span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<p>For DUST particles, you can create any color. Example named presets:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">pure_red</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span>
+<span class="w">  </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">  </span><span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 
-<span class="c1"># Purple</span>
-<span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128</span>
-<span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
-<span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span>
+<span class="nt">purple</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">128</span>
+<span class="w">  </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">  </span><span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span>
 
-<span class="c1"># Custom orange</span>
-<span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span>
-<span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">165</span>
-<span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="nt">custom_orange</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">red</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">255</span>
+<span class="w">  </span><span class="nt">green</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">165</span>
+<span class="w">  </span><span class="nt">blue</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 </code></pre></div>
 <h3 id="performance-optimization">Performance Optimization</h3>
 <p><strong>Skip Values:</strong></p>
@@ -1153,12 +1170,14 @@ shyparticles.list        # View available effects
 <li>Test with multiple effects running simultaneously</li>
 </ul>
 <h3 id="animation-timing">Animation Timing</h3>
-<p><strong>Duration and Repeat:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">    </span><span class="c1"># 5 seconds</span>
-<span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">    </span><span class="c1"># Play once then stop</span>
+<p><strong>Duration and Repeat:</strong> Example effect presets:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">example_one</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">    </span><span class="c1"># 5 seconds</span>
+<span class="w">  </span><span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">    </span><span class="c1"># Play once then stop</span>
 
-<span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span><span class="w">     </span><span class="c1"># 2 seconds  </span>
-<span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">     </span><span class="c1"># Loop forever</span>
+<span class="nt">example_two</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span><span class="w">     </span><span class="c1"># 2 seconds</span>
+<span class="w">  </span><span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">     </span><span class="c1"># Loop forever</span>
 </code></pre></div>
 <p><strong>Modifier Examples:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">modifiers</span><span class="p">:</span>
@@ -1253,6 +1272,53 @@ shyparticles.list        # View available effects
 <li><strong>Size/Shape</strong>: <code>radius</code>, <code>scale</code>, <code>width</code>, <code>height</code>, <code>length</code></li>
 <li><strong>Behavior</strong>: <code>speed</code>, <code>count</code>, <code>density</code>, <code>particleCount</code></li>
 <li><strong>Effects</strong>: <code>spreadX</code>, <code>spreadY</code>, <code>spreadZ</code>, <code>roll</code>, <code>delay</code></li>
+</ul>
+<hr />
+<h2 id="sounds">🔊 Sounds</h2>
+<p>ShyParticles supports simple sound definitions that are played while an effect runs. Sounds are defined per-effect using the <code>sounds:</code> list in the effect YAML. The implementation uses a small SoundEffect class with the following fields:</p>
+<ul>
+<li><code>name</code> (string) — Sound identifier. Can be a Bukkit Sound enum name (e.g. <code>ENTITY_EXPERIENCE_ORB_PICKUP</code>) or any custom sound string from a resource pack. Multiple candidates may be provided comma-separated; the plugin will try to resolve to a Bukkit Sound and fall back to the raw string.</li>
+<li><code>volume</code> (float) — Volume passed to Bukkit's playSound (0.0 to 1.0 is typical).</li>
+<li><code>pitch</code> (float) — Pitch passed to Bukkit's playSound (typical range 0.5 to 2.0).</li>
+<li><code>start</code> (int) — First tick at which the sound is eligible to play (inclusive).</li>
+<li><code>end</code> (int) — Last tick at which the sound is eligible to play (inclusive).</li>
+</ul>
+<p>Behavior notes (implementation details):</p>
+<ul>
+<li>Sounds are evaluated every tick while the effect runs. For each configured sound, the effect checks whether the current tick is between <code>start</code> and <code>end</code> (inclusive). If it is, the sound is played. You can also use the <code>interval</code> property to define the played interval in ticks.</li>
+<li>Playback is location-based using the effect origin. If the effect was started for a specific player (follow/play targeting a player), the plugin will call <code>player.playSound(...)</code>, so only that player hears it. If the effect is played at a world/location (no single player target), the plugin calls <code>world.playSound(...)</code> and normal server visibility applies.</li>
+<li>The audible range of a played sound is determined by Bukkit/server behavior and the <code>volume</code> value — there is no separate per-sound <code>range</code> setting.</li>
+</ul>
+<p>Examples</p>
+<p>1) One-shot sound at effect start:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">sounds</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ENTITY_EXPERIENCE_ORB_PICKUP&quot;</span>
+<span class="w">    </span><span class="nt">volume</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">    </span><span class="nt">pitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">end</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</code></pre></div>
+<p>2) Play a custom resource-pack sound every tick from tick 10 to 100:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">sounds</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my.custom.sound&quot;</span>
+<span class="w">    </span><span class="nt">volume</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span>
+<span class="w">    </span><span class="nt">pitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
+<span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">    </span><span class="nt">end</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+</code></pre></div>
+<p>3) Provide multiple candidates for resolution (tries enum names first):</p>
+<div class="highlight"><pre><span></span><code><span class="nt">sounds</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ENTITY_BLAZE_SHOOT,block.note_block.pling&quot;</span>
+<span class="w">    </span><span class="nt">volume</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.6</span>
+<span class="w">    </span><span class="nt">pitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.9</span>
+<span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">end</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+</code></pre></div>
+<p>Tips</p>
+<ul>
+<li>To avoid loud sounds every tick, keep <code>end</code> close to <code>start</code> or only set both to the same tick for a single play.</li>
+<li>Use per-effect <code>range</code> and permissions to control which players can see and hear the effect; however sound audible radius itself is controlled by Bukkit and the <code>volume</code> parameter.</li>
 </ul>
 <hr />
 <h2 id="common-issues">❓ Common Issues</h2>
