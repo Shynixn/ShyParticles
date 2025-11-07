@@ -457,9 +457,7 @@ ShyParticles supports simple sound definitions that are played while an effect r
 
 Behavior notes (implementation details):
 
-- Sounds are evaluated every tick while the effect runs. For each configured sound, the effect checks whether the current tick is between `start` and `end` (inclusive). If it is, the sound is played.
-- Because there is no separate `interval` or `repeat` property for sounds, a sound with a `start` of 0 and an `end` greater than or equal to the effect duration (or a very large number) will be played every tick during that range. To play a one-shot at the start, set `start: 0` and `end: 0`.
-- The `name` is cached after the first resolution: the plugin attempts to map the name to a Bukkit Sound enum (case-insensitive). If no enum matches, the raw string is used and passed to Bukkit's playSound so custom/resourcepack sounds are supported.
+- Sounds are evaluated every tick while the effect runs. For each configured sound, the effect checks whether the current tick is between `start` and `end` (inclusive). If it is, the sound is played. You can also use the `interval` property to define the played interval in ticks.
 - Playback is location-based using the effect origin. If the effect was started for a specific player (follow/play targeting a player), the plugin will call `player.playSound(...)`, so only that player hears it. If the effect is played at a world/location (no single player target), the plugin calls `world.playSound(...)` and normal server visibility applies.
 - The audible range of a played sound is determined by Bukkit/server behavior and the `volume` value — there is no separate per-sound `range` setting.
 
@@ -474,6 +472,7 @@ sounds:
     pitch: 1.0
     start: 0
     end: 0
+    interval: 1
 ```
 
 2) Play a custom resource-pack sound every tick from tick 10 to 100:

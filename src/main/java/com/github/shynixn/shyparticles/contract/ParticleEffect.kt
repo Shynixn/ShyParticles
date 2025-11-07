@@ -15,7 +15,13 @@ interface ParticleEffect : AutoCloseable {
     val location: Location
 
     /** Player who can see this effect (null = all players). */
-    val player: Player?
+    val visiblePlayer: Player?
+
+    /**
+     *  Player who owns this effect (null = no one).
+     *  If this player quits the server. This effect is automatically cleaned up.
+     */
+    val ownerPlayer: Player?
 
     /** Whether this effect is currently running. */
     val isRunning: Boolean

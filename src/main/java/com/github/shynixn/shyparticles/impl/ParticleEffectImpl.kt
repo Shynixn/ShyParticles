@@ -15,11 +15,13 @@ import com.github.shynixn.shyparticles.entity.ParticleOptions
 import com.github.shynixn.shyparticles.entity.ShyParticlesSettings
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
+import com.github.shynixn.shyparticles.event.ParticleStopEvent
 import com.github.shynixn.shyparticles.impl.modifier.*
 import com.github.shynixn.shyparticles.impl.modifier.ParticlePointModifierPulseImpl
 import com.github.shynixn.shyparticles.impl.shape.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Sound
 import org.bukkit.entity.Player
@@ -32,12 +34,13 @@ class ParticleEffectImpl(
     override val id: String,
     private val effectMeta: ParticleEffectMeta,
     val locationRef: () -> Location,
-    override val player: Player?,
+    override val visiblePlayer: Player?,
+    override val ownerPlayer: Player?,
     plugin: Plugin,
     private val packetService: PacketService,
     private val materialService: MaterialService,
     private val itemService: ItemService,
-    settings: ShyParticlesSettings
+    settings: ShyParticlesSettings,
 ) : ParticleEffect {
     companion object {
         private val soundCache = HashMap<String, Any>()
@@ -129,13 +132,15 @@ class ParticleEffectImpl(
                 reset(layersAndOptions)
             }
         }
+
+        Bukkit.getPluginManager().callEvent(ParticleStopEvent(this))
     }
 
     private fun getPlayersInRange(baseLocation: Location): Set<Player> {
         val selection = HashSet<Player>()
 
-        if (player != null) {
-            selection.add(player)
+        if (visiblePlayer != null) {
+            selection.add(visiblePlayer)
         } else {
             val world = baseLocation.world
 
@@ -305,11 +310,11 @@ class ParticleEffectImpl(
 
             val world = baseLocation.world
             if (world != null) {
-                if (player != null) {
+                if (visiblePlayer != null) {
                     if (cachedSound is Sound) {
-                        player.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
+                        visiblePlayer.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
                     } else if (cachedSound is String) {
-                        player.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
+                        visiblePlayer.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
                     }
                 } else {
                     if (cachedSound is Sound) {

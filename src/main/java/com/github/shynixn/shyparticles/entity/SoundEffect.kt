@@ -27,10 +27,10 @@ class SoundEffect {
     /**
      * How often this sound is played.
      */
-    var interval : Int = -1
+    var interval : Int = 20
 
     /**
      * When to end sending the sound.
      */
-    var end: Int = 0
+    var end: Int = Int.MAX_VALUE
 }

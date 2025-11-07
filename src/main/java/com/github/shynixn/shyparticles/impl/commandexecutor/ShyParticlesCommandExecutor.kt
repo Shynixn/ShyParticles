@@ -239,7 +239,7 @@ class ShyParticlesCommandExecutor(
             return
         }
 
-        val sessionId = particleService.startEffect(effectMeta, { player.location })
+        val sessionId = particleService.startEffect(effectMeta, { player.location }, player)
         sender.sendLanguageMessage(language.shyParticlesEffectPlayMessage, effectMeta.name, sessionId)
     }
 
@@ -259,7 +259,7 @@ class ShyParticlesCommandExecutor(
             return
         }
 
-        val sessionId = particleService.startEffect(effectMeta, { location }, visible)
+        val sessionId = particleService.startEffect(effectMeta, { location }, null, visible)
         sender.sendLanguageMessage(language.shyParticlesEffectPlayMessage, effectMeta.name, sessionId)
     }
 
