@@ -1,6 +1,7 @@
 package com.github.shynixn.shyparticles.impl
 
 import com.github.shynixn.mccoroutine.folia.launch
+import com.github.shynixn.mccoroutine.folia.regionDispatcher
 import com.github.shynixn.mccoroutine.folia.ticks
 import com.github.shynixn.mcutils.common.item.ItemService
 import com.github.shynixn.mcutils.packet.api.MaterialService
@@ -13,6 +14,7 @@ import com.github.shynixn.shyparticles.entity.ParticleLayer
 import com.github.shynixn.shyparticles.entity.ParticleModifier
 import com.github.shynixn.shyparticles.entity.ParticleOptions
 import com.github.shynixn.shyparticles.entity.ShyParticlesSettings
+import com.github.shynixn.shyparticles.entity.SoundEffect
 import com.github.shynixn.shyparticles.enumeration.ParticleModifierType
 import com.github.shynixn.shyparticles.enumeration.ParticleShapeType
 import com.github.shynixn.shyparticles.event.ParticleStopEvent
@@ -36,7 +38,7 @@ class ParticleEffectImpl(
     val locationRef: () -> Location,
     override val visiblePlayer: Player?,
     override val ownerPlayer: Player?,
-    plugin: Plugin,
+    private val plugin: Plugin,
     private val packetService: PacketService,
     private val materialService: MaterialService,
     private val itemService: ItemService,
@@ -281,6 +283,8 @@ class ParticleEffectImpl(
     }
 
     private fun playSounds(baseLocation: Location, tickCount: Long) {
+        val soundsToPlay = ArrayList<Pair<SoundEffect, Any>>()
+
         for (sound in effectMeta.sounds) {
             if (tickCount < sound.start || tickCount > sound.end) {
                 continue
@@ -307,20 +311,29 @@ class ParticleEffectImpl(
 
                 soundCache[sound.name] = cachedSound
             }
+            soundsToPlay.add(Pair(sound, cachedSound))
+        }
 
-            val world = baseLocation.world
-            if (world != null) {
-                if (visiblePlayer != null) {
-                    if (cachedSound is Sound) {
-                        visiblePlayer.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
-                    } else if (cachedSound is String) {
-                        visiblePlayer.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
-                    }
-                } else {
-                    if (cachedSound is Sound) {
-                        world.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
-                    } else if (cachedSound is String) {
-                        world.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
+        if (soundsToPlay.isNotEmpty()) {
+            plugin.launch(plugin.regionDispatcher(baseLocation)) {
+                for (soundPair in soundsToPlay) {
+                    val sound = soundPair.first
+                    val cachedSound = soundPair.second
+                    val world = baseLocation.world
+                    if (world != null) {
+                        if (visiblePlayer != null) {
+                            if (cachedSound is Sound) {
+                                visiblePlayer.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
+                            } else if (cachedSound is String) {
+                                visiblePlayer.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
+                            }
+                        } else {
+                            if (cachedSound is Sound) {
+                                world.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
+                            } else if (cachedSound is String) {
+                                world.playSound(baseLocation, cachedSound, sound.volume, sound.pitch)
+                            }
+                        }
                     }
                 }
             }
