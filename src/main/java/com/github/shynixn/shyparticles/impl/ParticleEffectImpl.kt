@@ -300,6 +300,7 @@ class ParticleEffectImpl(
                 for (part in sound.name.split(",")) {
                     try {
                         cachedSound = Sound.valueOf(part.uppercase(Locale.ENGLISH))
+                        break
                     } catch (_: Exception) {
                         // Ignored
                     }
