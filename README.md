@@ -8,7 +8,7 @@ A Minecraft particle effects plugin that allows server owners to create stunning
 * Bukkit and Folia compatible
 * PlaceHolderApi support
 * Runs asynchronously
-* Version support 1.8.R3 - 1.21.R6
+* Version support 1.8.R3 - 1.21.R7
 
 ## Installation
 
