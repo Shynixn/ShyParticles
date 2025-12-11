@@ -52,6 +52,7 @@ class ParticleEffectServiceImpl(
     /** Stops a running particle effect. */
     override fun stopEffect(effectId: String) {
         val globalEffect = activeParticleEffects.remove(effectId) ?: return
+        globalEffect.close()
         val player = globalEffect.ownerPlayer
         if (player != null) {
             stopPlayerEffects(player)

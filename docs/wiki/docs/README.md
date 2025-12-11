@@ -33,7 +33,7 @@ ShyParticles is a modern, high-performance particle effects plugin for Bukkit an
 ### Compatibility
 * **📦 Server Support**: Bukkit and Folia compatible
 * **🔌 Plugin Integration**: PlaceholderAPI support for dynamic content
-* **🎯 Version Range**: Supports Minecraft 1.8.R3 through 1.21.R6
+* **🎯 Version Range**: Supports Minecraft 1.8.R3 through 1.21.R7
 
 ## 🚀 Quick Start
 
