@@ -5,6 +5,7 @@ import com.github.shynixn.mcutils.common.ChatColor
 import com.github.shynixn.mcutils.common.CoroutineHandler
 import com.github.shynixn.mcutils.common.Version
 import com.github.shynixn.mcutils.common.checkIfFoliaIsLoadable
+import com.github.shynixn.mcutils.common.commonServer
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.language.reloadTranslation
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
@@ -39,6 +40,7 @@ class ShyParticlesPlugin : JavaPlugin(), CoroutineHandler{
 
     override fun onEnable() {
         Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Loading ShyParticles ...")
+        commonServer = Bukkit.getServer()
         this.saveDefaultConfig()
         this.reloadConfig()
         val versions = if (areLegacyVersionsIncluded) {
