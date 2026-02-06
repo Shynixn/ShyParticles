@@ -2,7 +2,7 @@ package com.github.shynixn.shyparticles
 
 import com.github.shynixn.mccoroutine.folia.*
 import com.github.shynixn.mcutils.common.ChatColor
-import com.github.shynixn.mcutils.common.CoroutinePlugin
+import com.github.shynixn.mcutils.common.CoroutineHandler
 import com.github.shynixn.mcutils.common.Version
 import com.github.shynixn.mcutils.common.checkIfFoliaIsLoadable
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
@@ -22,7 +22,7 @@ import org.bukkit.Location
 import org.bukkit.entity.Entity
 import org.bukkit.plugin.java.JavaPlugin
 
-class ShyParticlesPlugin : JavaPlugin(), CoroutinePlugin {
+class ShyParticlesPlugin : JavaPlugin(), CoroutineHandler{
     private val prefix: String = ChatColor.BLUE.toString() + "[ShyParticles] " + ChatColor.WHITE
     private var module: DependencyInjectionModule? = null
 
@@ -110,7 +110,7 @@ class ShyParticlesPlugin : JavaPlugin(), CoroutinePlugin {
         val settings = ShyParticlesSettings { settings ->
         }
         settings.reload()
-        val placeHolderService = PlaceHolderServiceImpl(this)
+        val placeHolderService = PlaceHolderServiceImpl(this, Bukkit.getPluginManager())
         this.module = ShyParticlesDependencyInjectionModule(
             this,
             settings,

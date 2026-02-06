@@ -3,7 +3,7 @@ package com.github.shynixn.shyparticles
 import com.github.shynixn.fasterxml.jackson.core.type.TypeReference
 import com.github.shynixn.mcutils.common.ConfigurationService
 import com.github.shynixn.mcutils.common.ConfigurationServiceImpl
-import com.github.shynixn.mcutils.common.CoroutinePlugin
+import com.github.shynixn.mcutils.common.CoroutineHandler
 import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.command.CommandServiceImpl
@@ -44,7 +44,7 @@ class ShyParticlesDependencyInjectionModule(
 
         // Params
         module.addService<Plugin>(plugin)
-        module.addService<CoroutinePlugin>(plugin)
+        module.addService<CoroutineHandler>(plugin)
         module.addService<ShyParticlesLanguage>(language)
         module.addService<ShyParticlesSettings>(settings)
         module.addService<PlaceHolderService>(placeHolderService)
@@ -71,6 +71,8 @@ class ShyParticlesDependencyInjectionModule(
                 module.getService(),
                 module.getService(),
                 module.getService(),
+                module.getService(),
+                module.getService(),
                 module.getService()
             )
         }
@@ -78,7 +80,13 @@ class ShyParticlesDependencyInjectionModule(
             ShyParticlesListener(module.getService(), module.getService())
         }
         module.addService<ParticleEffectFactory> {
-            ParticleEffectFactoryImpl(module.getService(), module.getService(), module.getService(), module.getService(), module.getService())
+            ParticleEffectFactoryImpl(
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService()
+            )
         }
         module.addService<ParticleEffectService> {
             ParticleEffectServiceImpl(
@@ -92,7 +100,7 @@ class ShyParticlesDependencyInjectionModule(
         module.addService<MaterialService> { MaterialServiceImpl() }
         module.addService<CommandService> { CommandServiceImpl(module.getService()) }
         module.addService<ChatMessageService> {
-            ChatMessageServiceImpl(module.getService(), module.getService())
+            ChatMessageServiceImpl(module.getService(), module.getService(), module.getService())
         }
 
         // Developer Api.

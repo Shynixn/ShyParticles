@@ -2,9 +2,10 @@ package com.github.shynixn.shyparticles.impl.commandexecutor
 
 import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
-import com.github.shynixn.mcutils.common.CoroutinePlugin
+import com.github.shynixn.mcutils.common.CoroutineHandler
 import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandBuilder
+import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.command.Validator
 import com.github.shynixn.mcutils.common.language.LanguageItem
 import com.github.shynixn.mcutils.common.language.reloadTranslation
@@ -19,16 +20,19 @@ import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import org.bukkit.plugin.Plugin
 import java.util.*
 
 class ShyParticlesCommandExecutor(
     private val settings: ShyParticlesSettings,
-    private val plugin: CoroutinePlugin,
+    private val plugin: Plugin,
     private val particleService: ParticleEffectService,
     private val language: ShyParticlesLanguage,
     private val chatMessageService: ChatMessageService,
     private val repository: CacheRepository<ParticleEffectMeta>,
-    private val placeHolderService: PlaceHolderService
+    private val placeHolderService: PlaceHolderService,
+    coroutineHandler: CoroutineHandler,
+    commandService: CommandService,
 ) {
 
     private val senderHasToBePlayer: () -> String = {
@@ -133,104 +137,110 @@ class ShyParticlesCommandExecutor(
     }
 
     init {
-        CommandBuilder(plugin, settings.baseCommand, chatMessageService) {
-            usage(language.shyParticlesCommandUsage.text)
-            description(language.shyParticlesCommandDescription.text)
-            aliases(settings.commandAliases)
-            permission(settings.commandPermission)
-            permissionMessage(language.shyParticlesNoPermissionCommand.text)
-            subCommand("play") {
-                permission(settings.playPermission)
-                toolTip { language.shyParticlesPlayCommandHint.text }
-                builder().argument("effect").validator(effectMustExist)
-                    .tabs(effectTabs).executePlayer(senderHasToBePlayer) { player, effectMeta ->
-                        playEffect(player, effectMeta, player.location)
-                    }.argument("x").validator(coordinateValue)
-                    .executePlayer(senderHasToBePlayer) { player, effectMeta, xRaw ->
-                        val location = player.location.clone()
-                        setXRaw(location, xRaw)
-                        playEffect(player, effectMeta, location)
-                    }.argument("y").validator(coordinateValue)
-                    .executePlayer(senderHasToBePlayer) { player, effectMeta, xRaw, yRaw ->
-                        val location = player.location.clone()
-                        setXRaw(location, xRaw)
-                        setYRaw(location, yRaw)
-                        playEffect(player, effectMeta, location)
-                    }.argument("z").validator(coordinateValue)
-                    .executePlayer(senderHasToBePlayer) { player, effectMeta, xRaw, yRaw, zRaw ->
-                        val location = player.location.clone()
-                        setXRaw(location, xRaw)
-                        setYRaw(location, yRaw)
-                        setZRaw(location, zRaw)
-                        playEffect(player, effectMeta, location)
-                    }.argument("world").validator(worldMustExist)
-                    .execute { sender, effectMeta, xRaw, yRaw, zRaw, world ->
-                        if (xRaw.toDoubleOrNull() != null && yRaw.toDoubleOrNull() != null && zRaw.toDoubleOrNull() != null) {
-                            val location = Location(world, xRaw.toDouble(), yRaw.toDouble(), zRaw.toDouble())
-                            playEffect(sender, effectMeta, location)
+        commandService.registerCommand(
+            CommandBuilder(
+                coroutineHandler,
+                plugin,
+                settings.baseCommand,
+                chatMessageService
+            ) {
+                usage(language.shyParticlesCommandUsage.text)
+                description(language.shyParticlesCommandDescription.text)
+                aliases(settings.commandAliases)
+                permission(settings.commandPermission)
+                permissionMessage(language.shyParticlesNoPermissionCommand.text)
+                subCommand("play") {
+                    permission(settings.playPermission)
+                    toolTip { language.shyParticlesPlayCommandHint.text }
+                    builder().argument("effect").validator(effectMustExist)
+                        .tabs(effectTabs).executePlayer(senderHasToBePlayer) { player, effectMeta ->
+                            playEffect(player, effectMeta, player.location)
+                        }.argument("x").validator(coordinateValue)
+                        .executePlayer(senderHasToBePlayer) { player, effectMeta, xRaw ->
+                            val location = player.location.clone()
+                            setXRaw(location, xRaw)
+                            playEffect(player, effectMeta, location)
+                        }.argument("y").validator(coordinateValue)
+                        .executePlayer(senderHasToBePlayer) { player, effectMeta, xRaw, yRaw ->
+                            val location = player.location.clone()
+                            setXRaw(location, xRaw)
+                            setYRaw(location, yRaw)
+                            playEffect(player, effectMeta, location)
+                        }.argument("z").validator(coordinateValue)
+                        .executePlayer(senderHasToBePlayer) { player, effectMeta, xRaw, yRaw, zRaw ->
+                            val location = player.location.clone()
+                            setXRaw(location, xRaw)
+                            setYRaw(location, yRaw)
+                            setZRaw(location, zRaw)
+                            playEffect(player, effectMeta, location)
+                        }.argument("world").validator(worldMustExist)
+                        .execute { sender, effectMeta, xRaw, yRaw, zRaw, world ->
+                            if (xRaw.toDoubleOrNull() != null && yRaw.toDoubleOrNull() != null && zRaw.toDoubleOrNull() != null) {
+                                val location = Location(world, xRaw.toDouble(), yRaw.toDouble(), zRaw.toDouble())
+                                playEffect(sender, effectMeta, location)
+                            }
+                        }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
+                        .execute { sender, effectMeta, xRaw, yRaw, zRaw, world, player ->
+                            if (xRaw.toDoubleOrNull() != null && yRaw.toDoubleOrNull() != null && zRaw.toDoubleOrNull() != null) {
+                                val location = Location(world, xRaw.toDouble(), yRaw.toDouble(), zRaw.toDouble())
+                                playEffect(sender, effectMeta, location, player)
+                            }
                         }
-                    }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
-                    .execute { sender, effectMeta, xRaw, yRaw, zRaw, world, player ->
-                        if (xRaw.toDoubleOrNull() != null && yRaw.toDoubleOrNull() != null && zRaw.toDoubleOrNull() != null) {
-                            val location = Location(world, xRaw.toDouble(), yRaw.toDouble(), zRaw.toDouble())
-                            playEffect(sender, effectMeta, location, player)
+                }
+                subCommand("follow") {
+                    permission(settings.followPermission)
+                    toolTip { language.shyParticlesPlayCommandHint.text }
+                    builder().argument("effect").validator(effectMustExist)
+                        .tabs(effectTabs).executePlayer(senderHasToBePlayer) { player, effectMeta ->
+                            playFollowEffect(player, effectMeta, player)
+                        }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
+                        .execute { sender, effect, player ->
+                            if (sender.hasPermission(settings.followOtherPermission)) {
+                                playFollowEffect(sender, effect, player)
+                            } else {
+                                sender.sendLanguageMessage(language.shyParticlesNoPermissionCommand)
+                            }
                         }
+                }
+                subCommand("stop") {
+                    permission(settings.stopPermission)
+                    toolTip { language.shyParticlesStopCommandHint.text }
+                    builder().argument("sessionId").tabs(sessionIdTabs).execute { sender, sessionId ->
+                        stopEffects(sender, sessionId)
                     }
-            }
-            subCommand("follow") {
-                permission(settings.followPermission)
-                toolTip { language.shyParticlesPlayCommandHint.text }
-                builder().argument("effect").validator(effectMustExist)
-                    .tabs(effectTabs).executePlayer(senderHasToBePlayer) { player, effectMeta ->
-                        playFollowEffect(player, effectMeta, player)
-                    }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
-                    .execute { sender, effect, player ->
-                        if (sender.hasPermission(settings.followOtherPermission)) {
-                            playFollowEffect(sender, effect, player)
+                }
+                subCommand("stopFollow") {
+                    permission(settings.stopFollowPermission)
+                    toolTip { language.shyParticlesStopCommandHint.text }
+                    builder().executePlayer(senderHasToBePlayer) { player ->
+                        stopFollowEffect(player, player)
+                    }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs).execute { sender, player ->
+                        if (sender.hasPermission(settings.stopFollowOtherPermission)) {
+                            stopFollowEffect(sender, player)
                         } else {
                             sender.sendLanguageMessage(language.shyParticlesNoPermissionCommand)
                         }
                     }
-            }
-            subCommand("stop") {
-                permission(settings.stopPermission)
-                toolTip { language.shyParticlesStopCommandHint.text }
-                builder().argument("sessionId").tabs(sessionIdTabs).execute { sender, sessionId ->
-                    stopEffects(sender, sessionId)
                 }
-            }
-            subCommand("stopFollow") {
-                permission(settings.stopFollowPermission)
-                toolTip { language.shyParticlesStopCommandHint.text }
-                builder().executePlayer(senderHasToBePlayer) { player ->
-                    stopFollowEffect(player, player)
-                }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs).execute { sender, player ->
-                    if (sender.hasPermission(settings.stopFollowOtherPermission)) {
-                        stopFollowEffect(sender, player)
-                    } else {
-                        sender.sendLanguageMessage(language.shyParticlesNoPermissionCommand)
+                subCommand("list") {
+                    permission(settings.listPermission)
+                    toolTip { language.shyParticlesListCommandHint.text }
+                    builder().execute { sender ->
+                        listEffects(sender)
                     }
                 }
-            }
-            subCommand("list") {
-                permission(settings.listPermission)
-                toolTip { language.shyParticlesListCommandHint.text }
-                builder().execute { sender ->
-                    listEffects(sender)
-                }
-            }
-            subCommand("reload") {
-                permission(settings.reloadPermission)
-                toolTip { language.shyParticlesReloadCommandHint.text }
-                builder().execute { sender ->
-                    plugin.saveDefaultConfig()
-                    plugin.reloadConfig()
-                    plugin.reloadTranslation(language)
-                    particleService.reload()
-                    sender.sendLanguageMessage(language.shyParticlesReloadMessage)
-                }
-            }.helpCommand()
-        }.build()
+                subCommand("reload") {
+                    permission(settings.reloadPermission)
+                    toolTip { language.shyParticlesReloadCommandHint.text }
+                    builder().execute { sender ->
+                        plugin.saveDefaultConfig()
+                        plugin.reloadConfig()
+                        plugin.reloadTranslation(language)
+                        particleService.reload()
+                        sender.sendLanguageMessage(language.shyParticlesReloadMessage)
+                    }
+                }.helpCommand()
+            })
     }
 
     private fun playFollowEffect(sender: CommandSender, effectMeta: ParticleEffectMeta, player: Player) {
