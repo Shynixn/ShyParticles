@@ -90,7 +90,7 @@ class ShyParticlesCommandExecutor(
                 return value
             }
 
-            if (value.startsWith("~") && value.substring(1).toDoubleOrNull() != null) {
+            if (value.startsWith("~") && (value.length == 1 || value.substring(1).toDoubleOrNull() != null)) {
                 return value
             }
 
@@ -293,7 +293,7 @@ class ShyParticlesCommandExecutor(
 
     private fun setXRaw(location: Location, raw: String) {
         if (raw.startsWith("~")) {
-            location.x += raw.substring(1).toDouble()
+            location.x += if (raw.length == 1) 0.0 else raw.substring(1).toDouble()
         } else {
             location.x = raw.toDouble()
         }
@@ -301,7 +301,7 @@ class ShyParticlesCommandExecutor(
 
     private fun setYRaw(location: Location, raw: String) {
         if (raw.startsWith("~")) {
-            location.y += raw.substring(1).toDouble()
+            location.y += if (raw.length == 1) 0.0 else raw.substring(1).toDouble()
         } else {
             location.y = raw.toDouble()
         }
@@ -309,7 +309,7 @@ class ShyParticlesCommandExecutor(
 
     private fun setZRaw(location: Location, raw: String) {
         if (raw.startsWith("~")) {
-            location.z += raw.substring(1).toDouble()
+            location.z += if (raw.length == 1) 0.0 else raw.substring(1).toDouble()
         } else {
             location.z = raw.toDouble()
         }

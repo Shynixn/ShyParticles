@@ -154,7 +154,7 @@ class ParticleEffectImpl(
         val result = HashSet<Player>()
 
         for (player in selection) {
-            if (player.location.distance(baseLocation) <= effectMeta.range) {
+            if (player.world == baseLocation.world && player.location.distance(baseLocation) <= effectMeta.range) {
                 if (player.hasPermission(visiblePermission)) {
                     result.add(player)
                 }
@@ -290,7 +290,7 @@ class ParticleEffectImpl(
                 continue
             }
 
-            if (sound.interval != -1 && tickCount % sound.interval != 0L) {
+            if (sound.interval > 0 && tickCount % sound.interval != 0L) {
                 continue
             }
 

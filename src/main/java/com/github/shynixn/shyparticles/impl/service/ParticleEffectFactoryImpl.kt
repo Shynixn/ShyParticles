@@ -11,6 +11,7 @@ import com.github.shynixn.shyparticles.impl.ParticleEffectImpl
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
+import java.util.concurrent.atomic.AtomicInteger
 
 class ParticleEffectFactoryImpl(
     private val plugin: Plugin,
@@ -19,7 +20,7 @@ class ParticleEffectFactoryImpl(
     private val materialService: MaterialService,
     private val settings: ShyParticlesSettings
 ) : ParticleEffectFactory {
-    private var counter = 1
+    private val counter = AtomicInteger(1)
 
     /**
      * Creates a new particle effect instance from meta.
@@ -30,8 +31,7 @@ class ParticleEffectFactoryImpl(
         owner: Player?,
         visible: Player?
     ): ParticleEffect {
-        val particleId = meta.name + String.format("-%010d", counter)
-        counter++
+        val particleId = meta.name + String.format("-%010d", counter.getAndIncrement())
         return ParticleEffectImpl(
             particleId,
             meta,
