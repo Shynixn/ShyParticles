@@ -1,5 +1,13 @@
 # Changelog
 
+## Release 1.5.0
+
+### Changes
+
+* #19 Added support for Minecraft 26.3.x
+
+---
+
 ## Release 1.4.1
 
 ### Bugs/Issues
