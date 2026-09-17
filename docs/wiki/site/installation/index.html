@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -29,7 +29,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -1120,13 +1120,13 @@
 </ol>
 <h3 id="step-2-basic-effect-configuration">Step 2: Basic Effect Configuration</h3>
 <p>Let's create a simple custom effect by modifying <code>blue_sphere.yml</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my_custom_sphere&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"my_custom_sphere"</span>
 <span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120</span><span class="w">  </span><span class="c1"># 6 seconds (120 ticks ÷ 20 = 6 seconds)</span>
 <span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">   </span><span class="c1"># Loop indefinitely</span>
 
 <span class="nt">layers</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;DUST,REDSTONE&quot;</span>
-<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SPHERE&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">"DUST,REDSTONE"</span>
+<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">"SPHERE"</span>
 <span class="w">    </span><span class="nt">options</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">skip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span><span class="w">          </span><span class="c1"># Update every 2 ticks for performance</span>
 <span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span><span class="w">      </span><span class="c1"># Make it larger than the original</span>
@@ -1208,14 +1208,14 @@ shyparticles.list        # View available effects
 <h2 id="advanced-customization">🎨 Advanced Customization</h2>
 <h3 id="multi-layer-effects">Multi-Layer Effects</h3>
 <p>Create complex effects by combining multiple particle layers:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;epic_tornado&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"epic_tornado"</span>
 <span class="nt">duration</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span>
 <span class="nt">repeat</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 
 <span class="nt">layers</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># Base fire layer</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;FLAME&quot;</span>
-<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SPIRAL&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">"FLAME"</span>
+<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">"SPIRAL"</span>
 <span class="w">    </span><span class="nt">options</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">skip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
 <span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span>
@@ -1223,14 +1223,14 @@ shyparticles.list        # View available effects
 <span class="w">      </span><span class="nt">turns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
 <span class="w">      </span><span class="nt">particleCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span>
 <span class="w">    </span><span class="nt">modifiers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ROTATE&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"ROTATE"</span>
 <span class="w">        </span><span class="nt">angle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
 <span class="w">        </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
 <span class="w">        </span><span class="nt">axis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Y</span>
 
 <span class="w">  </span><span class="c1"># Smoke layer</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;LARGE_SMOKE&quot;</span>
-<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;SPIRAL&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">"LARGE_SMOKE"</span>
+<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">"SPIRAL"</span>
 <span class="w">    </span><span class="nt">options</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">skip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.5</span>
@@ -1238,21 +1238,21 @@ shyparticles.list        # View available effects
 <span class="w">      </span><span class="nt">turns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">      </span><span class="nt">particleCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 <span class="w">    </span><span class="nt">modifiers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ROTATE&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"ROTATE"</span>
 <span class="w">        </span><span class="nt">angle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="w">        </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
 <span class="w">        </span><span class="nt">axis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Y</span>
 
 <span class="w">  </span><span class="c1"># Ember particles with upward movement</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;LAVA&quot;</span>
-<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;RANDOM&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">particle</span><span class="p">:</span><span class="w"> </span><span class="s">"LAVA"</span>
+<span class="w">    </span><span class="nt">shape</span><span class="p">:</span><span class="w"> </span><span class="s">"RANDOM"</span>
 <span class="w">    </span><span class="nt">options</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">skip</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
 <span class="w">      </span><span class="nt">radius</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.0</span>
 <span class="w">      </span><span class="nt">height</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">6.0</span>
 <span class="w">      </span><span class="nt">particleCount</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span>
 <span class="w">    </span><span class="nt">modifiers</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;MOVE&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"MOVE"</span>
 <span class="w">        </span><span class="nt">y</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.05</span>
 <span class="w">        </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
 </code></pre></div>
@@ -1299,7 +1299,7 @@ shyparticles.list        # View available effects
 <p><strong>Modifier Examples:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nt">modifiers</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># Rotation around Y axis</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ROTATE&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"ROTATE"</span>
 <span class="w">    </span><span class="nt">angle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span><span class="w">         </span><span class="c1"># Degrees per tick</span>
 <span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">       </span><span class="c1"># Speed multiplier</span>
 <span class="w">    </span><span class="nt">axis</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Y</span><span class="w">          </span><span class="c1"># X, Y, Z, or ALL</span>
@@ -1307,7 +1307,7 @@ shyparticles.list        # View available effects
 <span class="w">    </span><span class="nt">end</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span><span class="w">         </span><span class="c1"># Stop after 200 ticks</span>
 
 <span class="w">  </span><span class="c1"># Movement with directional offsets</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;MOVE&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"MOVE"</span>
 <span class="w">    </span><span class="nt">x</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">           </span><span class="c1"># X offset per tick</span>
 <span class="w">    </span><span class="nt">y</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.1</span><span class="w">           </span><span class="c1"># Y offset per tick</span>
 <span class="w">    </span><span class="nt">z</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.0</span><span class="w">           </span><span class="c1"># Z offset per tick</span>
@@ -1318,19 +1318,19 @@ shyparticles.list        # View available effects
 <span class="w">    </span><span class="nt">usePitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Whether to use pitch in directional calculations</span>
 
 <span class="w">  </span><span class="c1"># Pulsing effect</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;PULSE&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"PULSE"</span>
 <span class="w">    </span><span class="nt">minScale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.5</span><span class="w">    </span><span class="c1"># Minimum scale factor</span>
 <span class="w">    </span><span class="nt">maxScale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.5</span><span class="w">    </span><span class="c1"># Maximum scale factor</span>
 <span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">       </span><span class="c1"># Pulse speed</span>
 
 <span class="w">  </span><span class="c1"># Wave motion</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;WAVE&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"WAVE"</span>
 <span class="w">    </span><span class="nt">amplitude</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">   </span><span class="c1"># Wave height</span>
 <span class="w">    </span><span class="nt">frequency</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">   </span><span class="c1"># Wave frequency</span>
 <span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">       </span><span class="c1"># Wave speed</span>
 
 <span class="w">  </span><span class="c1"># Oscillating orbital motion</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OSCILLATE&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"OSCILLATE"</span>
 <span class="w">    </span><span class="nt">x</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">           </span><span class="c1"># X orbit radius</span>
 <span class="w">    </span><span class="nt">y</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">           </span><span class="c1"># Y orbit radius</span>
 <span class="w">    </span><span class="nt">z</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">           </span><span class="c1"># Z orbit radius</span>
@@ -1338,7 +1338,7 @@ shyparticles.list        # View available effects
 <span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">       </span><span class="c1"># Orbital speed</span>
 
 <span class="w">  </span><span class="c1"># Options modification - Set specific values at certain times</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OPTIONS_SET&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"OPTIONS_SET"</span>
 <span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">       </span><span class="c1"># Start after 100 ticks</span>
 <span class="w">    </span><span class="nt">end</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span><span class="w">         </span><span class="c1"># End after 200 ticks</span>
 <span class="w">    </span><span class="nt">options</span><span class="p">:</span>
@@ -1349,7 +1349,7 @@ shyparticles.list        # View available effects
 <span class="w">      </span><span class="nt">scale</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2.0</span><span class="w">     </span><span class="c1"># Make particles larger</span>
 
 <span class="w">  </span><span class="c1"># Options modification - Add to existing values over time</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OPTIONS_ADD&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"OPTIONS_ADD"</span>
 <span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">         </span><span class="c1"># Start immediately</span>
 <span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">       </span><span class="c1"># Rate of change</span>
 <span class="w">    </span><span class="nt">options</span><span class="p">:</span>
@@ -1361,7 +1361,7 @@ shyparticles.list        # View available effects
 <p><strong>OPTIONS_SET and OPTIONS_ADD</strong> modifiers allow you to change particle properties over time:</p>
 <p><strong>OPTIONS_SET</strong> - Replaces current option values:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">modifiers</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OPTIONS_SET&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"OPTIONS_SET"</span>
 <span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">50</span><span class="w">        </span><span class="c1"># Apply changes after 50 ticks</span>
 <span class="w">    </span><span class="nt">end</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w">         </span><span class="c1"># Stop changes after 100 ticks</span>
 <span class="w">    </span><span class="nt">options</span><span class="p">:</span>
@@ -1374,7 +1374,7 @@ shyparticles.list        # View available effects
 </code></pre></div>
 <p><strong>OPTIONS_ADD</strong> - Adds to existing option values each tick:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">modifiers</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;OPTIONS_ADD&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">"OPTIONS_ADD"</span>
 <span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">         </span><span class="c1"># Start immediately</span>
 <span class="w">    </span><span class="nt">speed</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span><span class="w">       </span><span class="c1"># Rate multiplier</span>
 <span class="w">    </span><span class="nt">options</span><span class="p">:</span>
@@ -1409,7 +1409,7 @@ shyparticles.list        # View available effects
 <p>Examples</p>
 <p>1) One-shot sound at effect start:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">sounds</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ENTITY_EXPERIENCE_ORB_PICKUP&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"ENTITY_EXPERIENCE_ORB_PICKUP"</span>
 <span class="w">    </span><span class="nt">volume</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
 <span class="w">    </span><span class="nt">pitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
 <span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
@@ -1418,7 +1418,7 @@ shyparticles.list        # View available effects
 </code></pre></div>
 <p>2) Play a custom resource-pack sound every tick from tick 10 to 100:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">sounds</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;my.custom.sound&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"my.custom.sound"</span>
 <span class="w">    </span><span class="nt">volume</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span>
 <span class="w">    </span><span class="nt">pitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1.0</span>
 <span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
@@ -1426,7 +1426,7 @@ shyparticles.list        # View available effects
 </code></pre></div>
 <p>3) Provide multiple candidates for resolution (tries enum names first):</p>
 <div class="highlight"><pre><span></span><code><span class="nt">sounds</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ENTITY_BLAZE_SHOOT,block.note_block.pling&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"ENTITY_BLAZE_SHOOT,block.note_block.pling"</span>
 <span class="w">    </span><span class="nt">volume</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.6</span>
 <span class="w">    </span><span class="nt">pitch</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.9</span>
 <span class="w">    </span><span class="nt">start</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
@@ -1574,7 +1574,7 @@ shyparticles.list        # View available effects
       <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tabs", "content.tabs.link", "content.code.copy", "navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
